@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@iconify-icon/react": "^3.0.3",
     "@react-router/node": "8.0.0",
     "@react-router/serve": "8.0.0",
     "isbot": "^5.1.36",
