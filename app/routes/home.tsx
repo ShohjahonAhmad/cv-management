@@ -1,3 +1,4 @@
+import Menu from "~/components/Menu";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -8,5 +9,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <h1>Welcome Home</h1>;
+  return (
+    <>
+      <Menu />
+    </>
+  );
 }
