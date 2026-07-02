@@ -14,7 +14,7 @@ export async function clientLoader() {
   console.log(localStorage.getItem("token"));
   const users = await getUsers();
 
-  return { users };
+  return users;
 }
 
 export default function Users() {
