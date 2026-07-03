@@ -1,10 +1,10 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
-export default async function getUsers() {
+export default async function getUsers(page: number) {
     const token = localStorage.getItem("token");
     console.log(token);
     if(!token) window.location.href = "/login";
     try {
-        const res = await fetch(`${BASE_URL}/users`, {
+        const res = await fetch(`${BASE_URL}/users?page=${page}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
