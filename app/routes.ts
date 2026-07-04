@@ -6,5 +6,6 @@ export default [
     route("auth/callback", "routes/callback.tsx"),
     layout("layouts/dashboard-layout.tsx", [
         route("users", "routes/users.tsx"),
+        route("attributes", "routes/attributes.tsx"),
     ])
 ] satisfies RouteConfig;
