@@ -1,5 +1,4 @@
 import GitHubIcon from "../GitHubIcon";
-import Gmail from "../Gmail";
 
 export default function GitHubProvider() {
   return (
