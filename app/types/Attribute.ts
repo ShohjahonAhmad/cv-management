@@ -1,3 +1,8 @@
+export type SelectedAttribute = {
+    id: number;
+    updatedAt: string; 
+}
+
 export type Attribute = {
     id: number;
     name: string;
@@ -25,3 +30,27 @@ export enum AttributeType {
     BOOLEAN="BOOLEAN",
     SELECT="SELECT"
 }
+
+export type Dialog = {
+    open: boolean;
+    mode: "create" | "edit";
+    attribute?: Attribute;
+  };
+
+// export type CreateAttributeFormError = {
+//     errors: string[];
+//     properties?: {
+//       name?: {
+//           errors: string[];
+//       } | undefined;
+//       description?: {
+//           errors: string[];
+//       } | undefined;
+//       category?: {
+//           errors: string[];
+//       } | undefined;
+//       type?: {
+//           errors: string[];
+//       } | undefined;
+//     } | undefined;
+// }

@@ -1,5 +1,5 @@
 import { AttributeType } from "~/types/Attribute";
-import Boolean from "~/utils/attribute_types/BOOLEAN";
+import Boolean from "~/utils/attribute_types/Boolean";
 import Date from "~/utils/attribute_types/Date";
 import Image from "~/utils/attribute_types/Image";
 import Number from "~/utils/attribute_types/Number";
