@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Form } from "react-router";
+import i18n from "~/config/i18n";
 import {
   AttributeCategory,
   AttributeType,
@@ -9,21 +11,21 @@ import {
 } from "~/types/Attribute";
 
 export const attributeCategoryLabels: Record<AttributeCategory, string> = {
-  [AttributeCategory.PERSONAL_INFORMATION]: "Personal Information",
-  [AttributeCategory.CERTIFICATION]: "Certification",
-  [AttributeCategory.DOMAIN_KNOWLEDGE]: "Domain Knowledge",
-  [AttributeCategory.SOFT_SKILLS]: "Soft Skills",
+  [AttributeCategory.PERSONAL_INFORMATION]: "category.personalInformation",
+  [AttributeCategory.CERTIFICATION]: "category.certification",
+  [AttributeCategory.DOMAIN_KNOWLEDGE]: "category.domainKnowledge",
+  [AttributeCategory.SOFT_SKILLS]: "category.softSkills",
 };
 
 export const attributeTypeLabels: Record<AttributeType, string> = {
-  [AttributeType.STRING]: "Single-line Text",
-  [AttributeType.TEXT]: "Markdown Text",
-  [AttributeType.IMAGE]: "Image",
-  [AttributeType.NUMBER]: "Number",
-  [AttributeType.DATE]: "Date",
-  [AttributeType.PERIOD]: "Date Range",
-  [AttributeType.BOOLEAN]: "Checkbox",
-  [AttributeType.SELECT]: "Dropdown",
+  [AttributeType.STRING]: "type.string",
+  [AttributeType.TEXT]: "type.text",
+  [AttributeType.IMAGE]: "type.image",
+  [AttributeType.NUMBER]: "type.number",
+  [AttributeType.DATE]: "type.date",
+  [AttributeType.PERIOD]: "type.period",
+  [AttributeType.BOOLEAN]: "type.boolean",
+  [AttributeType.SELECT]: "type.select",
 };
 
 type AttributeDialogProps = {
@@ -40,18 +42,21 @@ export default function AttributeDialog({
   errors,
 }: AttributeDialogProps) {
   const isEdit = mode === "edit";
+  const { t } = useTranslation();
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#00000059]">
       <div className="bg-table-header rounded-2xl shadow-2xl flex flex-col w-[500px] border border-table-border">
         <div className="flex items-center justify-between px-6 py-4">
           <div>
             <p className="font-bold text-base text-nav-text-active">
-              {isEdit ? "Edit Attribute" : "New Attribute"}
+              {isEdit
+                ? t("page.attribute.dialog.edit.title")
+                : t("page.attribute.dialog.create.title")}
             </p>
             <p className="text-xs text-nav-text mt-1">
               {isEdit
-                ? "Update the selected attribute"
-                : "Define a reusable attribute for positions and CVs"}
+                ? t("page.attribute.dialog.edit.subtitle")
+                : t("page.attribute.dialog.create.subtitle")}
             </p>
           </div>
           <button
@@ -64,7 +69,7 @@ export default function AttributeDialog({
         {errors && errors.length > 0 && (
           <div className="mx-6 mt-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
             <p className="font-medium text-red-400">
-              Please fix the following:
+              {t("page.attribute.dialog.fix")}
             </p>
 
             <ul className="mt-2 list-disc pl-5 text-sm text-red-300">
@@ -87,31 +92,31 @@ export default function AttributeDialog({
             </>
           )}
           <label htmlFor="name" className="text-xs font-medium text-hr">
-            Attribute Name
+            {t("page.attribute.dialog.name")}
           </label>
           <input
             type="text"
             name="name"
             id="name"
             defaultValue={attribute?.name}
-            placeholder="e.g. Years of Experience"
+            placeholder={t("page.attribute.dialog.namePlaceholder")}
             className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
           />
 
           <label htmlFor="description" className="text-xs font-medium text-hr">
-            Description
+            {t("page.attribute.dialog.description")}
           </label>
           <textarea
             name="description"
             id="description"
             defaultValue={attribute?.description}
             className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
-            placeholder="Brief description of what this attribute captures..."
+            placeholder={t("page.attribute.dialog.descriptionPlaceholder")}
           ></textarea>
           <div className="flex gap-3">
             <div className="flex flex-1 flex-col">
               <label htmlFor="category" className="text-xs font-medium text-hr">
-                Category
+                {t("page.attribute.dialog.category")}
               </label>
               <select
                 name="category"
@@ -124,7 +129,7 @@ export default function AttributeDialog({
                 {Object.entries(attributeCategoryLabels).map(
                   ([type, label]) => (
                     <option key={type} value={type}>
-                      {label}
+                      {t(label)}
                     </option>
                   )
                 )}
@@ -132,18 +137,18 @@ export default function AttributeDialog({
             </div>
             <div className="flex flex-1 flex-col">
               <label htmlFor="type" className="text-xs font-medium text-hr">
-                Type
+                {t("page.attribute.dialog.type")}
               </label>
               <select
                 disabled={isEdit}
                 name="type"
                 id="type"
-                className="border mt-1.5 border-table-border rounded-lg px-3 py-2.5 bg-table-header"
+                className="border mt-1.5 border-table-border rounded-lg px-3 py-2.5 bg-table-header disabled:opacity-50"
                 defaultValue={attribute?.type || AttributeType.STRING}
               >
                 {Object.entries(attributeTypeLabels).map(([type, label]) => (
                   <option key={type} value={type}>
-                    {label}
+                    {t(label)}
                   </option>
                 ))}
               </select>
@@ -155,14 +160,16 @@ export default function AttributeDialog({
               onClick={() => setDialog((prev) => ({ ...prev, open: false }))}
               className="px-4 py-2 rounded-lg text-sm font-medium bg-[#f3f4f6] text-[#374151] dark:bg-[#374151] dark:text-[#f3f4f6]"
             >
-              Cancel
+              {t("page.attribute.dialog.cancel")}
             </button>
 
             <button
               type="submit"
               className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-nav-border-active"
             >
-              {isEdit ? "Save Changes" : "Create Attribute"}
+              {isEdit
+                ? t("page.attribute.dialog.edit.action")
+                : t("page.attribute.dialog.create.action")}
             </button>
           </div>
         </Form>

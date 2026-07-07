@@ -26,6 +26,7 @@ import AttributeDialog, {
 } from "~/components/AttributeDialog";
 import { CreateAttributeSchema, UpdateAttributeSchema } from "~/schemas";
 import z from "zod";
+import { useTranslation } from "react-i18next";
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -100,6 +101,7 @@ export default function Attributes() {
     (a: Attribute) => a.id === selected[0]?.id
   );
   const actionData = useActionData<ActionData>();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (actionData?.error) {
@@ -166,21 +168,21 @@ export default function Attributes() {
     count: number
   ): string {
     if (conflicts > 0) {
-      return `${conflicts} attribute(s) could not be deleted due to conflicts. ${changeCount} change(s) were made.`;
+      return t("page.attribute.toast.conflict", { conflicts, changeCount });
     } else if (count > 0) {
-      return `${count} attribute(s) were successfully deleted.`;
+      return t("page.attribute.toast.changesSaved", { count });
     } else {
-      return `No attributes were deleted.`;
+      return t("page.attribute.toast.noChanges");
     }
   }
 
   return (
     <main>
-      {actionData?.success && message && (
+      {message && (
         <div className="absolute top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
           <div>
             <p className="font-semibold text-sm text-nav-text-active">
-              {actionData.success ? "Changes saved" : "Error"}
+              {t("page.attribute.changesSaved")}
             </p>
             <p className="text-xs text-nav-text">{message}</p>
           </div>
@@ -189,18 +191,17 @@ export default function Attributes() {
       <div className="px-6 py-5 flex items-center justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
-            Attribute Library
+            {t("page.attribute.title")}
           </h1>
           <p className="text-xs text-nav-text mt-0.5">
-            Create and manage reusable attributes used by Positions, Candidate
-            Profiles and CVs.
+            {t("page.attribute.subtitle")}
           </p>
         </div>
         <div className="flex items-center gap-3 mt-1">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-table-header border border-table-border">
             <Library className="w-3.5 h-3.5 text-nav-text" />
             <span className="font-medium text-xs text-hr">
-              {total} attributes
+              {total} {t("page.attribute.attributes")}
             </span>
           </div>
           <button
@@ -208,7 +209,7 @@ export default function Attributes() {
             className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold bg-nav-border-active text-white cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
-            New Attribute
+            {t("page.attribute.newAttribute")}
           </button>
         </div>
       </div>
@@ -218,7 +219,7 @@ export default function Attributes() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name..."
+            placeholder={t("page.attribute.searchPlaceholder")}
             className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border min-w-[260px]"
           />
           <select
@@ -239,10 +240,10 @@ export default function Attributes() {
             }
             className="border mt-1.5 border-table-border rounded-lg px-3 py-2 bg-table-header text-xs ml-3"
           >
-            <option value="all">All Categories</option>
+            <option value="all">{t("page.attribute.allCategories")}</option>
             {Object.entries(attributeCategoryLabels).map(([type, label]) => (
               <option key={type} value={type}>
-                {label}
+                {t(label)}
               </option>
             ))}
           </select>
@@ -250,7 +251,7 @@ export default function Attributes() {
         <div className="flex items-center gap-1.5 text-xs text-date">
           <Funnel className="w-3 h-3" />
           <span>
-            Showing {attributes.length} of {total}
+            {t("page.attribute.show", { attributes: attributes.length, total })}
           </span>
         </div>
       </div>
@@ -261,7 +262,7 @@ export default function Attributes() {
             className="h-5 w-5 border-[#4B5563] bg-[#374151] data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
           />
           <span className="text-xs font-semibold text-white">
-            {selected.length} selected
+            {selected.length} {t("page.attribute.selected")}
           </span>
         </div>
         <hr className="w-px mx-1 h-5 bg-hr" />
@@ -277,9 +278,9 @@ export default function Attributes() {
           }
         >
           <SquarePen className="w-3.5 h-3.5" />
-          <span>Edit</span>
+          <span>{t("page.attribute.edit")}</span>
           <span className="ml-1 px-1.5 py-0.5 rounded text-xs bg-[#1f2937] dark:bg-indigo-300 text-nav-text text-[10px]">
-            1 only
+            {t("page.attribute.singleSelection")}
           </span>
         </button>
         <button
@@ -293,7 +294,7 @@ export default function Attributes() {
           }}
         >
           <Trash2 className="w-3.5 h-3.5" />
-          <span>Delete</span>
+          <span>{t("page.attribute.delete")}</span>
         </button>
       </div>
       <div className="mx-6 mt-2 rounded-xl overflow-hidden border border-table-border">
@@ -324,11 +325,21 @@ export default function Attributes() {
                   className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
                 />
               </th>
-              <th className="px-2 py-2.5 w-[32%]">Name</th>
-              <th className="px-4 py-2.5 w-[17%]">Category</th>
-              <th className="px-4 py-2.5 w-[12%]">Type</th>
-              <th className="px-4 py-2.5 w-[24%]">Description</th>
-              <th className="px-4 py-2.5 w-[12%]">Created</th>
+              <th className="px-2 py-2.5 w-[32%]">
+                {t("page.attribute.table.name")}
+              </th>
+              <th className="px-4 py-2.5 w-[17%]">
+                {t("page.attribute.table.category")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.attribute.table.type")}
+              </th>
+              <th className="px-4 py-2.5 w-[24%]">
+                {t("page.attribute.table.description")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.attribute.table.created")}
+              </th>
             </tr>
           </thead>
           <tbody>

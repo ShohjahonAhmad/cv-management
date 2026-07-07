@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import "./config/i18n";
 import { DarkModeProvider } from "./context/DarkModeProvider";
 
 export const links: Route.LinksFunction = () => [

@@ -1,0 +1,100 @@
+{
+    "menu": {
+        "users": "Foydalanuvchi",
+        "attributes": "Xususiyatlar"
+    },
+    "page": {
+        "user": {
+            "title": "Foydalanuvchi boshqaruvi",
+            "subtitle": "Barcha foydalanuvchilar bo'yicha rollar, ruxsatlar va hisob holatini boshqaring",
+            "selected": "tanlangan",
+            "users": "foydalanuvchilar",
+            "page": "Sahifa",
+            "of": "dan",
+            "changeMessage": "O'zgarishlar saqlandi",
+            "changeRole": "Rolni o'zgartirish",
+            "makeCandidate": "Nomzod qiling",
+            "makeRecruiter": "Rekrutr qiling",
+            "makeAdmin": "Admin qiling",
+            "block": "Bloklash",
+            "table": {
+                "user": "foydalanuvchi",
+                "email": "elektron pochta",
+                "provider": "ta'minlovchi",
+                "role": "rol",
+                "status": "holat",
+                "created": "yaratilgan"
+            }
+        },
+        "attribute": {
+            "title": "Xususiyatlar kutubxonasi",
+            "subtitle": "Pozitsiyalar, Nomzod Profillari va CV-larda ishlatiladigan qayta ishlatiladigan xususiyatlarni yarating va boshqaring",
+            "selected": "tanlangan",
+            "attributes": "xususiyatlar",
+            "newAttribute": "Yangi xususiyat",
+            "show": "{{total}} dan {{attributes}} ko'rsatilmoqda",
+            "searchPlaceholder": "Ism orqali qidirish...",
+            "allCategories": "Barcha kategoriyalar",
+            "edit": "Tahrirlash",
+            "singleSelection": "Faqat 1 ta",
+            "delete": "O'chirish",
+            "changesSaved": "O'zgarishlar saqlandi",
+            "error": "Xatolik",
+            "toast": {
+                "noChanges": "Hech qanday xususiyat o'chirilmadi.",
+                "changesSaved": "{{count}} xususiyat(lar) muvaffaqiyatli o'chirildi.",
+                "conflict": "{{conflicts}} xususiyat(lar) qarama-qarshiliklar tufayli o'chirilmaydi. {{changeCount}} o'zgarish(lar) amalga oshirildi."
+            },
+            "table": {
+                "name": "ism",
+                "category": "kategoriya",
+                "type": "tur",
+                "description": "ta'rif",
+                "created": "yaratilgan"
+            },
+            "dialog": {
+                "create": {
+                    "title": "Yangi xususiyat",
+                    "subtitle": "Pozitsiyalar va CV-lar uchun qayta ishlatiladigan xususiyatni aniqlang",
+                    "action": "Xususiyatni yaratish"
+                },
+                "edit": {
+                    "title": "Xususiyatni tahrirlash",
+                    "subtitle": "Tanlangan xususiyatni yangilang",
+                    "action": "O'zgarishlarni saqlash"
+                },
+                "fix": "Quyidagilarni tuzating:",
+                "name": "Xususiyat nomi",
+                "description": "Ta'rif",
+                "category": "Kategoriya",
+                "type": "Tur",
+                "cancel": "Bekor qilish",
+                "namePlaceholder": "masalan, Tajriba yili",
+                "descriptionPlaceholder": "Ushbu xususiyat nimani qamrab olishini qisqacha tavsiflang..."
+            }
+        },
+        "auth": {
+            "title": "HireBoardga xush kelibsiz",
+            "subtitle": "Davom etish uchun login yoki ro'yxatdan o'ting",
+            "googleSignIn": "Google bilan davom etish",
+            "githubSignIn": "GitHub bilan davom etish",
+            "agreement": "Davom etish orqali siz <terms>Xizmat Ko‘rsatish Shartlari</terms> va <privacy>Maxfiylik Siyosati</privacy>ga rozilik bildirasiz."
+        }
+    },
+    "category": {
+        "personalInformation": "Shaxsiy ma'lumotlar",
+        "certification": "Sertifikatsiya",
+        "domainKnowledge": "Soha bilimi",
+        "softSkills": "Yumshoq ko'nikmalar"
+    },
+    "type": {
+        "string": "Bir qatorli matn",
+        "text": "Markdown Matn",
+        "image": "Rasm",
+        "number": "Raqam",
+        "date": "Sana",
+        "period": "Sana Oralig'i",
+        "boolean": "Belgilash Qutisi",
+        "select": "Tanlov ro'yhati" 
+    }
+}

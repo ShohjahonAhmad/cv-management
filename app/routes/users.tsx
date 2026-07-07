@@ -15,6 +15,7 @@ import type { SelectedUser, User } from "~/types/User";
 import { Checkbox } from "~/components/ui/checkbox";
 import BulkOperationToolbar from "~/components/BulkOperationToolbar";
 import Pagination from "~/components/Pagination";
+import { useTranslation } from "react-i18next";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -31,6 +32,7 @@ export default function Users() {
   const [selectedUsers, setSelectedUsers] = useState<SelectedUser[]>([]);
   const { revalidate } = useRevalidator();
   const [message, setMessage] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   function setPage(newPage: number) {
     setSearchParams((prev) => {
@@ -70,7 +72,7 @@ export default function Users() {
         <div className="absolute top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
           <div>
             <p className="font-semibold text-sm text-nav-text-active">
-              Changes saved
+              {t("page.user.changeMessage")}
             </p>
             <p className="text-xs text-nav-text">{message}</p>
           </div>
@@ -79,17 +81,17 @@ export default function Users() {
       <div className="px-6 py-5 flex items-center justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
-            User Management
+            {t("page.user.title")}
           </h1>
           <p className="text-xs text-nav-text mt-0.5">
-            Manage roles, permissions, and account status across all users
+            {t("page.user.subtitle")}
           </p>
         </div>
 
         <span className="text-xs text-nav-text">
-          {total} users · Page
+          {total} {t("page.user.users")} · {t("page.user.page")}
           <strong className="mx-1 text-nav-text-active">{page}</strong>
-          of {totalPages}
+          {t("page.user.of")} {totalPages}
         </span>
       </div>
 
@@ -128,12 +130,24 @@ export default function Users() {
                   className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
                 />
               </th>
-              <th className="px-2 py-2.5 w-[30%]">User</th>
-              <th className="px-4 py-2.5 w-[17%]">Email</th>
-              <th className="px-4 py-2.5 w-[12%]">Provider</th>
-              <th className="px-4 py-2.5 w-[12%]">Role</th>
-              <th className="px-4 py-2.5 w-[12%]">Status</th>
-              <th className="px-4 py-2.5 w-[12%]">Created</th>
+              <th className="px-2 py-2.5 w-[30%]">
+                {t("page.user.table.user")}
+              </th>
+              <th className="px-4 py-2.5 w-[17%]">
+                {t("page.user.table.email")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.user.table.provider")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.user.table.role")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.user.table.status")}
+              </th>
+              <th className="px-4 py-2.5 w-[12%]">
+                {t("page.user.table.created")}
+              </th>
             </tr>
           </thead>
           <tbody>

@@ -1,0 +1,101 @@
+{
+    "menu": {
+        "users": "User",
+        "attributes": "Attributes"
+    },
+    "page": {
+        "user": {
+            "title": "User Management",
+            "subtitle": "Manage roles, permissions, and account status across all users",
+            "selected": "selected",
+            "users": "users",
+            "page": "Page",
+            "of": "of",
+            "changeMessage": "Changes saved",
+            "changeRole": "Change Role",
+            "makeCandidate": "Make Candidate",
+            "makeRecruiter": "Make Recruiter",
+            "makeAdmin": "Make Admin",
+            "block": "Block",
+            "table": {
+                "user": "user",
+                "email": "email",
+                "provider": "provider",
+                "role": "role",
+                "status": "status",
+                "created": "created"
+            }
+        },
+        "attribute": {
+            "title": "Attribute Library",
+            "subtitle": "Create and manage reusable attributes used by Positions, Candidate Profiles and CVs",
+            "selected": "selected",
+            "attributes": "attributes",
+            "newAttribute": "New Attribute",
+            "show": "Showing {{attributes}} of {{total}}",
+            "searchPlaceholder": "Search by name...",
+            "allCategories": "All Categories",
+            "edit": "Edit",
+            "singleSelection": "1 only",
+            "delete": "Delete",
+            "changesSaved": "Changes saved",
+            "error": "Error",
+            "toast": {
+                "noChanges": "No attributes were deleted.",
+                "changesSaved": "{{count}} attribute(s) were successfully deleted.",
+                "conflict": "{{conflicts}} attribute(s) could not be deleted due to conflicts. {{changeCount}} change(s) were made."
+            },
+            
+            "table": {
+                "name": "name",
+                "category": "category",
+                "type": "type",
+                "description": "description",
+                "created": "created"
+            },
+            "dialog": {
+                "create": {
+                    "title": "New Attribute",
+                    "subtitle": "Define a reusable attribute for positions and CVs",
+                    "action": "Create Attribute"
+                },
+                "edit": {
+                    "title": "Edit Attribute",
+                    "subtitle": "Update the selected attribute",
+                    "action": "Save Changes"
+                },
+                "fix": "Please fix the following:",
+                "name": "Attribute Name",
+                "description": "Description",
+                "category": "Category",
+                "type": "Type",
+                "cancel": "Cancel",
+                "namePlaceholder": "e.g. Years of Experience",
+                "descriptionPlaceholder": "Brief description of what this attribute captures..."
+            }
+        },
+        "auth": {
+            "title": "Welcome to HireBoard",
+            "subtitle": "Sign in or create an account to continue",
+            "googleSignIn": "Continue with Google",
+            "githubSignIn": "Continue with GitHub",
+            "agreement": "By continuing, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+        }
+    },
+    "category": {
+        "personalInformation": "Personal Information",
+        "certification": "Certification",
+        "domainKnowledge": "Domain Knowledge",
+        "softSkills": "Soft Skills"
+    },
+    "type": {
+        "string": "Single-line Text",
+        "text": "Markdown Text",
+        "image": "Image",
+        "number": "Number",
+        "date": "Date",
+        "period": "Date Range",
+        "boolean": "Checkbox",
+        "select": "Dropdown" 
+    }
+}
