@@ -71,7 +71,8 @@
                 "type": "Type",
                 "cancel": "Cancel",
                 "namePlaceholder": "e.g. Years of Experience",
-                "descriptionPlaceholder": "Brief description of what this attribute captures..."
+                "descriptionPlaceholder": "Brief description of what this attribute captures...",
+                "addOption": "Add Option"
             }
         },
         "auth": {

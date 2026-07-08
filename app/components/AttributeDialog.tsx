@@ -1,14 +1,15 @@
 import { X } from "lucide-react";
-import React from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-router";
-import i18n from "~/config/i18n";
 import {
   AttributeCategory,
   AttributeType,
   type Attribute,
   type Dialog,
 } from "~/types/Attribute";
+import { SelectOptionsEditor } from "./SelectOptionsEditor";
+import type { AttributeOption } from "~/schemas";
 
 export const attributeCategoryLabels: Record<AttributeCategory, string> = {
   [AttributeCategory.PERSONAL_INFORMATION]: "category.personalInformation",
@@ -43,6 +44,12 @@ export default function AttributeDialog({
 }: AttributeDialogProps) {
   const isEdit = mode === "edit";
   const { t } = useTranslation();
+  const [options, setOptions] = useState<AttributeOption[]>(
+    attribute?.attributeOptions || [{ value: "" }]
+  );
+  const [type, setType] = useState<AttributeType>(
+    attribute?.type || AttributeType.STRING
+  );
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#00000059]">
       <div className="bg-table-header rounded-2xl shadow-2xl flex flex-col w-[500px] border border-table-border">
@@ -89,6 +96,7 @@ export default function AttributeDialog({
                 name="updatedAt"
                 value={attribute?.updatedAt}
               />
+              <input type="hidden" name="type" value={type} />
             </>
           )}
           <label htmlFor="name" className="text-xs font-medium text-hr">
@@ -143,8 +151,9 @@ export default function AttributeDialog({
                 disabled={isEdit}
                 name="type"
                 id="type"
+                value={type}
+                onChange={(e) => setType(e.target.value as AttributeType)}
                 className="border mt-1.5 border-table-border rounded-lg px-3 py-2.5 bg-table-header disabled:opacity-50"
-                defaultValue={attribute?.type || AttributeType.STRING}
               >
                 {Object.entries(attributeTypeLabels).map(([type, label]) => (
                   <option key={type} value={type}>
@@ -154,6 +163,9 @@ export default function AttributeDialog({
               </select>
             </div>
           </div>
+          {type === AttributeType.SELECT && (
+            <SelectOptionsEditor options={options} setOptions={setOptions} />
+          )}
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"

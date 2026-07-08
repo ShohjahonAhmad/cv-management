@@ -1,3 +1,5 @@
+import type { AttributeOption } from "~/schemas";
+
 export type SelectedAttribute = {
     id: number;
     updatedAt: string; 
@@ -11,6 +13,7 @@ export type Attribute = {
     type: AttributeType;
     createdAt: string;
     updatedAt: string;
+    attributeOptions?: AttributeOption[];
 }
 
 export enum AttributeCategory {

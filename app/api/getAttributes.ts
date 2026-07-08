@@ -1,4 +1,5 @@
-import type { AttributeCategory, AttributeType, SelectedAttribute } from "~/types/Attribute";
+import type { AttributeOption } from "~/schemas";
+import { AttributeType, type AttributeCategory, type SelectedAttribute } from "~/types/Attribute";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default async function getAttributes(page: number, search: string, filter: string) {
@@ -60,16 +61,23 @@ export function getToken() {
     return token;
 }
 
-export async function createAttribute({name, description, category, type}:{name: string, description: string, category: AttributeCategory, type: AttributeType}) {
+export async function createAttribute({name, description, category, type, attributeOptions}:{name: string, description: string, category: AttributeCategory, type: AttributeType, attributeOptions?: AttributeOption[]}) {
     try {
         const token = getToken();
+        const body = {
+            name,
+            description,
+            category, 
+            type, 
+            ...(type === AttributeType.SELECT && {attributeOptions})
+        }
         const res = await fetch(`${BASE_URL}/attributes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ name, description, category, type }),
+            body: JSON.stringify(body),
         });
 
         if(!res.ok) {
@@ -79,21 +87,22 @@ export async function createAttribute({name, description, category, type}:{name:
         }
         return {success: true, message: "Attribute created successfully"};
     } catch(err:any) {
+        console.log(err)
         throw new Error(err.message || "Failed to create attribute");
     }
 } 
 
-export async function updateAttribute(form: {name: string, description: string, category: AttributeCategory, updatedAt: Date, id: number}) {
+export async function updateAttribute(form: {type: AttributeType, name: string, description: string, category: AttributeCategory, updatedAt: Date, id: number, attributeOptions?: AttributeOption[]}) {
     try {
         const token = getToken();
-        const {id, name, category, description, updatedAt} = form;
+        const {id, name, category, description, updatedAt, attributeOptions, type} = form;
         const res = await fetch(`${BASE_URL}/attributes/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ name, description, category, updatedAt }),
+            body: JSON.stringify({ name, description, category, updatedAt, attributeOptions, type }),
         });
 
         if(!res.ok) {

@@ -70,7 +70,8 @@
                 "type": "Tur",
                 "cancel": "Bekor qilish",
                 "namePlaceholder": "masalan, Tajriba yili",
-                "descriptionPlaceholder": "Ushbu xususiyat nimani qamrab olishini qisqacha tavsiflang..."
+                "descriptionPlaceholder": "Ushbu xususiyat nimani qamrab olishini qisqacha tavsiflang...",
+                "addOption": "Variant qo'shish"
             }
         },
         "auth": {

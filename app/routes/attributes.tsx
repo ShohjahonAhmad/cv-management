@@ -24,7 +24,11 @@ import { useEffect, useState } from "react";
 import AttributeDialog, {
   attributeCategoryLabels,
 } from "~/components/AttributeDialog";
-import { CreateAttributeSchema, UpdateAttributeSchema } from "~/schemas";
+import {
+  CreateAttributeSchema,
+  UpdateAttributeSchema,
+  type AttributeOption,
+} from "~/schemas";
 import z from "zod";
 import { useTranslation } from "react-i18next";
 
@@ -42,12 +46,28 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
   const mode = formData.get("mode");
 
+  const attributeOptions: AttributeOption[] = [];
+  for (let i = 0; ; i++) {
+    const value = formData.get(`attributeOptions[${i}].value`);
+
+    if (value === null) break;
+
+    const id = formData.get(`attributeOptions[${i}].id`);
+
+    attributeOptions.push({
+      ...(id && { id: Number(id) }),
+      value: String(value),
+    });
+  }
+
   if (mode === "create") {
     const form = {
       name: formData.get("name"),
       description: formData.get("description"),
       category: formData.get("category"),
       type: formData.get("type"),
+      attributeOptions:
+        attributeOptions.length > 0 ? attributeOptions : undefined,
     };
     const result = CreateAttributeSchema.safeParse(form);
 
@@ -65,7 +85,10 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
       name: formData.get("name"),
       description: formData.get("description"),
       category: formData.get("category"),
+      type: formData.get("type"),
       updatedAt: formData.get("updatedAt"),
+      attributeOptions:
+        attributeOptions.length > 0 ? attributeOptions : undefined,
     };
     const result = UpdateAttributeSchema.safeParse(form);
     if (!result.success) {
@@ -101,7 +124,7 @@ export default function Attributes() {
     (a: Attribute) => a.id === selected[0]?.id
   );
   const actionData = useActionData<ActionData>();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (actionData?.error) {
