@@ -83,7 +83,8 @@ export async function createAttribute({name, description, category, type, attrib
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            return {success: false, message: error.error || "Failed to create attribute"};
+            console.log(error)
+            return {success: false, conflict: res.status === 409, message: error.error || "Failed to create attribute"};
         }
         return {success: true, message: "Attribute created successfully"};
     } catch(err:any) {
@@ -108,7 +109,8 @@ export async function updateAttribute(form: {type: AttributeType, name: string, 
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            return {success: false, message: error.error || "Failed to update attribute"};
+            console.log(error)
+            return {success: false, conflict: res.status === 409, message: error.error || "Failed to update attribute"};
         }
         return {success: true, message: "Attribute updated successfully"};
     } catch(err:any) {

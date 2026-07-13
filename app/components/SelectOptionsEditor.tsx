@@ -12,7 +12,9 @@ export function SelectOptionsEditor({
   const { t } = useTranslation();
   return (
     <div>
-      <label className="text-xs font-medium text-text-hr">Options</label>
+      <label className="text-xs font-medium text-text-hr">
+        {t("page.attribute.dialog.options")}
+      </label>
       <div className="flex flex-col gap-2 mt-2">
         {options.map((option, index) => (
           <div

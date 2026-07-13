@@ -51,7 +51,7 @@ export default function AttributeDialog({
     attribute?.type || AttributeType.STRING
   );
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#00000059]">
+    <div className="fixed inset-0 flex items-center justify-center z-40 bg-[#00000059]">
       <div className="bg-table-header rounded-2xl shadow-2xl flex flex-col w-[500px] border border-table-border">
         <div className="flex items-center justify-between px-6 py-4">
           <div>

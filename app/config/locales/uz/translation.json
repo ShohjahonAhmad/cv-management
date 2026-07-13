@@ -1,7 +1,8 @@
 {
     "menu": {
         "users": "Foydalanuvchi",
-        "attributes": "Xususiyatlar"
+        "attributes": "Xususiyatlar",
+        "positions": "Pozitsiyalar"
     },
     "page": {
         "user": {
@@ -11,7 +12,7 @@
             "users": "foydalanuvchilar",
             "page": "Sahifa",
             "of": "dan",
-            "changeMessage": "O'zgarishlar saqlandi",
+            "changeMessage": "Ma'lumot",
             "changeRole": "Rolni o'zgartirish",
             "makeCandidate": "Nomzod qiling",
             "makeRecruiter": "Rekrutr qiling",
@@ -38,7 +39,7 @@
             "edit": "Tahrirlash",
             "singleSelection": "Faqat 1 ta",
             "delete": "O'chirish",
-            "changesSaved": "O'zgarishlar saqlandi",
+            "changesSaved": "Ma'lumot",
             "error": "Xatolik",
             "toast": {
                 "noChanges": "Hech qanday xususiyat o'chirilmadi.",
@@ -68,10 +69,30 @@
                 "description": "Ta'rif",
                 "category": "Kategoriya",
                 "type": "Tur",
+                "options": "Variantlar",
                 "cancel": "Bekor qilish",
                 "namePlaceholder": "masalan, Tajriba yili",
                 "descriptionPlaceholder": "Ushbu xususiyat nimani qamrab olishini qisqacha tavsiflang...",
                 "addOption": "Variant qo'shish"
+            }
+        },
+        "position": {
+            "title": "Pozitsiyalarni boshqarish",
+            "subtitle": "Nomzodlarning CVlarini va yollash jarayonlarini tartibga solishda foydalaniladigan qayta ishlatiladigan lavozim shablonlarini boshqarish",
+            "positions": "pozitsiyalar",
+            "page": "{{page}} Sahifa {{totalPages}} dan",
+            "newPosition": "Yangi pozitsiya",
+            "searchPlaceholder": "Nom orqali qidirish...",
+            "show": "{{total}} dan {{positions}} ko'rsatilmoqda",
+            "selected": "tanlangan",
+            "delete": "O'chirish",
+            "table": {
+                "title": "Pozitsiya nomi",
+                "description": "Ta'rif",
+                "attributes": "Xususiyatlar",
+                "tags": "Taglar",
+                "maxProjects": "Max loyihalar",
+                "created": "Yaratilgan"
             }
         },
         "auth": {

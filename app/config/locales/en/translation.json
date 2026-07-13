@@ -1,7 +1,8 @@
 {
     "menu": {
         "users": "User",
-        "attributes": "Attributes"
+        "attributes": "Attributes",
+        "positions": "Positions"
     },
     "page": {
         "user": {
@@ -11,7 +12,7 @@
             "users": "users",
             "page": "Page",
             "of": "of",
-            "changeMessage": "Changes saved",
+            "changeMessage": "Info",
             "changeRole": "Change Role",
             "makeCandidate": "Make Candidate",
             "makeRecruiter": "Make Recruiter",
@@ -38,7 +39,7 @@
             "edit": "Edit",
             "singleSelection": "1 only",
             "delete": "Delete",
-            "changesSaved": "Changes saved",
+            "changesSaved": "Info",
             "error": "Error",
             "toast": {
                 "noChanges": "No attributes were deleted.",
@@ -54,6 +55,7 @@
                 "created": "created"
             },
             "dialog": {
+                
                 "create": {
                     "title": "New Attribute",
                     "subtitle": "Define a reusable attribute for positions and CVs",
@@ -69,10 +71,30 @@
                 "description": "Description",
                 "category": "Category",
                 "type": "Type",
+                "options": "Options",
                 "cancel": "Cancel",
                 "namePlaceholder": "e.g. Years of Experience",
                 "descriptionPlaceholder": "Brief description of what this attribute captures...",
                 "addOption": "Add Option"
+            }
+        },
+        "position": {
+            "title": "Position Management",
+            "subtitle": "Manage reusable position templates used to structure candidate CVs and recruitment pipeplines",
+            "positions": "positions",
+            "page": "Page {{page}} of {{totalPages}}",
+            "newPosition": "New Position",
+            "page.position.searchPlaceholder": "Search by title...",
+            "show": "Showing {{positions}} of {{total}}",
+            "selected": "selected",
+            "delete": "Delete",
+            "table": {
+                "title": "Position Title",
+                "description": "Description",
+                "attributes": "Attributes",
+                "tags": "Tags",
+                "maxProjects": "Max Projects",
+                "created": "Created"
             }
         },
         "auth": {

@@ -29,8 +29,8 @@ import {
   UpdateAttributeSchema,
   type AttributeOption,
 } from "~/schemas";
-import z from "zod";
 import { useTranslation } from "react-i18next";
+import { buildErrors } from "~/utils/buildErrors";
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -105,6 +105,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 type ActionData = {
   success: boolean;
   message: string;
+  conflict?: boolean;
   error?: boolean;
   errors?: string[];
 };
@@ -127,19 +128,23 @@ export default function Attributes() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (actionData?.error) {
+    if (!actionData) return;
+
+    if (actionData.conflict) {
+      revalidate();
+      setDialog({ open: false, mode: "create" });
       setMessage(actionData.message);
       return;
     }
 
-    if (!actionData?.success) return;
+    if (actionData.error) {
+      setMessage(actionData.message);
+      return;
+    }
 
     revalidate();
-
     setDialog({ open: false, mode: "create" });
-
     setSelected([]);
-
     setMessage(actionData.message);
   }, [actionData]);
 
@@ -147,7 +152,7 @@ export default function Attributes() {
     if (message) {
       const timer = setTimeout(() => {
         setMessage(null);
-      }, 3000);
+      }, 10000);
 
       return () => clearTimeout(timer);
     }
@@ -202,7 +207,7 @@ export default function Attributes() {
   return (
     <main>
       {message && (
-        <div className="absolute top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
+        <div className="fixed top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
           <div>
             <p className="font-semibold text-sm text-nav-text-active">
               {t("page.attribute.changesSaved")}
@@ -418,18 +423,4 @@ export default function Attributes() {
       )}
     </main>
   );
-}
-
-function buildErrors(error: z.ZodError) {
-  const errors: string[] = [];
-
-  const tree = z.treeifyError(error) as any;
-
-  if (tree.properties) {
-    for (const value of Object.values(tree.properties) as any[]) {
-      errors.push(...value.errors);
-    }
-  }
-
-  return errors;
 }
