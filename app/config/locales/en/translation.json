@@ -85,9 +85,15 @@
             "page": "Page {{page}} of {{totalPages}}",
             "newPosition": "New Position",
             "page.position.searchPlaceholder": "Search by title...",
-            "show": "Showing {{positions}} of {{total}}",
+            "show": "Showing {{pageSize}} of {{total}}",
             "selected": "selected",
             "delete": "Delete",
+            "toast": {
+                "noChanges": "No positions were deleted.",
+                "changesSaved": "{{count}} position(s) were successfully deleted.",
+                "conflict": "{{conflicts}} position(s) could not be deleted due to conflicts. {{changeCount}} change(s) were made.",
+                "positionCreated": "Position created successfully"
+            },
             "table": {
                 "title": "Position Title",
                 "description": "Description",
@@ -95,6 +101,26 @@
                 "tags": "Tags",
                 "maxProjects": "Max Projects",
                 "created": "Created"
+            },
+            "dialog": {
+                "create": {
+                    "title": "New Position",
+                    "subtitle": "Create a reusable CV template for candidates",
+                    "action": "Create Position"
+                },
+                "titlePlaceholder": "e.g. Software Engineer",
+                "description": "Short Description",
+                "descriptionPlaceholder": "Describe this position and the ideal candidate...",
+                "company": "Company",
+                "companyPlaceholder": "e.g. HireBoard Inc.",
+                "level": "Level",
+                "projectTags": "Project Tags",
+                "projectTagsPlaceholder": "e.g. React, Node.js, AWS",
+                "attributes": "Attributes",
+                "attributePlaceholder": "Search attributes by name...",
+                "maxProjects": "Maximum projects included in generated CV",
+                "minValue": "Minimum value: 1",
+                "cancel": "Cancel"
             }
         },
         "auth": {
@@ -120,5 +146,16 @@
         "period": "Date Range",
         "boolean": "Checkbox",
         "select": "Dropdown" 
+    },
+    "positionLevel": {
+        "intern": "Intern",
+        "junior": "Junior",
+        "middle": "Middle",
+        "senior": "Senior",
+        "lead": "Lead",
+        "manager": "Manager",
+        "director": "Director",
+        "vp": "VP",
+        "c_level": "C-Level"
     }
 }

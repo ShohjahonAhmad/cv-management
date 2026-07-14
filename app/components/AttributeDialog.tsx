@@ -10,6 +10,7 @@ import {
 } from "~/types/Attribute";
 import { SelectOptionsEditor } from "./SelectOptionsEditor";
 import type { AttributeOption } from "~/schemas";
+import ErrorBanner from "./ErrorBanner";
 
 export const attributeCategoryLabels: Record<AttributeCategory, string> = {
   [AttributeCategory.PERSONAL_INFORMATION]: "category.personalInformation",
@@ -73,19 +74,7 @@ export default function AttributeDialog({
             <X className="w-3.5 h-3.5 text-nav-text" />
           </button>
         </div>
-        {errors && errors.length > 0 && (
-          <div className="mx-6 mt-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
-            <p className="font-medium text-red-400">
-              {t("page.attribute.dialog.fix")}
-            </p>
-
-            <ul className="mt-2 list-disc pl-5 text-sm text-red-300">
-              {errors.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {errors && errors.length > 0 && <ErrorBanner errors={errors} />}
         <Form method="POST" className="px-6 py-5 flex flex-col gap-4">
           <input type="hidden" name="mode" value={mode} />
           {isEdit && (

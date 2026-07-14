@@ -31,6 +31,7 @@ import {
 } from "~/schemas";
 import { useTranslation } from "react-i18next";
 import { buildErrors } from "~/utils/buildErrors";
+import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -113,7 +114,7 @@ type ActionData = {
 export default function Attributes() {
   const { attributes, total, totalPages } = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page")) || 1;
+  const { page, setPage, setSearch: setSearchParam } = useCustomSearchParams();
   const [selected, setSelected] = useState<SelectedAttribute[]>([]);
   const { revalidate } = useRevalidator();
   const [message, setMessage] = useState<string | null>(null);
@@ -158,29 +159,9 @@ export default function Attributes() {
     }
   }, [message]);
 
-  function setPage(newPage: number) {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev);
-
-      params.set("page", newPage.toString());
-
-      return params;
-    });
-  }
-
   useEffect(() => {
     const delayedParam = setTimeout(() => {
-      setSearchParams((prev) => {
-        if (search.trim()) {
-          prev.set("search", search.trim());
-        } else {
-          prev.delete("search");
-        }
-
-        prev.set("page", "1");
-
-        return prev;
-      });
+      setSearchParam(search);
     }, 400);
 
     return () => clearTimeout(delayedParam);

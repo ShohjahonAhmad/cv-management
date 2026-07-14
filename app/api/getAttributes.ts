@@ -2,6 +2,28 @@ import type { AttributeOption } from "~/schemas";
 import { AttributeType, type AttributeCategory, type SelectedAttribute } from "~/types/Attribute";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
+export async function getAttribute(search : string) {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/attributes?search=${search}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        if(!res.ok){
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.error || "Failed to fetch attributes");
+        }
+
+        const data = await res.json();
+
+        return data.attributes;
+    } catch(err:any) {
+        throw new Error(err.message || "Failed to fetch attributes");
+    }
+}
+
 export default async function getAttributes(page: number, search: string, filter: string) {
     try {
         const token = getToken();
@@ -86,7 +108,7 @@ export async function createAttribute({name, description, category, type, attrib
             console.log(error)
             return {success: false, conflict: res.status === 409, message: error.error || "Failed to create attribute"};
         }
-        return {success: true, message: "Attribute created successfully"};
+        return {success: true};
     } catch(err:any) {
         console.log(err)
         throw new Error(err.message || "Failed to create attribute");
@@ -109,7 +131,6 @@ export async function updateAttribute(form: {type: AttributeType, name: string, 
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            console.log(error)
             return {success: false, conflict: res.status === 409, message: error.error || "Failed to update attribute"};
         }
         return {success: true, message: "Attribute updated successfully"};

@@ -5,21 +5,138 @@ import AttributeCount from "~/utils/attribute_types/AttributeCount";
 import PositionLevel from "~/utils/attribute_types/ProjectCount";
 import Tag from "~/utils/attribute_types/Tag";
 import type { Route } from "./+types/positions";
-import { getPositions } from "~/api/getPositions";
-import { useLoaderData } from "react-router";
-import type { Position } from "~/types/Position";
+import {
+  deletePositions,
+  getPositions,
+  createPosition,
+} from "~/api/getPositions";
+import { useActionData, useLoaderData, useRevalidator } from "react-router";
+import type { CreatePosition, Position } from "~/types/Position";
+import { useEffect, useState } from "react";
+import Pagination from "~/components/Pagination";
+import useCustomSearchParams from "~/hooks/useCustomSearchParam";
+import PositionDialog from "~/components/PositionDialog";
+import { CreatePositionSchema } from "~/schemas";
+import { buildErrors } from "~/utils/buildErrors";
+import type { Dialog } from "~/types/Position";
+
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+
+  const position = {
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    company: formData.get("company") as string,
+    level: formData.get("level") as string as CreatePosition["level"],
+    maxProjects: Number(formData.get("maxProjects")),
+    attributeIds: formData.getAll("attributeIds") as string[],
+    tags: formData.getAll("tags") as string[],
+  };
+
+  const result = CreatePositionSchema.safeParse(position);
+
+  if (!result.success) {
+    return {
+      error: true,
+      errors: buildErrors(result.error),
+    };
+  }
+
+  const data = await createPosition(result.data);
+
+  return data;
+}
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
-  const positions = await getPositions();
+  const searchParams = new URL(url).searchParams;
+  const page = Number(searchParams.get("page")) || 1;
+  const search = searchParams.get("search") || "";
+  const positions = await getPositions(page, search);
 
   return positions;
 }
 
 export default function Positions() {
+  const { revalidate } = useRevalidator();
   const { t } = useTranslation();
-  const { positions, total, totalPages } = useLoaderData();
+  const { positions, total, pageSize, totalPages } = useLoaderData();
+  const [selected, setSelected] = useState<{ id: number; updatedAt: string }[]>(
+    []
+  );
+  const [message, setMessage] = useState<string | null>(null);
+  const {
+    page,
+    setPage,
+    search: paramSearch,
+    setSearch: setParamSearch,
+  } = useCustomSearchParams();
+  const [search, setSearch] = useState(paramSearch);
+  const actionData = useActionData();
+  const [dialog, setDialog] = useState<Dialog>({ open: false, mode: "create" });
+
+  useEffect(() => {
+    const delayedParam = setTimeout(() => {
+      setParamSearch(search);
+    }, 400);
+
+    return () => clearTimeout(delayedParam);
+  }, [search]);
+
+  useEffect(() => {
+    if (!actionData) return;
+
+    if (actionData.success) {
+      setMessage(t("page.position.toast.positionCreated"));
+      setDialog({ open: false, mode: "create" });
+      revalidate();
+    }
+  }, [actionData]);
+
+  useEffect(() => {
+    setSelected([]);
+  }, [positions]);
+
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      setMessage(null);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
+  function buildMessage(
+    conflicts: number,
+    changeCount: number,
+    count: number
+  ): string {
+    if (conflicts > 0) {
+      return t("page.position.toast.conflict", { conflicts, changeCount });
+    } else if (count > 0) {
+      return t("page.position.toast.changesSaved", { count });
+    } else {
+      return t("page.position.toast.noChanges");
+    }
+  }
+
+  async function handleDelete() {
+    const { conflicts, changeCount, count } = await deletePositions(selected);
+    setMessage(buildMessage(conflicts, changeCount, count));
+    revalidate();
+  }
   return (
     <main>
+      {message && (
+        <div className="fixed top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
+          <div>
+            <p className="font-semibold text-sm text-nav-text-active">
+              {t("page.attribute.changesSaved")}
+            </p>
+            <p className="text-xs text-nav-text">{message}</p>
+          </div>
+        </div>
+      )}
       <div className="px-6 py-5 flex items-start justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
@@ -33,16 +150,19 @@ export default function Positions() {
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-table-header border border-table-border">
             <FolderOpen className="w-3.5 h-3.5 text-date" />
             <span className="text-xs font-medium text-hr">
-              48 {t("page.position.positions")}
+              {total} {t("page.position.positions")}
             </span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-table-header border border-table-border">
             <BookOpen className="w-3.5 h-3.5 text-date" />
             <span className="text-xs font-medium text-hr">
-              {t("page.position.page", { page: 1, totalPages: 4 })}
+              {t("page.position.page", { page, totalPages })}
             </span>
           </div>
-          <button className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold bg-nav-border-active text-white cursor-pointer">
+          <button
+            onClick={() => setDialog({ open: true, mode: "create" })}
+            className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold bg-nav-border-active text-white cursor-pointer"
+          >
             <Plus className="w-3.5 h-3.5" />
             {t("page.position.newPosition")}
           </button>
@@ -52,28 +172,45 @@ export default function Positions() {
         <div>
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder={t("page.position.searchPlaceholder")}
             className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border min-w-[260px]"
           />
         </div>
         <div className="flex items-center gap-1.5 text-xs text-date">
           <Funnel className="w-3 h-3" />
-          <span>{t("page.position.show", { positions: 12, total: 48 })}</span>
+          <span>
+            {t("page.position.show", {
+              pageSize: Math.min(pageSize, positions.length),
+              total,
+            })}
+          </span>
         </div>
       </div>
 
       <div className="mx-6 my-3 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
         <div className="flex items-center gap-2 mr-2">
           <Checkbox
-            checked={true}
+            checked={
+              selected.length === 0
+                ? false
+                : selected.length === positions.length
+                  ? true
+                  : "indeterminate"
+            }
             className="h-5 w-5 border-[#4B5563] bg-[#374151] data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
           />
           <span className="text-xs font-semibold text-white">
-            {0} {t("page.position.selected")}
+            {selected.length} {t("page.position.selected")}
           </span>
         </div>
         <hr className="w-px mx-1 h-5 bg-hr" />
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#dc2626] text-white cursor-pointer">
+        <button
+          disabled={selected.length === 0}
+          onClick={handleDelete}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#dc2626] text-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+        >
           <Trash2 className="w-3.5 h-3.5" />
           <span>{t("page.position.delete")}</span>
         </button>
@@ -83,7 +220,28 @@ export default function Positions() {
           <thead>
             <tr className="uppercase bg-table-header border-b text-xs font-semibold tracking-[0.06em] text-nav-text text-left">
               <th className="px-4 py-2.5 w-[3%]">
-                <Checkbox className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600" />
+                <Checkbox
+                  className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setSelected(
+                        positions.map((position: Position) => ({
+                          id: position.id,
+                          updatedAt: position.updatedAt,
+                        }))
+                      );
+                    } else {
+                      setSelected([]);
+                    }
+                  }}
+                  checked={
+                    selected.length === 0
+                      ? false
+                      : selected.length === positions.length
+                        ? true
+                        : "indeterminate"
+                  }
+                />
               </th>
               <th className="px-2 py-2.5 w-[24%]">
                 {t("page.position.table.title")}
@@ -107,10 +265,33 @@ export default function Positions() {
           </thead>
           <tbody>
             {positions.map((position: Position) => (
-              <tr className="text-xs">
+              <tr className="text-xs" key={position.id}>
                 <td className="px-4 py-2.5">
                   <div className="flex items-center gap-2">
-                    <Checkbox className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600" />
+                    <Checkbox
+                      className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                      checked={selected.some((s) => s.id === position.id)}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setSelected((prev) => {
+                            if (prev.some((s) => s.id === position.id))
+                              return prev;
+
+                            return [
+                              ...prev,
+                              {
+                                id: position.id,
+                                updatedAt: position.updatedAt,
+                              },
+                            ];
+                          });
+                        } else {
+                          setSelected((prev) =>
+                            prev.filter((s) => s.id !== position.id)
+                          );
+                        }
+                      }}
+                    />
                   </div>
                 </td>
                 <td className="px-2 py-2.5">
@@ -147,6 +328,15 @@ export default function Positions() {
           </tbody>
         </table>
       </div>
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+      {dialog.open && (
+        <PositionDialog
+          mode={dialog.mode}
+          setDialog={setDialog}
+          errors={actionData?.error ? actionData.errors : undefined}
+          position={dialog.position}
+        />
+      )}
     </main>
   );
 }

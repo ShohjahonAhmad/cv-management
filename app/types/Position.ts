@@ -1,5 +1,10 @@
 import type { Attribute } from "./Attribute";
 
+export type SelectedPosition = {
+    id: number;
+    updatedAt: string; 
+}
+
 export type Position = {
     id: number;
     title: string;
@@ -11,7 +16,17 @@ export type Position = {
     positionProjectTags: {projectTag: ProjectTag}[];
     createdAt: string;
     updatedAt: string;
-} 
+}
+
+export type CreatePosition = {
+    title: string;
+    description: string;
+    company: string;
+    level: PositionLevel;
+    maxProjects: number;
+    attributeIds: number[];
+    tags: string[];
+}
 
 export enum PositionLevel {
     INTERN="INTERN",
@@ -29,3 +44,9 @@ export type ProjectTag = {
     id: number;
     name: string;
 }
+
+export type Dialog = {
+    open: boolean;
+    mode: "create" | "edit";
+    position?: Position;
+  };

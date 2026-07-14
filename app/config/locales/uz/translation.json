@@ -83,9 +83,15 @@
             "page": "{{page}} Sahifa {{totalPages}} dan",
             "newPosition": "Yangi pozitsiya",
             "searchPlaceholder": "Nom orqali qidirish...",
-            "show": "{{total}} dan {{positions}} ko'rsatilmoqda",
+            "show": "{{total}} dan {{pageSize}} ko'rsatilmoqda",
             "selected": "tanlangan",
             "delete": "O'chirish",
+            "toast": {
+                "noChanges": "Hech qanday pozitsiya o'chirilmadi.",
+                "changesSaved": "{{count}} ta pozitsiya muvaffaqiyatli o'chirildi.",
+                "conflict": "{{conflicts}} ta pozitsiya qarama-qarshiliklar tufayli o'chirilmaydi. {{changeCount}} ta o'zgarish amalga oshirildi.",
+                "positionCreated": "Pozitsiya muvaffaqiyatli yaratildi"
+            },
             "table": {
                 "title": "Pozitsiya nomi",
                 "description": "Ta'rif",
@@ -93,7 +99,28 @@
                 "tags": "Taglar",
                 "maxProjects": "Max loyihalar",
                 "created": "Yaratilgan"
+            },
+            "dialog": {
+                "create": {
+                    "title": "Yangi pozitsiya",
+                    "subtitle": "Nomzodlar uchun qayta ishlatiladigan CV shablonini yarating",
+                    "action": "Pozitsiyani yaratish"
+                },
+                "titlePlaceholder": "masalan, Dasturiy ta'minot muhandisi",
+                "description": "Qisqa ta'rif",
+                "descriptionPlaceholder":"Ushbu pozitsiya nimani qamrab olishini qisqacha tavsiflang...",
+                "company": "Kompaniya",
+                "companyPlaceholder": "masalan, HireBoard",
+                "level": "Daraja",
+                "projectTags": "Loyiha taglari",
+                "projectTagsPlaceholder": "masalan, React, Node.js, AWS",
+                "attributes": "Xususiyatlar",
+                "attributePlaceholder": "Xususiyatlarni nomi bo'yicha qidirish...",
+                "maxProjects": "Maksimal loyihalar soni CVda ko'rsatiladi",
+                "minValue": "Minimal son: 1",
+                "cancel":"Bekor qilish"
             }
+            
         },
         "auth": {
             "title": "HireBoardga xush kelibsiz",
@@ -118,5 +145,16 @@
         "period": "Sana Oralig'i",
         "boolean": "Belgilash Qutisi",
         "select": "Tanlov ro'yhati" 
+    },
+    "positionLevel": {
+        "intern": "Amaliyotchi",
+        "junior": "Junior",
+        "mid": "O'rta",
+        "senior": "Senior",
+        "lead": "Lider",
+        "manager": "Menejer",
+        "director": "Direktor",
+        "vp": "Vitse-prezident",
+        "cLevel": "C-daraja"
     }
 }
