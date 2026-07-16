@@ -28,6 +28,8 @@ export type CreatePosition = {
     tags: string[];
 }
 
+export type UpdatePosition = CreatePosition & {id: string, updatedAt: Date};
+
 export enum PositionLevel {
     INTERN="INTERN",
     JUNIOR="JUNIOR",

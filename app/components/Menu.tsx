@@ -11,6 +11,14 @@ export default function Menu() {
       <div className="flex items-center gap-4">
         <BrandName />
         <NavLink
+          to="profile"
+          className={({ isActive }) =>
+            `text-sm font-normal text-nav-text ${isActive && "text-nav-text-active border-b-2 border-nav-border-active font-semibold"}`
+          }
+        >
+          {t("menu.profile")}
+        </NavLink>
+        <NavLink
           to="users"
           className={({ isActive }) =>
             `text-sm font-normal text-nav-text ${isActive && "text-nav-text-active border-b-2 border-nav-border-active font-semibold"}`

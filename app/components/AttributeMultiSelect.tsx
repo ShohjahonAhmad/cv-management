@@ -4,10 +4,16 @@ import { getAttribute } from "~/api/getAttributes";
 import type { Attribute } from "~/types/Attribute";
 import AttributeChip from "~/utils/attribute_types/AttributeChip";
 
-export default function AttributeMultiSelect() {
+export default function AttributeMultiSelect({
+  attributes,
+}: {
+  attributes: { attribute: Attribute }[] | undefined;
+}) {
   const { t } = useTranslation();
   const [attribute, setAttribute] = useState("");
-  const [selectedAttributes, setSelectedAttributes] = useState<Attribute[]>([]);
+  const [selectedAttributes, setSelectedAttributes] = useState<Attribute[]>(
+    attributes?.map((a) => a.attribute) || []
+  );
   const [attributeResults, setAttributeResults] = useState<Attribute[]>([]);
 
   const attributeSuggestions = attributeResults.filter(

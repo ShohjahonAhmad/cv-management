@@ -5,11 +5,17 @@ import { getTags } from "~/api/getPositions";
 import type { ProjectTag } from "~/types/Position";
 import TagChip from "~/utils/attribute_types/TagChip";
 
-export default function TagMultiSelect() {
+export default function TagMultiSelect({
+  tags,
+}: {
+  tags: { projectTag: ProjectTag }[] | undefined;
+}) {
   const { t } = useTranslation();
   const [tag, setTag] = useState("");
   const [tagResults, setTagResults] = useState<ProjectTag[]>([]);
-  const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<ProjectTag[]>(
+    tags?.map((t) => t.projectTag) || []
+  );
   const tagSuggestions = tagResults.filter(
     (tag) => !selectedTags.some((t) => t.id === tag.id)
   );

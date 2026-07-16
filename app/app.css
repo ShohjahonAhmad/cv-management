@@ -19,6 +19,17 @@
     --color-table-border: var(--table-border);
     --color-table-header: var(--table-header);
     --color-date: var(--date);
+    --color-header: var(--header);
+    --color-header-border: var(--header-border);
+    --color-number-bg: var(--number-bg);
+    --color-number-border: var(--number-border);
+    --color-number-text: var(--number-text);
+    --color-string-bg: var(--string-bg);
+    --color-string-border: var(--string-border);
+    --color-string-text: var(--string-text);
+    --color-boolean-bg: var(--boolean-bg);
+    --color-boolean-border: var(--boolean-border);
+    --color-boolean-text: var(--boolean-text);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -82,6 +93,17 @@ body {
   --table-border: #e5e7eb;
   --table-header: #f9fafb;
   --date: #9ca3af;
+  --header-border: #f3f4f6;
+  --header: #fafafa;
+  --number-bg: #fefce8;
+  --number-border: #fef08a;
+  --number-text: #FBBF24;
+  --string-bg: #F0F7FF;
+  --string-border: #BFDBFE;
+  --string-text: #1D4ED8;
+  --boolean-bg: #FDF4FF;
+  --boolean-border: #E9D5FF;
+  --boolean-text: #9333EA;
 }
 
 .dark {
@@ -120,10 +142,21 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --hr: #FFFFFF40;
+  --hr: #9494A8;
   --table-border: #27272f;
   --table-header: #1a1a20;
   --date: #6b6b80;
+  --header-border: #27272F;
+  --header: #141418;
+  --number-bg: #1E1A08;
+  --number-border: #3D3208;
+  --number-text: #a16207;
+  --string-bg: #0F1E38;
+  --string-border: #1E3A6E;
+  --string-text: #60A5FA;
+  --boolean-bg: #1F0A2E;
+  --boolean-border: #3D1A5C;
+  --boolean-text: #A78BFA;
 }
 
 .border-border {
@@ -191,4 +224,17 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }

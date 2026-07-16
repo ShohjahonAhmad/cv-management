@@ -2,7 +2,8 @@
     "menu": {
         "users": "User",
         "attributes": "Attributes",
-        "positions": "Positions"
+        "positions": "Positions",
+        "profile": "Profile"
     },
     "page": {
         "user": {
@@ -84,15 +85,19 @@
             "positions": "positions",
             "page": "Page {{page}} of {{totalPages}}",
             "newPosition": "New Position",
-            "page.position.searchPlaceholder": "Search by title...",
+            "searchPlaceholder": "Search by title...",
             "show": "Showing {{pageSize}} of {{total}}",
             "selected": "selected",
             "delete": "Delete",
+            "edit": "Edit",
+            "singleSelection":"1 only",
             "toast": {
                 "noChanges": "No positions were deleted.",
                 "changesSaved": "{{count}} position(s) were successfully deleted.",
                 "conflict": "{{conflicts}} position(s) could not be deleted due to conflicts. {{changeCount}} change(s) were made.",
-                "positionCreated": "Position created successfully"
+                "positionCreated": "Position created successfully",
+                "positionUpdated": "Position updated successfully",
+                "conflictError": "Position was modified by another recruiter"
             },
             "table": {
                 "title": "Position Title",
@@ -108,6 +113,11 @@
                     "subtitle": "Create a reusable CV template for candidates",
                     "action": "Create Position"
                 },
+                "edit": {
+                    "title": "Edit Position",
+                    "subtitle": "Update the selected position",
+                    "action": "Save Changes"
+                },
                 "titlePlaceholder": "e.g. Software Engineer",
                 "description": "Short Description",
                 "descriptionPlaceholder": "Describe this position and the ideal candidate...",
@@ -122,6 +132,47 @@
                 "minValue": "Minimum value: 1",
                 "cancel": "Cancel"
             }
+        },
+        "profile": {
+            "title": "My Profile",
+            "subtitle": "Manage your personal information and CV attributes visible to recruiters",
+            "save": "Save Changes",
+            "fallback": {
+                "phone": "N/A",
+                "location": "N/A",
+                "headline": "No headline available"
+            },
+            "basicInformation": {  
+                "title": "Basic Information",
+                "subtitle": "Your personal details shown on your public profile",
+                "firstName": "First Name",
+                "firstNamePlaceholder": "e.g. John",
+                "lastName": "Last Name",    
+                "lastNamePlaceholder": "e.g. Doe",
+                "headline": "Headline",
+                "headlinePlaceholder": "e.g. Software Engineer at HireBoard Inc.",
+                "phone": "Phone",
+                "phonePlaceholder": "e.g. +1 (555) 123-4567",
+                "location": "Location",
+                "locationPlaceholder": "e.g. San Francisco, CA",
+                "email": "Email",
+                "emailPlaceholder": "e.g. john.doe@example.com",
+                "readonly": "Read-only",
+                "emailPolicy": "Email is managed by your authentication provider and cannot be changed here",
+                "aboutMe": "About Me",
+                "aboutMePlaceholder": "Write a brief summary about yourself, your skills, and your career goals..."
+            }, 
+            "attributes": {
+                "title": "CV Attributes",
+                "subtitle": "Choose attributes from the library and fill in your values. Recruiters use these to match you to positions.",
+                "addAttribute": "Add Attribute"
+            },
+            "toast": {
+                "profileUpdated": "Profile updated successfully",
+                "avatarUpdated": "Avatar updated successfully",
+                "avatarUploadFailed": "Avatar upload failed. Please try again."
+            } 
+
         },
         "auth": {
             "title": "Welcome to HireBoard",

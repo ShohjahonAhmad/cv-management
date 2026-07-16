@@ -8,5 +8,6 @@ export default [
         route("users", "routes/users.tsx"),
         route("attributes", "routes/attributes.tsx"),
         route("positions", "routes/positions.tsx"),
+        route("profile", "routes/profile.tsx"),
     ])
 ] satisfies RouteConfig;

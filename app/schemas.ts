@@ -72,3 +72,25 @@ export const CreatePositionSchema = z.object({
     attributeIds: z.array(z.coerce.number().int().positive()).default([]).refine(ids => new Set(ids).size === ids.length, "Duplicate attributes are not allowed"),
     tags: z.array(z.string().trim().min(1, "Tag must be at least 1 character long").max(50, "Tag must be at most 50 characters long")).default([]).refine(tags => new Set(tags.map(tag => tag.toLowerCase())).size === tags.length, "Duplicate project tags are not allowed"),
 })
+
+export const UpdatePositionSchema = z.object({
+    title: z.string().trim().min(3, "Title must be at least 3 characters long").max(100, "Title must be at most 100 characters long"),
+    description: z.string().trim().min(1, "Description is required").max(1000, "Description must be at most 1000 characters long"),
+    company: z.string().trim().min(1, "Company is required").max(100, "Company must be at most 100 characters long"),
+    level: z.enum(PositionLevel),
+    maxProjects: z.coerce.number().int().min(1, "Maximum projects must be at least 1").default(3),
+    attributeIds: z.array(z.coerce.number().int().positive()).default([]).refine(ids => new Set(ids).size === ids.length, "Duplicate attributes are not allowed"),
+    tags: z.array(z.string().trim().min(1, "Tag must be at least 1 character long").max(50, "Tag must be at most 50 characters long")).default([]).refine(tags => new Set(tags.map(tag => tag.toLowerCase())).size === tags.length, "Duplicate project tags are not allowed"),
+    updatedAt: z.coerce.date(),
+})
+
+export const ProfileSchema = z.object({
+    firstName: z.string().trim().min(1, "First name is required"),
+    lastName: z.string().trim().min(1, "Last name is required"),
+    phone: z.string().trim().min(1, "Phone Number is required").max(30, "Phone number must be at most 30 characters"),
+    location: z.string().trim().min(1, "Location is required"),
+    photoUrl: z.string().nullable().default(null),
+    headline: z.string().trim().min(1, "Headline is required").max(100, "Headline must be at most 100 characters"),
+    aboutMe: z.string().trim().min(1, "About Me is required").max(2000, "About Me must be at most 2000 characters"),
+    attributeValues: z.array(z.any()).default([]),
+});

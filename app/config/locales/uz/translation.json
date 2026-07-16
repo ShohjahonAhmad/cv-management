@@ -2,7 +2,8 @@
     "menu": {
         "users": "Foydalanuvchi",
         "attributes": "Xususiyatlar",
-        "positions": "Pozitsiyalar"
+        "positions": "Pozitsiyalar",
+        "profile": "Profil"
     },
     "page": {
         "user": {
@@ -86,11 +87,15 @@
             "show": "{{total}} dan {{pageSize}} ko'rsatilmoqda",
             "selected": "tanlangan",
             "delete": "O'chirish",
+            "edit": "Tahrirlash",
+            "singleSelection":"Faqat 1 ta",
             "toast": {
                 "noChanges": "Hech qanday pozitsiya o'chirilmadi.",
                 "changesSaved": "{{count}} ta pozitsiya muvaffaqiyatli o'chirildi.",
                 "conflict": "{{conflicts}} ta pozitsiya qarama-qarshiliklar tufayli o'chirilmaydi. {{changeCount}} ta o'zgarish amalga oshirildi.",
-                "positionCreated": "Pozitsiya muvaffaqiyatli yaratildi"
+                "positionCreated": "Pozitsiya muvaffaqiyatli yaratildi",
+                "positionUpdated": "Pozitsiya muvaffaqiyatli yangilandi",
+                "conflictError": "Pozitsiya boshqa rekruter tomonidan o'zgartirilgan"
             },
             "table": {
                 "title": "Pozitsiya nomi",
@@ -105,6 +110,11 @@
                     "title": "Yangi pozitsiya",
                     "subtitle": "Nomzodlar uchun qayta ishlatiladigan CV shablonini yarating",
                     "action": "Pozitsiyani yaratish"
+                },
+                "edit": {
+                    "title": "Pozitsiyani tahrirlash",
+                    "subtitle": "Tanlangan pozitsiyani yangilang",
+                    "action": "O'zgarishlarni saqlash"
                 },
                 "titlePlaceholder": "masalan, Dasturiy ta'minot muhandisi",
                 "description": "Qisqa ta'rif",
@@ -121,6 +131,46 @@
                 "cancel":"Bekor qilish"
             }
             
+        },
+        "profile": {
+            "title": "Mening Profilim",
+            "subtitle": "Shaxsiy ma'lumotlaringiz va rekruterlar ko'radigan CV xususiyatlaringizni boshqaring",
+            "save": "O'zgarishlarni saqlash",
+            "fallback": {
+                "phone": "N/A",
+                "location": "N/A",
+                "headline": "Sarlavha mavjud emas"
+            },
+            "basicInformation": {  
+                "title": "Asosiy ma'lumotlar",
+                "subtitle": "Ommaviy profilida ko'rsatiladigan shaxsiy ma'lumotlaringiz",
+                "firstName": "Ism",
+                "firstNamePlaceholder": "masalan, Abduqodir",
+                "lastName": "Familiya",
+                "lastNamePlaceholder": "masalan, Qodirov",
+                "headline": "Sarlavha",
+                "headlinePlaceholder": "masalan, HireBoard Inc. da Dasturiy ta'minot muhandisi",
+                "phone": "Telefon",
+                "phonePlaceholder": "masalan, +998 90 123 45 67",
+                "location": "Lokatsiya",
+                "locationPlaceholder": "masalan, Toshkent, O'zbekiston",
+                "email":"Elektron pochta",
+                "emailPlaceholder": "masalan, john.doe@example.com",
+                "readonly": "Faqat o'qish",
+                "emailPolicy": "Elektron pochta sizning autentifikatsiya provayderingiz tomonidan boshqariladi va bu yerda o'zgartirilmaydi",
+                "aboutMe": "Men haqida",
+                "aboutMePlaceholder": "O'zingiz, ko'nikmalaringiz va martaba maqsadlaringiz haqida qisqacha ma'lumot yozing..."
+            },
+            "attributes": {
+                "title": "CV Xususiyatlari",
+                "subtitle": "Kutubxondagi xususiyatlarni tangland va ularni qiymatlar bilan to'ldiring. Rekrutrlar ularni sizni pozitsiyalarga moslash uchun ishlatishadi.",
+                "addAttribute": "Xususiyat qo'shish"
+            },
+            "toast": {
+                "profileUpdated": "Profil muvaffaqiyatli yangilandi",
+                "avatarUpdated": "Avatar muvaffaqiyatli yangilandi",
+                "avatarUploadFailed": "Avatarni yuklashda xatolik yuz berdi"
+            }
         },
         "auth": {
             "title": "HireBoardga xush kelibsiz",

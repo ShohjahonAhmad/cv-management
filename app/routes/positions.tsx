@@ -1,4 +1,11 @@
-import { BookOpen, FolderOpen, Funnel, Plus, Trash2 } from "lucide-react";
+import {
+  BookOpen,
+  FolderOpen,
+  Funnel,
+  Plus,
+  SquarePen,
+  Trash2,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "~/components/ui/checkbox";
 import AttributeCount from "~/utils/attribute_types/AttributeCount";
@@ -9,6 +16,7 @@ import {
   deletePositions,
   getPositions,
   createPosition,
+  updatePosition,
 } from "~/api/getPositions";
 import { useActionData, useLoaderData, useRevalidator } from "react-router";
 import type { CreatePosition, Position } from "~/types/Position";
@@ -16,35 +24,61 @@ import { useEffect, useState } from "react";
 import Pagination from "~/components/Pagination";
 import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 import PositionDialog from "~/components/PositionDialog";
-import { CreatePositionSchema } from "~/schemas";
+import { CreatePositionSchema, UpdatePositionSchema } from "~/schemas";
 import { buildErrors } from "~/utils/buildErrors";
 import type { Dialog } from "~/types/Position";
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
-
-  const position = {
-    title: formData.get("title") as string,
-    description: formData.get("description") as string,
-    company: formData.get("company") as string,
-    level: formData.get("level") as string as CreatePosition["level"],
-    maxProjects: Number(formData.get("maxProjects")),
-    attributeIds: formData.getAll("attributeIds") as string[],
-    tags: formData.getAll("tags") as string[],
-  };
-
-  const result = CreatePositionSchema.safeParse(position);
-
-  if (!result.success) {
-    return {
-      error: true,
-      errors: buildErrors(result.error),
+  const mode = formData.get("mode") as "create" | "edit";
+  if (mode === "create") {
+    const position = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      company: formData.get("company") as string,
+      level: formData.get("level") as string as CreatePosition["level"],
+      maxProjects: Number(formData.get("maxProjects")),
+      attributeIds: formData.getAll("attributeIds") as string[],
+      tags: formData.getAll("tags") as string[],
     };
+
+    const result = CreatePositionSchema.safeParse(position);
+
+    if (!result.success) {
+      return {
+        error: true,
+        errors: buildErrors(result.error),
+      };
+    }
+
+    const data = await createPosition(result.data);
+
+    return data;
+  } else {
+    const position = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      company: formData.get("company") as string,
+      level: formData.get("level") as string as CreatePosition["level"],
+      maxProjects: Number(formData.get("maxProjects")),
+      attributeIds: formData.getAll("attributeIds") as string[],
+      tags: formData.getAll("tags") as string[],
+      updatedAt: formData.get("updatedAt") as string,
+    };
+
+    const result = UpdatePositionSchema.safeParse(position);
+
+    if (!result.success) {
+      return {
+        error: true,
+        errors: buildErrors(result.error),
+      };
+    }
+    const id = formData.get("id") as string;
+    const data = await updatePosition({ ...result.data, id });
+
+    return data;
   }
-
-  const data = await createPosition(result.data);
-
-  return data;
 }
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
@@ -73,6 +107,9 @@ export default function Positions() {
   const [search, setSearch] = useState(paramSearch);
   const actionData = useActionData();
   const [dialog, setDialog] = useState<Dialog>({ open: false, mode: "create" });
+  const selectedPosition = positions.find(
+    (p: Position) => p.id === selected[0]?.id
+  );
 
   useEffect(() => {
     const delayedParam = setTimeout(() => {
@@ -86,9 +123,20 @@ export default function Positions() {
     if (!actionData) return;
 
     if (actionData.success) {
-      setMessage(t("page.position.toast.positionCreated"));
+      console.log("action update:" + actionData.update);
+      setMessage(
+        actionData.update
+          ? t("page.position.toast.positionUpdated")
+          : t("page.position.toast.positionCreated")
+      );
       setDialog({ open: false, mode: "create" });
       revalidate();
+    } else if (!actionData.success && actionData.conflict) {
+      setMessage(t("page.position.toast.conflictError"));
+      setDialog({ open: false, mode: "create" });
+      revalidate();
+    } else {
+      setMessage(actionData.message);
     }
   }, [actionData]);
 
@@ -205,6 +253,24 @@ export default function Positions() {
             {selected.length} {t("page.position.selected")}
           </span>
         </div>
+        <hr className="w-px mx-1 h-5 bg-hr" />
+        <button
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-date bg-hr cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={selected.length !== 1}
+          onClick={() => {
+            setDialog({
+              open: true,
+              mode: "edit",
+              position: selectedPosition,
+            });
+          }}
+        >
+          <SquarePen className="w-3.5 h-3.5" />
+          <span>{t("page.position.edit")}</span>
+          <span className="ml-1 px-1.5 py-0.5 rounded text-xs bg-[#1f2937] dark:bg-indigo-300 text-nav-text text-[10px]">
+            {t("page.position.singleSelection")}
+          </span>
+        </button>
         <hr className="w-px mx-1 h-5 bg-hr" />
         <button
           disabled={selected.length === 0}

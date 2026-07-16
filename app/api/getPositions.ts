@@ -1,4 +1,4 @@
-import type { CreatePosition, Position, ProjectTag, SelectedPosition } from "~/types/Position";
+import type { CreatePosition, Position, ProjectTag, SelectedPosition, UpdatePosition } from "~/types/Position";
 import { getToken, isAuthorized } from "./getAttributes";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -91,5 +91,30 @@ export async function createPosition({title, description, company, level, maxPro
         return {success: true, message: "Position created successfully"};;
     } catch(err:any) {
         throw new Error(err.message || "Failed to create position");
+    }
+}
+
+export async function updatePosition( {id, title, description, company, level, maxProjects, attributeIds, tags, updatedAt} :  UpdatePosition) {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/positions/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({title, description, company, level, maxProjects, attributeIds, tags, updatedAt}),
+        })
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            console.log(error);
+            return {success: false, conflict: res.status === 409, message: error.error || "Failed to update position"};
+        }
+
+        return {success: true, update: true, message: "Position updated successfully"};
+    } catch(err:any){
+        throw new Error(err.message || "Failed to update position");
     }
 }

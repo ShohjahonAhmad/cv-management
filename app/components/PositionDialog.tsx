@@ -32,7 +32,8 @@ export default function PositionDialog({
   setDialog,
   errors,
 }: PositionDialogProps) {
-  const [maxProjects, setMaxProjects] = useState(1);
+  const [maxProjects, setMaxProjects] = useState(position?.maxProjects || 1);
+  const isEdit = mode === "edit";
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-40 bg-[#00000059]">
@@ -40,10 +41,14 @@ export default function PositionDialog({
         <div className="flex items-start justify-between px-6 py-5">
           <div>
             <h1 className="font-bold text-base text-nav-text-active">
-              {t("page.position.dialog.create.title")}
+              {isEdit
+                ? t("page.position.dialog.edit.title")
+                : t("page.position.dialog.create.title")}
             </h1>
             <p className="text-xs text-nav-text mt-1">
-              {t("page.position.dialog.create.subtitle")}
+              {isEdit
+                ? t("page.position.dialog.edit.subtitle")
+                : t("page.position.dialog.create.subtitle")}
             </p>
           </div>
           <button
@@ -55,6 +60,17 @@ export default function PositionDialog({
         </div>
         {errors && errors.length > 0 && <ErrorBanner errors={errors} />}
         <Form method="POST" className="px-6 py-5 flex flex-col gap-1.5">
+          <input type="hidden" name="mode" value={mode} />
+          {isEdit && (
+            <>
+              <input type="hidden" name="id" value={position?.id} />
+              <input
+                type="hidden"
+                name="updatedAt"
+                value={position?.updatedAt}
+              />
+            </>
+          )}
           <label htmlFor="title" className="text-xs font-medium text-hr">
             {t("page.position.dialog.create.title")}
           </label>
@@ -62,6 +78,7 @@ export default function PositionDialog({
             type="text"
             name="title"
             id="title"
+            defaultValue={position?.title}
             placeholder={t("page.position.dialog.titlePlaceholder")}
             className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
           />
@@ -71,6 +88,7 @@ export default function PositionDialog({
           <textarea
             name="description"
             id="description"
+            defaultValue={position?.description}
             className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
             placeholder={t("page.position.dialog.descriptionPlaceholder")}
           ></textarea>
@@ -83,6 +101,7 @@ export default function PositionDialog({
                 type="text"
                 name="company"
                 id="company"
+                defaultValue={position?.company}
                 placeholder={t("page.position.dialog.companyPlaceholder")}
                 className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
               />
@@ -94,6 +113,7 @@ export default function PositionDialog({
               <select
                 name="level"
                 id="level"
+                defaultValue={position?.level || PositionLevel.INTERN}
                 className="border mt-1.5 border-table-border rounded-lg px-3 py-2.5 bg-table-header disabled:opacity-50"
               >
                 {Object.entries(positionLevelLabels).map(([level, label]) => (
@@ -104,8 +124,8 @@ export default function PositionDialog({
               </select>
             </div>
           </div>
-          <TagMultiSelect />
-          <AttributeMultiSelect />
+          <TagMultiSelect tags={position?.positionProjectTags} />
+          <AttributeMultiSelect attributes={position?.positionAttributes} />
           <label
             htmlFor="maxProjects"
             className="text-xs text-hr font-medium mt-1.5"
@@ -137,14 +157,7 @@ export default function PositionDialog({
             <p className="text-xs text-date">
               {t("page.position.dialog.minValue")}
             </p>
-            <input
-              type="number"
-              name="maxProjects"
-              id="maxProjects"
-              hidden
-              readOnly
-              value={maxProjects}
-            />
+            <input name="maxProjects" hidden readOnly value={maxProjects} />
           </div>
 
           <div className="flex items-center justify-end gap-2">
@@ -156,7 +169,9 @@ export default function PositionDialog({
               {t("page.position.dialog.cancel")}
             </button>
             <button className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-nav-border-active cursor-pointer">
-              {t("page.position.dialog.create.action")}
+              {isEdit
+                ? t("page.position.dialog.edit.action")
+                : t("page.position.dialog.create.action")}
             </button>
           </div>
         </Form>
