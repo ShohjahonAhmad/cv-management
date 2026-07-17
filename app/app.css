@@ -30,6 +30,22 @@
     --color-boolean-bg: var(--boolean-bg);
     --color-boolean-border: var(--boolean-border);
     --color-boolean-text: var(--boolean-text);
+    --color-text-bg: var(--text-bg);
+    --color-text-border: var(--text-border);
+    --color-text-text: var(--text-text);
+    --color-date-bg: var(--date-bg);
+    --color-date-border: var(--date-border);  
+    --color-date-text: var(--date-text);
+    --color-period-bg: var(--period-bg);
+    --color-period-border: var(--period-border);
+    --color-period-text: var(--period-text);
+    --color-image-bg: var(--image-bg);
+    --color-image-border: var(--image-border);
+    --color-image-text: var(--image-text);
+    --color-drag-border: var(--drag-border);
+    --color-select-bg: var(--select-bg);
+    --color-select-border: var(--select-border);
+    --color-select-text: var(--select-text);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -104,6 +120,22 @@ body {
   --boolean-bg: #FDF4FF;
   --boolean-border: #E9D5FF;
   --boolean-text: #9333EA;
+  --text-bg: #FDF4FF;
+  --text-border: #E9D5FF;
+  --text-text: #7E22CE;
+  --date-bg: #F0F9FF;
+  --date-border: #BAE6FD;
+  --date-text: #0369A1;
+  --period-bg: #FFF7ED;
+  --period-border: #FED7AA;
+  --period-text: #C2410C;
+  --image-bg: #F0FDF4;
+  --image-border: #BBF7D0;
+  --image-text: #15803D;
+  --select-bg: #FFF1F0;
+  --select-border: #FECACA;
+  --select-text: #C0392B;
+  --drag-border: #d1d5db;
 }
 
 .dark {
@@ -157,6 +189,22 @@ body {
   --boolean-bg: #1F0A2E;
   --boolean-border: #3D1A5C;
   --boolean-text: #A78BFA;
+  --text-bg: #1E1030;
+  --text-border: #3B1F5C;
+  --text-text: #C084FC;
+  --date-bg: #0A1E2E;
+  --date-border: #0E3554;
+  --date-text: #38BDF8;
+  --period-bg: #1F1508;
+  --period-border: #3D2E0A;
+  --period-text: #FB923C;
+  --image-bg: #0D2218;
+  --image-border: #1A4030;
+  --image-text: #4ADE80;
+  --drag-border: #6B6B80;
+  --select-bg: #2D1010;
+  --select-border: #5C1A1A;
+  --select-text: #F87171;
 }
 
 .border-border {

@@ -1,7 +1,6 @@
 import { ToggleLeft, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "../ui/checkbox";
-import { check } from "zod";
 
 export default function BooleanAttribute({
   value,

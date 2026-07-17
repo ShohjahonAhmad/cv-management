@@ -67,7 +67,7 @@ export async function updateProfile(profile: UpdateProfile) {
     }
 }
 
-export async function uploadAvatar(formData: FormData) {
+export async function uploadAvatar(formData: FormData){
     try {
         const token = getToken();
         const res = await fetch(`${BASE_URL}/candidate/profile/avatar`, {
@@ -87,5 +87,32 @@ export async function uploadAvatar(formData: FormData) {
         return await res.json(); 
     } catch(err: any) {
         return {success: false, error: err.message || "Failed to upload avatar" };
+    }
+}
+
+type UploadImageResponse =
+    | { success: true; imageUrl: string }
+    | { success: false; error: string };
+
+export async function uploadImage(formData: FormData, id: number | string): Promise<UploadImageResponse> {
+    try{
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/profile/image/${id}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            return {success: false, error: error.error || "Failed to upload image"};
+        }
+
+        return await res.json();
+    } catch(err: any) {
+        return {success: false, error: err.message || "Failed to upload image" };
     }
 }

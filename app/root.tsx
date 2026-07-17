@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { Toaster } from "sonner";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <DarkModeProvider>
       <Outlet />
+      <Toaster richColors closeButton position="top-right" />
     </DarkModeProvider>
   );
 }

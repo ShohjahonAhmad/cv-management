@@ -223,7 +223,7 @@ export default function Positions() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("page.position.searchPlaceholder")}
-            className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border min-w-[260px]"
+            className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border min-w-65"
           />
         </div>
         <div className="flex items-center gap-1.5 text-xs text-date">

@@ -25,6 +25,11 @@ import { buildErrors } from "~/utils/buildErrors";
 import { useEffect, useRef, useState } from "react";
 import ErrorBanner from "~/components/ErrorBanner";
 import Attribute from "~/components/attributes/AttributeValue";
+import { buildAttributePayload } from "~/utils/buildPayload";
+import DateAttribute from "~/components/attributes/PeriodAttributes";
+import RangeAttribute from "~/components/attributes/DateAttribute";
+import ImageAttribute from "~/components/attributes/ImageAttribute";
+import SelectAttribute from "~/components/attributes/SelectAttribute";
 
 export async function clientLoader() {
   return await getProfile();
@@ -40,7 +45,9 @@ export async function clientAction({ request }: Route.ActionArgs) {
     photoUrl: formData.get("photoUrl") as string,
     location: formData.get("location") as string,
     aboutMe: formData.get("aboutMe") as string,
-    attributeValues: [],
+    attributeValues: JSON.parse(
+      formData.get("attributeValues") as string
+    ) as AttributeValue[],
   };
 
   const result = ProfileSchema.safeParse(profile);
@@ -72,7 +79,7 @@ export default function Profile() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const fileInputRef = useRef<HTMLInputElement>(null);
-  console.log(attributeValues);
+  console.log(buildAttributePayload(attributeValues));
 
   useEffect(() => {
     if (!message) return;
@@ -381,7 +388,10 @@ export default function Profile() {
                     </p>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-header-border border border-table-border">
+                <button
+                  type="button"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-header-border border border-table-border"
+                >
                   <Plus className="w-3 h-3 text-hr" />
                   <span className="text-hr">
                     {t("page.profile.attributes.addAttribute")}
@@ -397,6 +407,14 @@ export default function Profile() {
                       setAttributeValues={setAttributeValues}
                     />
                   ))}
+                  <input
+                    hidden
+                    readOnly
+                    name="attributeValues"
+                    value={JSON.stringify(
+                      buildAttributePayload(attributeValues)
+                    )}
+                  />
                 </div>
               </div>
             </div>

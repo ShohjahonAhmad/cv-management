@@ -164,7 +164,17 @@
             "attributes": {
                 "title": "CV Xususiyatlari",
                 "subtitle": "Kutubxondagi xususiyatlarni tangland va ularni qiymatlar bilan to'ldiring. Rekrutrlar ularni sizni pozitsiyalarga moslash uchun ishlatishadi.",
-                "addAttribute": "Xususiyat qo'shish"
+                "addAttribute": "Xususiyat qo'shish",
+                "pickDate": "Sana tanlash",
+                "dragImage": "Yuklash uchun bosing yoki sudrab olib keling",
+                "imageTypes": "PNG, JPG, WEBP — maksimal fayl hajmi: 5 MB",
+                "replaceImage": "O'rnini almashtirish uchun sudrab olib keling",
+                "selectPlaceholder": "Variantni tanlang",
+                "toast": {
+                    "imageUploadError": "Rasmni yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+                    "imageUpload": "Rasm muvaffaqiyatli yuklandi",
+                    "imageError": "Noto'g'ri fayl turi. Iltimos, PNG, JPG yoki WEBP formatidagi rasmni yuklang."
+                }
             },
             "toast": {
                 "profileUpdated": "Profil muvaffaqiyatli yangilandi",

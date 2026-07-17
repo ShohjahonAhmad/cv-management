@@ -165,7 +165,17 @@
             "attributes": {
                 "title": "CV Attributes",
                 "subtitle": "Choose attributes from the library and fill in your values. Recruiters use these to match you to positions.",
-                "addAttribute": "Add Attribute"
+                "addAttribute": "Add Attribute",
+                "pickDate": "Pick a date",
+                "dragImage": "Click or drag to upload",
+                "imageTypes": "PNG, JPG, WEBP — max 5MB",
+                "replaceImage": "Drag to replace",
+                "selectPlaceholder": "Select an option",
+                "toast": {
+                    "imageUploadError": "Image upload failed. Please try again.",
+                    "imageUpload": "Image uploaded successfully",
+                    "imageError": "Wrong file type. Please upload a PNG, JPG, or WEBP image."
+                }
             },
             "toast": {
                 "profileUpdated": "Profile updated successfully",
