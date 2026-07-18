@@ -1,4 +1,4 @@
-import { CalendarRange, ChevronDownIcon, X } from "lucide-react";
+import { Calendar as Icon, ChevronDownIcon, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -19,7 +19,7 @@ export default function DateAttribute({
   return (
     <div className="flex items-start gap-4 py-3.5 border-b border-header-border">
       <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-period-bg border border-period-border mt-0.5">
-        <CalendarRange className="w-3 h-3 text-period-text" />
+        <Icon className="w-3 h-3 text-period-text" />
       </div>
       <div className="flex flex-col gap-1.5 flex-1">
         <div className="flex items-center gap-2">

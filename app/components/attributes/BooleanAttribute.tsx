@@ -8,9 +8,9 @@ export default function BooleanAttribute({
   onChange,
   onRemove,
 }: {
-  value: boolean;
+  value: boolean | null;
   name: string;
-  onChange: (value: boolean) => void;
+  onChange: (value: boolean | null) => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
@@ -29,10 +29,19 @@ export default function BooleanAttribute({
           </span>
         </div>
         <Checkbox
-          checked={value}
-          onCheckedChange={(checked) => onChange(checked === true)}
+          checked={
+            value === true ? true : value === false ? false : "indeterminate"
+          }
+          onCheckedChange={(checked) =>
+            onChange(checked === true ? true : checked === false ? false : null)
+          }
           className="h-5 w-5 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
         />
+        {value === null && (
+          <p className="text-xs text-date">
+            {t("page.profile.attributes.notSpecified")}
+          </p>
+        )}
       </div>
       <button
         onClick={onRemove}

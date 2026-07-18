@@ -17,26 +17,29 @@ import {
   useNavigation,
   useRevalidator,
 } from "react-router";
-import { getProfile, updateProfile, uploadAvatar } from "~/api/getUsers";
+import {
+  addAttributes,
+  getProfile,
+  updateProfile,
+  uploadAvatar,
+} from "~/api/getUsers";
 import type { Route } from "./+types/profile";
-import type { AttributeValue, UpdateProfile } from "~/types/Profile";
+import type { AttributeValue, Profile, UpdateProfile } from "~/types/Profile";
 import { ProfileSchema } from "~/schemas";
 import { buildErrors } from "~/utils/buildErrors";
 import { useEffect, useRef, useState } from "react";
 import ErrorBanner from "~/components/ErrorBanner";
 import Attribute from "~/components/attributes/AttributeValue";
 import { buildAttributePayload } from "~/utils/buildPayload";
-import DateAttribute from "~/components/attributes/PeriodAttributes";
-import RangeAttribute from "~/components/attributes/DateAttribute";
-import ImageAttribute from "~/components/attributes/ImageAttribute";
-import SelectAttribute from "~/components/attributes/SelectAttribute";
+import AddAddributeDialog from "~/components/AddAttributeDialog";
+import { toast } from "sonner";
 
 export async function clientLoader() {
+  console.log("fetching profile... ");
   return await getProfile();
 }
 
-export async function clientAction({ request }: Route.ActionArgs) {
-  const formData = await request.formData();
+async function updateAttributeValues(formData: FormData) {
   const profile: UpdateProfile = {
     firstName: formData.get("firstName") as string,
     lastName: formData.get("lastName") as string,
@@ -63,6 +66,27 @@ export async function clientAction({ request }: Route.ActionArgs) {
 
   return data;
 }
+
+async function addAttribute(formData: FormData) {
+  const attributeIds = formData.getAll("attributeIds") as string[];
+
+  const result = await addAttributes(attributeIds);
+
+  return { ...result, addAttributes: true };
+}
+
+export async function clientAction({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+
+  switch (formData.get("intent")) {
+    case "updateAttributeValues":
+      return updateAttributeValues(formData);
+    case "addAttributes":
+      return addAttribute(formData);
+    default:
+      throw new Response("Unknown action", { status: 400 });
+  }
+}
 const imageFormats = "image/png,image/jpeg,image/webp,image/gif";
 const defaultAvatar = "/image.png";
 
@@ -71,39 +95,49 @@ export default function Profile() {
   const { profile } = useLoaderData();
   const actionData = useActionData();
   const { revalidate } = useRevalidator();
-  const [message, setMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<string[] | null>(null);
   const [attributeValues, setAttributeValues] = useState<AttributeValue[]>(
     profile.attributeValues || []
   );
+  const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const fileInputRef = useRef<HTMLInputElement>(null);
-  console.log(buildAttributePayload(attributeValues));
-
-  useEffect(() => {
-    if (!message) return;
-
-    const timer = setTimeout(() => {
-      setMessage(null);
-    }, 10000);
-
-    return () => clearTimeout(timer);
-  }, [message]);
+  console.log("action: ", actionData);
+  console.log("attributeValues", profile.attributeValues);
 
   useEffect(() => {
     setErrors(null);
-    setMessage(null);
   }, [isSubmitting]);
+
+  useEffect(() => {
+    setAttributeValues(profile.attributeValues || []);
+  }, [profile.attributeValues]);
 
   useEffect(() => {
     if (!actionData) return;
 
     if (actionData.success) {
-      setMessage(t("page.profile.toast.profileUpdated"));
+      setIsOpen(false);
       revalidate();
+      if (actionData.addAttributes) {
+        toast.success(
+          t("page.profile.attributes.toast.attributesAdded", {
+            count: actionData.count,
+          })
+        );
+      } else {
+        toast.success(t("page.profile.toast.profileUpdated"));
+      }
     } else {
-      setErrors(actionData.errors);
+      if (actionData.addAttributes) {
+        toast.error(
+          actionData.error ||
+            t("page.profile.attributes.toast.attributesAddFailed")
+        );
+      } else {
+        setErrors(actionData.errors);
+      }
     }
   }, [actionData]);
 
@@ -120,24 +154,15 @@ export default function Profile() {
 
     if (data.success) {
       revalidate();
-      setMessage(t("page.profile.toast.avatarUpdated"));
+      toast.success(t("page.profile.toast.avatarUpdated"));
     } else {
-      setMessage(data.error || t("page.profile.toast.avatarUpdateFailed"));
+      toast.error(data.error || t("page.profile.toast.avatarUpdateFailed"));
     }
   }
   return (
     <main>
-      {message && (
-        <div className="fixed top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
-          <div>
-            <p className="font-semibold text-sm text-nav-text-active">
-              {t("page.attribute.changesSaved")}
-            </p>
-            <p className="text-xs text-nav-text">{message}</p>
-          </div>
-        </div>
-      )}
       <Form method="POST">
+        <input type="hidden" name="intent" value="updateAttributeValues" />
         <div className="px-8 py-5 flex items-center justify-between border-b border-header-border">
           <div>
             <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
@@ -156,7 +181,7 @@ export default function Profile() {
         <div className="flex items-start gap-6 px-8 py-6">
           <div className="flex flex-col items-center gap-4 px-5 py-6 rounded-xl border border-table-border bg-table-header w-56">
             <div className="relative">
-              <input value={profile.photoUrl} hidden readOnly />
+              <input value={profile.photoUrl} name="photoUrl" hidden readOnly />
               <input
                 ref={fileInputRef}
                 type="file"
@@ -389,6 +414,7 @@ export default function Profile() {
                   </div>
                 </div>
                 <button
+                  onClick={() => setIsOpen(true)}
                   type="button"
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-header-border border border-table-border"
                 >
@@ -421,6 +447,7 @@ export default function Profile() {
           </div>
         </div>
       </Form>
+      {isOpen && <AddAddributeDialog setIsOpen={setIsOpen} />}
     </main>
   );
 }

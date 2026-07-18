@@ -20,8 +20,6 @@ export default function Attribute({
     setAttributeValues((prev) => prev.filter((attr) => attr.id !== id));
   }
 
-  console.log(attributeValue);
-
   const name = attributeValue.attribute.name;
   const id = attributeValue.id;
   switch (attributeValue.attribute.type) {

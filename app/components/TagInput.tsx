@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { set } from "zod";
 import { getTags } from "~/api/getPositions";
 import type { ProjectTag } from "~/types/Position";
 import TagChip from "~/utils/attribute_types/TagChip";

@@ -1,4 +1,4 @@
-import { ArrowUpFromLine, Image, X } from "lucide-react";
+import { Image, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useDropzone } from "react-dropzone";
 import EmptyImageState from "../EmptyImageState";
@@ -7,6 +7,13 @@ import ReplaceDrag from "../ReplaceDrag";
 import { uploadImage } from "~/api/getUsers";
 import { useState } from "react";
 import { toast } from "sonner";
+
+const acceptedFiles = {
+  "image/jpeg": [],
+  "image/png": [],
+  "image/webp": [],
+  "image/gif": [],
+};
 
 export default function ImageAttribute({
   id,
@@ -48,12 +55,7 @@ export default function ImageAttribute({
         setIsUploading(false);
       }
     },
-    accept: {
-      "image/jpeg": [],
-      "image/png": [],
-      "image/webp": [],
-      "image/gif": [],
-    },
+    accept: acceptedFiles,
     onDropRejected: (rejections) => {
       toast.error(
         rejections[0].errors[0].message ||

@@ -171,10 +171,22 @@
                 "imageTypes": "PNG, JPG, WEBP — max 5MB",
                 "replaceImage": "Drag to replace",
                 "selectPlaceholder": "Select an option",
+                "notSpecified": "Not specified",
                 "toast": {
                     "imageUploadError": "Image upload failed. Please try again.",
                     "imageUpload": "Image uploaded successfully",
-                    "imageError": "Wrong file type. Please upload a PNG, JPG, or WEBP image."
+                    "imageError": "Wrong file type. Please upload a PNG, JPG, or WEBP image.",
+                    "attributesAdded": "{{count}} attribute(s) added successfully",
+                    "attributesAddFailed": "Failed to add attributes. Please try again."
+                },
+                "dialog": {
+                    "title": "Add Attributes",
+                    "subtitle": "Search and select one or more attributes to add to your profile",
+                    "attributes": "Attributes",
+                    "cancel": "Cancel",
+                    "actionNone": "Add Attributes",
+                    "action_one": "Add {{count}} Attribute",
+                    "action_other": "Add {{count}} Attributes"
                 }
             },
             "toast": {

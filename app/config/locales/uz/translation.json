@@ -170,10 +170,21 @@
                 "imageTypes": "PNG, JPG, WEBP — maksimal fayl hajmi: 5 MB",
                 "replaceImage": "O'rnini almashtirish uchun sudrab olib keling",
                 "selectPlaceholder": "Variantni tanlang",
+                "notSpecified": "Ko'rsatilmagan",
                 "toast": {
                     "imageUploadError": "Rasmni yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
                     "imageUpload": "Rasm muvaffaqiyatli yuklandi",
-                    "imageError": "Noto'g'ri fayl turi. Iltimos, PNG, JPG yoki WEBP formatidagi rasmni yuklang."
+                    "imageError": "Noto'g'ri fayl turi. Iltimos, PNG, JPG yoki WEBP formatidagi rasmni yuklang.",
+                    "attributesAdded": "{{count}} ta xususiyat muvaffaqiyatli qo'shildi",
+                    "attributesAddFailed": "Xususiyatlarni qo'shishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring."
+                },
+                "dialog": {
+                    "title": "Xususiyatlar qo'shish",
+                    "subtitle": "Profilingizga qo'shish uchun bitta yoki bir nechta xususiyatlarni qidirib tanlang",
+                    "attributes": "Xususiyatlar",
+                    "cancel": "Bekor qilish",
+                    "actionNone": "Xususiyatlar qo'shish",
+                    "action": "{{count}} xususiyat qo'shish"
                 }
             },
             "toast": {

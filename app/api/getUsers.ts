@@ -116,3 +116,52 @@ export async function uploadImage(formData: FormData, id: number | string): Prom
         return {success: false, error: err.message || "Failed to upload image" };
     }
 }
+
+export async function searchAttributes(search: string) {
+    try {
+            const token = getToken();
+            const res = await fetch(`${BASE_URL}/candidate/profile/attributes?search=${search}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            if(!res.ok){
+                isAuthorized(res.status);
+                const error = await res.json();
+                throw new Error(error.error || "Failed to fetch attributes");
+            }
+    
+            const data = await res.json();
+    
+            return data.attributes;
+        } catch(err:any) {
+            throw new Error(err.message || "Failed to fetch attributes");
+        }
+}
+
+type AddAttributesResponse =
+    | { success: true; count: number }
+    | { success: false; error: string };
+export async function addAttributes(attributeIds: number[] | string[]): Promise<AddAttributesResponse> {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/profile/attributes`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ attributeIds }),
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            return {success: false, error: error.error || "Failed to add attributes"};
+        }
+
+        return await res.json();
+    } catch(err: any) {
+        return {success: false, error: err.message || "Failed to add attributes" };
+    }
+}
