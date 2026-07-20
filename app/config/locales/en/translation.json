@@ -10,11 +10,25 @@
             "greeting": "Hello , {{name}} 👋",
             "description": "{{total}} open positions available — find your next opportunity below",
             "searchPlaceholder": "Search positions by title or company...",
-            "level": "Level",
+            "level": "All levels",
             "newest": "Newest first",
+            "oldest": "Oldest first",
             "allPositions": "All Positions",
             "attributesRequired": "{{count}} attributes required",
-            "viewDetails": "View Position"
+            "viewDetails": "View Position",
+            "noPositions": "No positions available at the moment. Please check back later."
+        },
+        "positionDetails": {
+            "back": "Back to Positions",
+            "description": "Position Description",
+            "attributes": "Required Information",
+            "profile": "Your Profile",
+            "completed": "attributes completed",
+            "missingAttributes": "Missing attributes",
+            "completeProfile": "Complete Profile",
+            "applyTitle": "Ready to Apply?",
+            "applyDescription": "You will be taken to the CV Builder to prepare your application",
+            "apply": "Apply for this Position"
         },
         "user": {
             "title": "User Management",

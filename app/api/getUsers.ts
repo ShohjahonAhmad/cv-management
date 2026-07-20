@@ -1,6 +1,7 @@
 import type { UpdateProfile } from "~/types/Profile";
 import { getToken, isAuthorized } from "./getAttributes";
 import { success } from "zod";
+import type { PositionLevel } from "~/types/Position";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default async function getUsers(page: number) {
@@ -166,10 +167,10 @@ export async function addAttributes(attributeIds: number[] | string[]): Promise<
     }
 }
 
-export async function getPositions(page: number) {
+export async function getPositions(page: number, search: string, level: PositionLevel | "", sort: "asc" | "desc") {
     try {
         const token = getToken();
-        const res = await fetch(`${BASE_URL}/candidate/positions?page=${page}`, {
+        const res = await fetch(`${BASE_URL}/candidate/positions?page=${page}&sort=${sort}&level=${level}&search=${search}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }

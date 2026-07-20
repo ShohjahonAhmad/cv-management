@@ -118,3 +118,24 @@ export async function updatePosition( {id, title, description, company, level, m
         throw new Error(err.message || "Failed to update position");
     }
 }
+
+export async function getPositionById(id: string): Promise<Position> {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/positions/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.error || "Failed to fetch position");
+        }
+
+        return await res.json();
+    } catch(err: any) {
+        throw new Error(err.message || "Failed to fetch position");
+    }
+}

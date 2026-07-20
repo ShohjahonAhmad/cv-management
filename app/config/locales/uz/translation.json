@@ -10,11 +10,25 @@
             "greeting": "Salom, {{name}} 👋",
             "description": "{{total}} ta bo'sh ish o'rni mavjud — quyida o'zingizga mos imkoniyatni toping",
             "searchPlaceholder": "Pozitsiya nomi yoki kompaniya bo'yicha qidirish...",
-            "level": "Daraja",
-            "newest": "Eng yangisi birinchi",
+            "level": "Barcha darajalar",
+            "newest": "Eng yangisi",
+            "oldest": "Eng eskisi",
             "allPositions": "Barcha pozitsiyalar",
             "attributesRequired": "{{count}} ta xususiyat talab qilinadi",
-            "viewDetails": "Pozitsiyani ko'rish"
+            "viewDetails": "Pozitsiyani ko'rish",
+            "noPositions": "Hozircha mavjud bo'sh ish o'rni yo'q. Iltimos, keyinroq qayta urinib ko'ring."
+        },
+        "positionDetails": {
+            "back": "Pozitsiyalarga qaytish",
+            "description": "Pozitsiya tavsifi",
+            "attributes": "Talab qilinadigan ma'lumotlar",
+            "profile": "Sizning Profilingiz",
+            "completed": " ta xususiyat to'ldirilgan",
+            "missingAttributes": "Yetishmayotgan xususiyatlar",
+            "completeProfile": "Profilni to'ldirish",
+            "applyTitle": "Ariza topshirishga tayyormisiz?",
+            "applyDescription": "Arizangizni tayyorlash uchun siz CV yaratish sahifasiga yo'naltirilasiz",
+            "apply": "Ushbu pozitsiyaga ariza topshirish"
         },
         "user": {
             "title": "Foydalanuvchi boshqaruvi",

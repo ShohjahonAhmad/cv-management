@@ -3,6 +3,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@import "react-circular-progressbar/dist/styles.css";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
@@ -46,6 +47,12 @@
     --color-select-bg: var(--select-bg);
     --color-select-border: var(--select-border);
     --color-select-text: var(--select-text);
+    --color-miss-bg: var(--miss-bg);  
+    --color-miss-border: var(--miss-border);
+    --color-miss-text: var(--miss-text);
+    --color-profile-bg: var(--profile-bg);
+    --color-profile-border: var(--profile-border);
+    --color-profile-text: var(--profile-text);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -136,6 +143,12 @@ body {
   --select-border: #FECACA;
   --select-text: #C0392B;
   --drag-border: #d1d5db;
+  --miss-bg: #FEF2F2;
+  --miss-border: #FECACA;
+  --miss-text: #991B1B;
+  --profile-bg: #F5F3FF;
+  --profile-border: #C4B5FD;
+  --profile-text: #4F46E5;
 }
 
 .dark {
@@ -205,6 +218,12 @@ body {
   --select-bg: #2D1010;
   --select-border: #5C1A1A;
   --select-text: #F87171;
+  --miss-bg: #1F0D0D;
+  --miss-border: #4D1A1A;
+  --miss-text: #F87171;
+  --profile-bg: #1A1A2E;
+  --profile-border: #2D2D5A;
+  --profile-text: #818CF8;
 }
 
 .border-border {

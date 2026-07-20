@@ -9,5 +9,6 @@ export default [
         route("attributes", "routes/attributes.tsx"),
         route("positions", "routes/positions.tsx"),
         route("profile", "routes/profile.tsx"),
+        route("positions/:id", "routes/position-details.tsx")
     ])
 ] satisfies RouteConfig;
