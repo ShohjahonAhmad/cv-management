@@ -8,7 +8,7 @@ import { uploadImage } from "~/api/getUsers";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const acceptedFiles = {
+const acceptedImageTypes = {
   "image/jpeg": [],
   "image/png": [],
   "image/webp": [],
@@ -51,11 +51,13 @@ export default function ImageAttribute({
 
         onChange(result.imageUrl);
         toast.success(t("page.profile.attributes.toast.imageUpload"));
+      } catch (err) {
+        toast.error(t("page.profile.attributes.toast.imageUploadError"));
       } finally {
         setIsUploading(false);
       }
     },
-    accept: acceptedFiles,
+    accept: acceptedImageTypes,
     onDropRejected: (rejections) => {
       toast.error(
         rejections[0].errors[0].message ||

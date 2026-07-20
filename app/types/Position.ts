@@ -16,6 +16,10 @@ export type Position = {
     positionProjectTags: {projectTag: ProjectTag}[];
     createdAt: string;
     updatedAt: string;
+    _count: {
+        positionAttributes: number;
+        positionProjectTags: number;
+    }
 }
 
 export type CreatePosition = {

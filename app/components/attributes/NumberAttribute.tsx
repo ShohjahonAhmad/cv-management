@@ -1,5 +1,6 @@
 import { Hash, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import NotSpecified from "../NotSpecified";
 
 export default function NumberAttribute({
   value,
@@ -7,9 +8,9 @@ export default function NumberAttribute({
   onChange,
   onRemove,
 }: {
-  value: number;
+  value: number | null;
   name: string;
-  onChange: (value: number) => void;
+  onChange: (value: number | null) => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
@@ -29,10 +30,13 @@ export default function NumberAttribute({
         </div>
         <input
           type="number"
-          value={value}
-          onChange={(e) => onChange(e.target.valueAsNumber)}
+          value={value ?? ""}
+          onChange={(e) =>
+            onChange(e.target.value === "" ? null : e.target.valueAsNumber)
+          }
           className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border w-40"
         />
+        {value === null && <NotSpecified />}
       </div>
       <button
         type="button"

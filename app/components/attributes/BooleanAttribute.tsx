@@ -1,6 +1,7 @@
 import { ToggleLeft, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "../ui/checkbox";
+import NotSpecified from "../NotSpecified";
 
 export default function BooleanAttribute({
   value,
@@ -37,11 +38,7 @@ export default function BooleanAttribute({
           }
           className="h-5 w-5 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
         />
-        {value === null && (
-          <p className="text-xs text-date">
-            {t("page.profile.attributes.notSpecified")}
-          </p>
-        )}
+        {value === null && <NotSpecified />}
       </div>
       <button
         onClick={onRemove}

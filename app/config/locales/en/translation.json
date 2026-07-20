@@ -6,6 +6,16 @@
         "profile": "Profile"
     },
     "page": {
+        "home": {
+            "greeting": "Hello , {{name}} 👋",
+            "description": "{{total}} open positions available — find your next opportunity below",
+            "searchPlaceholder": "Search positions by title or company...",
+            "level": "Level",
+            "newest": "Newest first",
+            "allPositions": "All Positions",
+            "attributesRequired": "{{count}} attributes required",
+            "viewDetails": "View Position"
+        },
         "user": {
             "title": "User Management",
             "subtitle": "Manage roles, permissions, and account status across all users",

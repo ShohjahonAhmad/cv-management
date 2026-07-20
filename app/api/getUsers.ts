@@ -165,3 +165,24 @@ export async function addAttributes(attributeIds: number[] | string[]): Promise<
         return {success: false, error: err.message || "Failed to add attributes" };
     }
 }
+
+export async function getPositions(page: number) {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/positions?page=${page}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to fetch positions");
+        }
+
+        return await res.json();
+    } catch(err: any) {
+        throw new Error(err.message || "Failed to fetch positions");
+    }
+}

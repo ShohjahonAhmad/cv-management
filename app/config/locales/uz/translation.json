@@ -6,6 +6,16 @@
         "profile": "Profil"
     },
     "page": {
+        "home": {
+            "greeting": "Salom, {{name}} 👋",
+            "description": "{{total}} ta bo'sh ish o'rni mavjud — quyida o'zingizga mos imkoniyatni toping",
+            "searchPlaceholder": "Pozitsiya nomi yoki kompaniya bo'yicha qidirish...",
+            "level": "Daraja",
+            "newest": "Eng yangisi birinchi",
+            "allPositions": "Barcha pozitsiyalar",
+            "attributesRequired": "{{count}} ta xususiyat talab qilinadi",
+            "viewDetails": "Pozitsiyani ko'rish"
+        },
         "user": {
             "title": "Foydalanuvchi boshqaruvi",
             "subtitle": "Barcha foydalanuvchilar bo'yicha rollar, ruxsatlar va hisob holatini boshqaring",
@@ -198,7 +208,7 @@
             "subtitle": "Davom etish uchun login yoki ro'yxatdan o'ting",
             "googleSignIn": "Google bilan davom etish",
             "githubSignIn": "GitHub bilan davom etish",
-            "agreement": "Davom etish orqali siz <terms>Xizmat Ko‘rsatish Shartlari</terms> va <privacy>Maxfiylik Siyosati</privacy>ga rozilik bildirasiz."
+            "agreement": "Davom etish orqali siz <terms>Xizmat Ko'rsatish Shartlari</terms> va <privacy>Maxfiylik Siyosati</privacy>ga rozilik bildirasiz."
         }
     },
     "category": {

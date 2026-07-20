@@ -10,9 +10,9 @@ export default function DateAttribute({
   onChange,
   onRemove,
 }: {
-  value: string;
+  value: string | null;
   name: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ export default function DateAttribute({
             {name}
           </label>
           <span className="inline-flex items-center px-1.5 py-0.5 rounded font-medium bg-period-bg text-period-text border border-period-border text-[10px]">
-            {t("type.period")}
+            {t("type.date")}
           </span>
         </div>
         <Popover>
@@ -49,7 +49,7 @@ export default function DateAttribute({
             <Calendar
               mode="single"
               selected={value ? new Date(value) : undefined}
-              onSelect={(e) => onChange(e ? e.toISOString() : "")}
+              onSelect={(e) => onChange(e ? e.toISOString() : null)}
               defaultMonth={value ? new Date(value) : undefined}
             />
           </PopoverContent>

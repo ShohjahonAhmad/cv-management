@@ -1,5 +1,6 @@
 import { TextAlignStart, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import NotSpecified from "../NotSpecified";
 
 export default function TextAttribute({
   value,
@@ -7,9 +8,9 @@ export default function TextAttribute({
   onChange,
   onRemove,
 }: {
-  value: string;
+  value: string | null;
   name: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
@@ -28,10 +29,14 @@ export default function TextAttribute({
           </span>
         </div>
         <textarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={value ?? ""}
+          onChange={(e) => {
+            const value = e.target.value.trim();
+            onChange(value === "" ? null : value);
+          }}
           className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border"
         ></textarea>
+        {value === null && <NotSpecified />}
       </div>
       <button
         type="button"

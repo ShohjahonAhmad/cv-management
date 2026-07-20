@@ -1,5 +1,6 @@
 import { Type, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import NotSpecified from "../NotSpecified";
 
 export default function StringAttribute({
   value,
@@ -7,9 +8,9 @@ export default function StringAttribute({
   onChange,
   onRemove,
 }: {
-  value: string;
+  value: string | null;
   name: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
@@ -29,10 +30,14 @@ export default function StringAttribute({
         </div>
         <input
           type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={value ?? ""}
+          onChange={(e) => {
+            const value = e.target.value.trim();
+            onChange(value === "" ? null : value);
+          }}
           className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border"
         />
+        {value === null && <NotSpecified />}
       </div>
       <button
         type="button"
