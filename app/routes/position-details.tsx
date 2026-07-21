@@ -61,7 +61,7 @@ export default function PositionDetails() {
               totalRequiredAttributes={totalRequiredAttributes}
               missingAttributes={missingAttributes}
             />
-            <PositionApply />
+            <PositionApply id={position.id} />
           </div>
         </div>
       </div>

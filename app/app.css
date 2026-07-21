@@ -22,6 +22,9 @@
     --color-date: var(--date);
     --color-header: var(--header);
     --color-header-border: var(--header-border);
+    --color-warning: var(--warning);
+    --color-warning-text: var(--warning-text);
+    --color-warning-border: var(--warning-border);
     --color-number-bg: var(--number-bg);
     --color-number-border: var(--number-border);
     --color-number-text: var(--number-text);
@@ -118,6 +121,8 @@ body {
   --date: #9ca3af;
   --header-border: #f3f4f6;
   --header: #fafafa;
+  --warning-text: #b45309;
+  --warning-border: #fde68a;
   --number-bg: #fefce8;
   --number-border: #fef08a;
   --number-text: #FBBF24;
@@ -172,6 +177,7 @@ body {
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --warning: #1F1A0D;
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.87 0 0);
@@ -193,6 +199,8 @@ body {
   --date: #6b6b80;
   --header-border: #27272F;
   --header: #141418;
+  --warning-text: #FBBF24;
+  --warning-border: #44320A;
   --number-bg: #1E1A08;
   --number-border: #3D3208;
   --number-text: #a16207;

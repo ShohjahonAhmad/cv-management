@@ -103,8 +103,6 @@ export default function Profile() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const fileInputRef = useRef<HTMLInputElement>(null);
-  console.log("action: ", actionData);
-  console.log("attributeValues", profile.attributeValues);
 
   useEffect(() => {
     setErrors(null);

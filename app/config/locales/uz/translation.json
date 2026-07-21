@@ -28,7 +28,25 @@
             "completeProfile": "Profilni to'ldirish",
             "applyTitle": "Ariza topshirishga tayyormisiz?",
             "applyDescription": "Arizangizni tayyorlash uchun siz CV yaratish sahifasiga yo'naltirilasiz",
-            "apply": "Ushbu pozitsiyaga ariza topshirish"
+            "apply": "Ushbu pozitsiyaga ariza topshirish",
+            "applyErrorNotFound": "Pozitsiya topilmadi. Iltimos, keyinroq qayta urinib ko'ring.",
+            "applySuccess": "Siz arizangizni yakunlash uchun CV Builder sahifasiga yo‘naltirilasiz"
+        },
+        "cvBuilder": {
+            "back": "Orqaga",
+            "draft": "Qoralama",
+            "save": "O'zgarishlarni saqlash",
+            "warning": "Hali {{count}} ta xususiyat to'ldirilmagan",
+            "completion": "Rezyume to'ldirilganligi",
+            "warningSubtitle": "Ariza topshirishdan oldin barcha kerakli xususiyatlarni to'ldiring",
+            "saveSuccess": "CV muvaffaqiyatli yangilandi",
+            "saveError": "CVni saqlashda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+            "cvNotFound": "CV topilmadi. Iltimos, keyinroq qayta urinib ko'ring.",
+            "submitTitle": "Arizangizni berishga tayyormisiz?",
+            "saveDraft": "Qoralama sifatida saqlash",
+            "publish": "CVni chop etish",
+            "publishSuccess": "CV muvaffaqiyatli chop etildi",
+            "published": "Sizning CVingiz chop etildi va rekruterlar tomonidan ko'rinadi"
         },
         "user": {
             "title": "Foydalanuvchi boshqaruvi",

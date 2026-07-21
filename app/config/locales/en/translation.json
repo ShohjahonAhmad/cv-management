@@ -28,7 +28,25 @@
             "completeProfile": "Complete Profile",
             "applyTitle": "Ready to Apply?",
             "applyDescription": "You will be taken to the CV Builder to prepare your application",
-            "apply": "Apply for this Position"
+            "apply": "Apply for this Position",
+            "applyErrorNotFound": "Applied Position not found. Please try again.",
+            "applySuccess": "You will be redirected to the CV Builder to complete your application."
+        },
+        "cvBuilder": {
+            "back": "Back",
+            "draft": "Draft",
+            "save": "Save Changes",
+            "completion": "CV completion",
+            "warning": "{{count}} attribute(s) still empty",
+            "warningSubtitle": "Fill in all attributes before submitting your application",
+            "saveSuccess": "CV updated successfully",
+            "saveError": "Failed to save CV. Please try again.",
+            "cvNotFound": "CV not found. Please try again.",
+            "submitTitle": "Ready to submit?",
+            "saveDraft": "Save Draft",
+            "publish": "Publish CV",
+            "publishSuccess": "CV published successfully",
+            "published": "Your CV is already published and visible to recruiters"
         },
         "user": {
             "title": "User Management",
