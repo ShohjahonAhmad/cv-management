@@ -16,6 +16,9 @@ import { Checkbox } from "~/components/ui/checkbox";
 import BulkOperationToolbar from "~/components/BulkOperationToolbar";
 import Pagination from "~/components/Pagination";
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+import { languageLocaleMap } from "~/components/position-details/PositionHeader";
+import i18n from "~/config/i18n";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -200,7 +203,13 @@ export default function Users() {
                 <td className="px-4 py-2.5">
                   {user.isBlocked ? <Blocked /> : <Active />}
                 </td>
-                <td className="px-4 py-2.5 text-date">{user.createdAt}</td>
+                <td className="px-4 py-2.5 text-date">
+                  {user.createdAt
+                    ? format(new Date(user.createdAt), "dd MMM, yyyy", {
+                        locale: languageLocaleMap[i18n.language],
+                      })
+                    : t("page.cvs.table.defaultPublished")}
+                </td>
               </tr>
             ))}
           </tbody>

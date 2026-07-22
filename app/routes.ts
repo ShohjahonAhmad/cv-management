@@ -9,9 +9,8 @@ export default [
         route("attributes", "routes/attributes.tsx"),
         route("positions", "routes/positions.tsx"),
         route("profile", "routes/profile.tsx"),
-        ...prefix("positions/:id", [
-            index("routes/position-details.tsx"),
-            route("cv/:cvId", "routes/cv-builder.tsx")
-        ])
+        route("positions/:id", "routes/position-details.tsx"),
+        route("cvs/:cvId", "routes/cv-builder.tsx"),
+        route("cvs", "routes/cvs.tsx")
     ])
 ] satisfies RouteConfig;

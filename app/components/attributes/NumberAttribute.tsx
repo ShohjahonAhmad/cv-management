@@ -7,11 +7,13 @@ export default function NumberAttribute({
   name,
   onChange,
   onRemove,
+  readOnly,
 }: {
   value: number | null;
   name: string;
   onChange: (value: number | null) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -30,6 +32,7 @@ export default function NumberAttribute({
         </div>
         <input
           type="number"
+          readOnly={readOnly}
           value={value ?? ""}
           onChange={(e) =>
             onChange(e.target.value === "" ? null : e.target.valueAsNumber)
@@ -38,13 +41,15 @@ export default function NumberAttribute({
         />
         {value === null && <NotSpecified />}
       </div>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          type="button"
+          onClick={onRemove}
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

@@ -1,8 +1,16 @@
 import { ArrowLeft, Pencil, Save } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink, useNavigation } from "react-router";
+import type { Position } from "~/types/Position";
+import { positionLevelLabels } from "../PositionDialog";
 
-export default function CVBuilderHeader() {
+export default function CVBuilderHeader({
+  readOnly,
+  position,
+}: {
+  readOnly: boolean;
+  position: Position;
+}) {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -20,30 +28,34 @@ export default function CVBuilderHeader() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="font-bold text-[18px] text-nav-text-active tracking-[-0.4px]">
-              Senior Frontend Engineer
+              {position.title}
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-warning text-[11px] text-warning-text border border-warning-border font-medium">
-              <Pencil className="w-2.5 h-2.5" />
-              {t("page.cvBuilder.draft")}
-            </span>
+            {!readOnly && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-warning text-[11px] text-warning-text border border-warning-border font-medium">
+                <Pencil className="w-2.5 h-2.5" />
+                {t("page.cvBuilder.draft")}
+              </span>
+            )}
           </div>
           <p className="text-xs text-nav-text mt-0.5">
-            SAP · Berlin, Germany · Senior
+            {position.company} · {t(positionLevelLabels[position.level])}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <button
-          name="intent"
-          value="save"
-          disabled={isSubmitting}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-nav-border-active text-white"
-        >
-          <Save className="w-[13px] h-[13px]" />
-          {t("page.cvBuilder.save")}
-        </button>
-      </div>
+      {!readOnly && (
+        <div className="flex items-center gap-2">
+          <button
+            name="intent"
+            value="save"
+            disabled={isSubmitting}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-nav-border-active text-white"
+          >
+            <Save className="w-[13px] h-[13px]" />
+            {t("page.cvBuilder.save")}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

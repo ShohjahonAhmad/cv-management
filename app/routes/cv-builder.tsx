@@ -51,13 +51,17 @@ export async function clientAction({ request, params }: Route.ActionArgs) {
 
 export default function CVBuilder() {
   const { t } = useTranslation();
-  const { cv, attributeValues: initialValues } =
-    useLoaderData<typeof clientLoader>();
+  const {
+    cv,
+    attributeValues: initialValues,
+    readOnly,
+  } = useLoaderData<typeof clientLoader>();
   const actionData = useActionData<typeof clientAction>();
   const [attributeValues, setAttributeValues] = useState(initialValues);
   const { revalidate } = useRevalidator();
   const navigate = useNavigate();
   const missing = initialValues.filter(isNull).length;
+  console.log(attributeValues);
 
   useEffect(() => {
     setAttributeValues(initialValues);
@@ -89,7 +93,7 @@ export default function CVBuilder() {
       method="POST"
       className="flex flex-col min-h-screen items-center bg-table-header"
     >
-      <CVBuilderHeader />
+      <CVBuilderHeader position={cv.position} readOnly={readOnly} />
       <div className="flex items-start gap-6 px-8 py-6 max-w-[1280px] w-full">
         <CVBuilderProfile
           profile={cv.candidate}
@@ -104,6 +108,7 @@ export default function CVBuilder() {
                 {attributeValues.map((attributeValue) => (
                   <Attribute
                     key={attributeValue.id}
+                    readOnly={readOnly}
                     attributeValue={attributeValue}
                     setAttributeValues={setAttributeValues}
                   />
@@ -117,10 +122,12 @@ export default function CVBuilder() {
               </div>
             </div>
           </div>
-          <CVBuilderSubmit
-            missing={missing}
-            published={cv.status === "PUBLISHED"}
-          />
+          {!readOnly && (
+            <CVBuilderSubmit
+              missing={missing}
+              published={cv.status === "PUBLISHED"}
+            />
+          )}
         </div>
       </div>
     </Form>

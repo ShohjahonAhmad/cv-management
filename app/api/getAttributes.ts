@@ -47,8 +47,10 @@ export default async function getAttributes(page: number, search: string, filter
 }
 
 export function isAuthorized(statusCode: number) {
-    if(statusCode === 401 || statusCode === 403) {
+    if(statusCode === 401) {
         window.location.href = "/login";
+    } else if (statusCode === 403) {
+        window.location.href = "/";
     }
 }
 

@@ -10,9 +10,11 @@ import ImageAttribute from "./ImageAttribute";
 import SelectAttribute from "./SelectAttribute";
 
 export default function Attribute({
+  readOnly,
   attributeValue,
   setAttributeValues,
 }: {
+  readOnly: boolean;
   attributeValue: AttributeValue;
   setAttributeValues: React.Dispatch<React.SetStateAction<AttributeValue[]>>;
 }) {
@@ -27,8 +29,9 @@ export default function Attribute({
       return (
         <StringAttribute
           name={name}
+          readOnly={readOnly}
           value={attributeValue.stringValue!}
-          onChange={(value: string) =>
+          onChange={(value) =>
             setAttributeValues((prev) =>
               prev.map((attr) =>
                 attr.id === id ? { ...attr, stringValue: value } : attr
@@ -42,6 +45,7 @@ export default function Attribute({
       return (
         <NumberAttribute
           name={name}
+          readOnly={readOnly}
           value={attributeValue.numericValue!}
           onChange={(value) =>
             setAttributeValues((prev) =>
@@ -57,6 +61,7 @@ export default function Attribute({
       return (
         <BooleanAttribute
           name={name}
+          readOnly={readOnly}
           value={attributeValue.booleanValue!}
           onChange={(value) =>
             setAttributeValues((prev) =>
@@ -72,6 +77,7 @@ export default function Attribute({
       return (
         <TextAttribute
           name={name}
+          readOnly={readOnly}
           value={attributeValue.textValue!}
           onChange={(value) =>
             setAttributeValues((prev) =>
@@ -87,6 +93,7 @@ export default function Attribute({
       return (
         <DateAttribute
           name={name}
+          readOnly={readOnly}
           value={attributeValue.dateValue!}
           onChange={(value) =>
             setAttributeValues((prev) =>
@@ -102,6 +109,7 @@ export default function Attribute({
       return (
         <PeriodAttribute
           name={name}
+          readOnly={readOnly}
           periodStart={attributeValue.periodStart!}
           periodEnd={attributeValue.periodEnd!}
           onChangeStart={(value) =>
@@ -126,6 +134,7 @@ export default function Attribute({
         <ImageAttribute
           id={id}
           name={name}
+          readOnly={readOnly}
           value={attributeValue.imageUrl!}
           onChange={(value) =>
             setAttributeValues((prev) =>
@@ -140,8 +149,9 @@ export default function Attribute({
     case AttributeType.SELECT:
       return (
         <SelectAttribute
-          value={attributeValue.optionId!}
           name={name}
+          readOnly={readOnly}
+          value={attributeValue.optionId!}
           options={attributeValue.attribute.attributeOptions!}
           onChange={(value) =>
             setAttributeValues((prev) =>

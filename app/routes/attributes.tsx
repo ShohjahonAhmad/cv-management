@@ -32,6 +32,9 @@ import {
 import { useTranslation } from "react-i18next";
 import { buildErrors } from "~/utils/buildErrors";
 import useCustomSearchParams from "~/hooks/useCustomSearchParam";
+import { format } from "date-fns";
+import { languageLocaleMap } from "~/components/position-details/PositionHeader";
+import i18n from "~/config/i18n";
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -387,7 +390,13 @@ export default function Attributes() {
                   <AttributeTypeC type={attribute.type} />
                 </td>
                 <td className="px-4 py-2.5">{attribute.description}</td>
-                <td className="px-4 py-2.5">{attribute.createdAt}</td>
+                <td className="px-4 py-2.5">
+                  {attribute.createdAt
+                    ? format(new Date(attribute.createdAt), "dd MMM, yyyy", {
+                        locale: languageLocaleMap[i18n.language],
+                      })
+                    : t("page.cvs.table.defaultPublished")}
+                </td>
               </tr>
             ))}
           </tbody>

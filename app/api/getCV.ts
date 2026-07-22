@@ -1,7 +1,6 @@
 import type { AttributeValue } from "~/types/Profile";
 import { getToken, isAuthorized } from "./getAttributes";
 import type { CV } from "~/types/CV";
-import { success } from "zod";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -30,6 +29,7 @@ export async function apply(positionId : number | string) {
 export type GetCVResponse = {
     cv: CV;
     attributeValues: AttributeValue[];
+    readOnly: boolean;
 }
 export async function getCV(id: number | string) : Promise<GetCVResponse> {
     try {
@@ -96,5 +96,34 @@ export async function publishCV(id: number | string) {
         return {success: true, published: true};
     } catch(err: any) {
         return {success: false, error: err.message || "Failed to publish CV"};
+    }
+}
+
+
+type GetCVsResponse = {
+    cvs: CV[];
+    page: number;
+    pageSize: number;
+    totalPages: number;
+    totalCount: number;
+}
+export async function getCVs(page: number, search: string) : Promise<GetCVsResponse> {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/cv?page=${page}&search=${search}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.error || "Failed to fetch CVs");
+        }
+
+        return await res.json() as GetCVsResponse;
+    } catch(err: any) {
+        throw new Error(err.message || "Failed to fetch CVs");
     }
 }

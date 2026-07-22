@@ -42,6 +42,14 @@ export default function Menu() {
         >
           {t("menu.positions")}
         </NavLink>
+        <NavLink
+          to="cvs"
+          className={({ isActive }) =>
+            `text-sm font-normal text-nav-text ${isActive && "text-nav-text-active border-b-2 border-nav-border-active font-semibold"}`
+          }
+        >
+          {t("menu.cvs")}
+        </NavLink>
       </div>
       <div>
         <LanguageSwitcher />

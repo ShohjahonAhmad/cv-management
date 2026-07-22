@@ -426,6 +426,7 @@ export default function Profile() {
                 <div className="flex flex-col">
                   {attributeValues.map((attributeValue) => (
                     <Attribute
+                      readOnly={false}
                       key={attributeValue.id}
                       attributeValue={attributeValue}
                       setAttributeValues={setAttributeValues}

@@ -21,12 +21,14 @@ export default function ImageAttribute({
   value,
   onChange,
   onRemove,
+  readOnly,
 }: {
   id: number;
   name: string;
   value: string;
   onChange: (value: string) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState(false);
@@ -65,8 +67,9 @@ export default function ImageAttribute({
       );
     },
     maxFiles: 1,
-    disabled: isUploading,
+    disabled: readOnly || isUploading,
   });
+
   return (
     <div className="flex items-start gap-4 py-3.5 border-b border-header-border">
       <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-image-bg border border-image-border mt-0.5">
@@ -83,27 +86,32 @@ export default function ImageAttribute({
         </div>
         <div
           {...getRootProps()}
-          className={`cursor-pointer transition-opacity ${isUploading && "pointer-events-none opacity-60"} `}
+          className={`
+            transition-opacity
+            ${readOnly ? "cursor-default" : "cursor-pointer"}  
+            ${isUploading && "pointer-events-none opacity-60"}`}
         >
           <input {...getInputProps()} />
           {value ? (
             <>
               <ImageSpace value={value} />
-              <ReplaceDrag />
+              {!readOnly && <ReplaceDrag />}
             </>
           ) : (
             <EmptyImageState />
           )}
         </div>
       </div>
-      <button
-        type="button"
-        disabled={isUploading}
-        onClick={onRemove}
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          type="button"
+          disabled={isUploading}
+          onClick={onRemove}
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

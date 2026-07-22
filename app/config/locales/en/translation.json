@@ -3,7 +3,8 @@
         "users": "User",
         "attributes": "Attributes",
         "positions": "Positions",
-        "profile": "Profile"
+        "profile": "Profile",
+        "cvs": "CVs"
     },
     "page": {
         "home": {
@@ -47,6 +48,20 @@
             "publish": "Publish CV",
             "publishSuccess": "CV published successfully",
             "published": "Your CV is already published and visible to recruiters"
+        },
+        "cvs": {
+            "title": "CVs",
+            "subtitle": "Browse published candidate CVs. Click any row to open the full CV.",
+            "page": "Page",
+            "of": "of",
+            "searchPlaceholder": "Search by candidate or position...",
+            "empty": "No CVs found. Please check back later.",
+            "table": {
+                "candidate": "Candidate",
+                "position": "Position",
+                "published": "Published",
+                "defaultPublished": "N/A"
+            }
         },
         "user": {
             "title": "User Management",

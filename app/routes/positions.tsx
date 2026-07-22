@@ -27,6 +27,9 @@ import PositionDialog from "~/components/PositionDialog";
 import { CreatePositionSchema, UpdatePositionSchema } from "~/schemas";
 import { buildErrors } from "~/utils/buildErrors";
 import type { Dialog } from "~/types/Position";
+import { format } from "date-fns";
+import { languageLocaleMap } from "~/components/position-details/PositionHeader";
+import i18n from "~/config/i18n";
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -387,7 +390,11 @@ export default function Positions() {
                   <PositionLevel count={position.maxProjects} />
                 </td>
                 <td className="px-4 py-2.5 text-nav-text">
-                  {position.createdAt}
+                  {position.createdAt
+                    ? format(new Date(position.createdAt), "dd MMM, yyyy", {
+                        locale: languageLocaleMap[i18n.language],
+                      })
+                    : t("page.cvs.table.defaultPublished")}
                 </td>
               </tr>
             ))}

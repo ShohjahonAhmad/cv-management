@@ -13,7 +13,7 @@ export default function PositionApply({ id }: { id: string | number }) {
 
     if (result.success) {
       toast.success(t("page.positionDetails.applySuccess"));
-      navigate(`cv/${result.cv!.id}`);
+      navigate(`/cvs/${result.cv!.id}`);
     } else {
       if (result.notFound) {
         toast.error(t("page.positionDetails.applyErrorNotFound"));

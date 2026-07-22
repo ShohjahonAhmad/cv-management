@@ -8,12 +8,14 @@ export default function SelectAttribute({
   options,
   onChange,
   onRemove,
+  readOnly,
 }: {
   value: number | null;
   options: AttributeOption[];
   name: string;
   onChange: (value: number | null) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   const selectId = `attribute-${name}`;
@@ -36,6 +38,7 @@ export default function SelectAttribute({
         </div>
         <select
           id={selectId}
+          disabled={readOnly}
           onChange={(e) => {
             const value = e.target.value;
 
@@ -58,13 +61,15 @@ export default function SelectAttribute({
           })}
         </select>
       </div>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          type="button"
+          onClick={onRemove}
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

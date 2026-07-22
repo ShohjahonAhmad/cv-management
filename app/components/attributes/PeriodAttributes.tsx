@@ -9,6 +9,7 @@ export default function PeriodAttribute({
   onChangeStart,
   onChangeEnd,
   onRemove,
+  readOnly,
 }: {
   name: string;
   periodStart: string;
@@ -16,6 +17,7 @@ export default function PeriodAttribute({
   onChangeStart: (value: string) => void;
   onChangeEnd: (value: string) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -33,18 +35,28 @@ export default function PeriodAttribute({
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <CalendarInput value={periodStart} onChange={onChangeStart} />
+          <CalendarInput
+            value={periodStart}
+            onChange={onChangeStart}
+            readOnly={readOnly}
+          />
           <MoveRight />
-          <CalendarInput value={periodEnd} onChange={onChangeEnd} />
+          <CalendarInput
+            value={periodEnd}
+            onChange={onChangeEnd}
+            readOnly={readOnly}
+          />
         </div>
       </div>
-      <button
-        onClick={onRemove}
-        type="button"
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={onRemove}
+          type="button"
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

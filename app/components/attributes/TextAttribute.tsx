@@ -7,11 +7,13 @@ export default function TextAttribute({
   name,
   onChange,
   onRemove,
+  readOnly,
 }: {
   value: string | null;
   name: string;
   onChange: (value: string | null) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -29,22 +31,22 @@ export default function TextAttribute({
           </span>
         </div>
         <textarea
+          readOnly={readOnly}
           value={value ?? ""}
-          onChange={(e) => {
-            const value = e.target.value.trim();
-            onChange(value === "" ? null : value);
-          }}
+          onChange={(e) => onChange(e.target.value)}
           className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border"
         ></textarea>
         {value === null && <NotSpecified />}
       </div>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          type="button"
+          onClick={onRemove}
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

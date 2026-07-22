@@ -18,13 +18,13 @@ export function buildAttributePayload(attributeValues: AttributeValue[]) {
 export function getValue(attributeValue: AttributeValue) {
     switch (attributeValue.attribute.type) {
       case AttributeType.STRING:
-        return attributeValue.stringValue!;
+        return attributeValue.stringValue?.trim() || null;
       case AttributeType.NUMBER:
         return attributeValue.numericValue!;
       case AttributeType.BOOLEAN:
         return attributeValue.booleanValue!;
       case AttributeType.TEXT: 
-        return attributeValue.textValue!;
+        return attributeValue.textValue?.trim() || null;
       case AttributeType.DATE:
         return attributeValue.dateValue!;
       case AttributeType.PERIOD:

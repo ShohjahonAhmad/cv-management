@@ -8,11 +8,13 @@ export default function BooleanAttribute({
   name,
   onChange,
   onRemove,
+  readOnly,
 }: {
   value: boolean | null;
   name: string;
   onChange: (value: boolean | null) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -30,6 +32,7 @@ export default function BooleanAttribute({
           </span>
         </div>
         <Checkbox
+          disabled={readOnly}
           checked={
             value === true ? true : value === false ? false : "indeterminate"
           }
@@ -40,13 +43,15 @@ export default function BooleanAttribute({
         />
         {value === null && <NotSpecified />}
       </div>
-      <button
-        onClick={onRemove}
-        type="button"
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={onRemove}
+          type="button"
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }

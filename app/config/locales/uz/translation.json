@@ -3,7 +3,8 @@
         "users": "Foydalanuvchi",
         "attributes": "Xususiyatlar",
         "positions": "Pozitsiyalar",
-        "profile": "Profil"
+        "profile": "Profil",
+        "cvs": "CVlar"
     },
     "page": {
         "home": {
@@ -47,6 +48,20 @@
             "publish": "CVni chop etish",
             "publishSuccess": "CV muvaffaqiyatli chop etildi",
             "published": "Sizning CVingiz chop etildi va rekruterlar tomonidan ko'rinadi"
+        },
+        "cvs": {
+            "title": "CVlar",
+            "subtitle": "Nashr qilingan nomzod rezyumelarini ko'rib chiqing. To'liq rezyumeni ochish uchun istalgan qatorni bosing.",
+            "page": "Sahifa",
+            "of": "dan",
+            "searchPlaceholder": "Nomzod yoki pozitsiya bo'yicha qidirish...",
+            "empty": "Hozircha mavjud nashr qilingan CVlar yo'q. Iltimos, keyinroq qayta urinib ko'ring.",
+            "table": {
+                "candidate": "Nomzod",
+                "position": "Pozitsiya",
+                "published": "Chop etilgan",
+                "defaultPublished": "N/A"
+            }
         },
         "user": {
             "title": "Foydalanuvchi boshqaruvi",

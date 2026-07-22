@@ -7,9 +7,11 @@ import { Calendar } from "./ui/calendar";
 export default function CalendarInput({
   value,
   onChange,
+  readOnly,
 }: {
   value: string;
   onChange: (value: string) => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -17,6 +19,7 @@ export default function CalendarInput({
       <PopoverTrigger asChild>
         <button
           type="button"
+          disabled={readOnly}
           data-empty={!value}
           className="w-53 flex justify-between rounded-lg border border-table-border bg-table-header px-3 py-2.5 text-left font-normal data-[empty=true]:text-muted-foreground"
         >

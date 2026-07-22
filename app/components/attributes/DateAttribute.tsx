@@ -3,17 +3,21 @@ import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
+import i18n from "~/config/i18n";
+import { languageLocaleMap } from "../position-details/PositionHeader";
 
 export default function DateAttribute({
   value,
   name,
   onChange,
   onRemove,
+  readOnly,
 }: {
   value: string | null;
   name: string;
   onChange: (value: string | null) => void;
   onRemove: () => void;
+  readOnly: boolean;
 }) {
   const { t } = useTranslation();
   return (
@@ -34,11 +38,14 @@ export default function DateAttribute({
           <PopoverTrigger asChild>
             <button
               type="button"
+              disabled={readOnly}
               data-empty={!value}
               className="w-53 flex justify-between rounded-lg border border-table-border bg-table-header px-3 py-2.5 text-left font-normal data-[empty=true]:text-muted-foreground"
             >
               {value ? (
-                format(new Date(value), "PPP")
+                format(new Date(value), "PPP", {
+                  locale: languageLocaleMap[i18n.language],
+                })
               ) : (
                 <span>{t("page.profile.attributes.pickDate")}</span>
               )}
@@ -55,13 +62,15 @@ export default function DateAttribute({
           </PopoverContent>
         </Popover>
       </div>
-      <button
-        onClick={onRemove}
-        type="button"
-        className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
-      >
-        <X className="w-3 h-3" />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={onRemove}
+          type="button"
+          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
     </div>
   );
 }
