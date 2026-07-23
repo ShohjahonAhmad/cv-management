@@ -10,6 +10,7 @@ import type { Route } from "./+types/cvs";
 import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
+import CVsSearch from "~/components/cvs/CVsSearch";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -22,39 +23,17 @@ export async function clientLoader({ url }: Route.LoaderArgs) {
 
 export default function CVs() {
   const { t } = useTranslation();
-  const { cvs, pageSize, totalPages, totalCount } =
-    useLoaderData<typeof clientLoader>();
+  const { cvs, totalPages, totalCount } = useLoaderData<typeof clientLoader>();
   const navigate = useNavigate();
-  const {
-    page,
-    setPage,
-    setSearch: setSearchParam,
-    search: searchParam,
-  } = useCustomSearchParams();
-  const [search, setSearch] = useState(searchParam);
+  const { page, setPage } = useCustomSearchParams();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearchParam(search.trim());
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [search]);
   return (
     <main className="flex flex-col min-h-screen bg-table-header">
       <CVsHeader page={page} totalCount={totalCount} totalPages={totalPages} />
-      <div className="px-3 pt-4 pb-3">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder={t("page.cvs.searchPlaceholder")}
-          className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border w-full max-w-md text-[13px] text-date"
-        />
-      </div>
+      <CVsSearch />
 
-      <div className="mx-6 rounded-xl overflow-hidden border border-table-border">
-        <table className="w-full table-fixed">
+      <div className="mx-2 lg:mx-6 rounded-xl overflow-x-auto border border-table-border">
+        <table className="w-full table-fixed min-w-225">
           <thead>
             <tr className="bg-table-header border-b border-table-border text-[11px] font-semibold text-nav-text uppercase tracking-[0.06em] text-left">
               <th className="px-4 py-2.5 w-[50%]">
@@ -89,13 +68,13 @@ export default function CVs() {
                         className="w-8 h-8 rounded-full shrink-0"
                         alt="CandidateAvatar"
                       />
-                      <p className="font-medium text-[13px] text-nav-text-active">
+                      <p className="font-medium text-[13px] text-nav-text-active truncate">
                         {cv.candidate.firstName} {cv.candidate.lastName}
                       </p>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <p className="font-medium text-[13px] text-nav-text-active mb-0.5">
+                    <p className="font-medium text-[13px] text-nav-text-active mb-0.5 truncate">
                       {cv.position.title}
                     </p>
                     <div className="flex items-center gap-1.5 text-[11px]">

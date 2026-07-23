@@ -51,6 +51,8 @@ export function isAuthorized(statusCode: number) {
         window.location.href = "/login";
     } else if (statusCode === 403) {
         window.location.href = "/";
+    } else if(statusCode === 404) {
+        window.location.href = "/not-found";
     }
 }
 

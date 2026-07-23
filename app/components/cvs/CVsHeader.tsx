@@ -11,7 +11,7 @@ export default function CVsHeader({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="px-6 py-5 flex items-center justify-between border-b border-header-border">
+    <div className="px-6 py-5 flex items-center flex-col lg:flex-row gap-2 justify-between border-b border-header-border">
       <div>
         <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
           {t("page.cvs.title")}

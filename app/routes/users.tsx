@@ -19,69 +19,94 @@ import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
+import useCustomSearchParams from "~/hooks/useCustomSearchParam";
+import { toast } from "sonner";
+import type { AssignRolesResponse } from "~/api/assignRoles";
+import type { BlockUsersResponse } from "~/api/blockUsers";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
   const page = Number(searchParams.get("page")) || 1;
-  console.log(localStorage.getItem("token"));
   const users = await getUsers(page);
   return users;
 }
 
 export default function Users() {
   const { users, total, totalPages } = useLoaderData();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page")) || 1;
+  const { page, setPage } = useCustomSearchParams();
   const [selectedUsers, setSelectedUsers] = useState<SelectedUser[]>([]);
   const { revalidate } = useRevalidator();
-  const [message, setMessage] = useState<string | null>(null);
   const { t } = useTranslation();
-
-  function setPage(newPage: number) {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev);
-
-      params.set("page", newPage.toString());
-
-      return params;
-    });
-  }
 
   useEffect(() => {
     setSelectedUsers([]);
   }, [page]);
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage(null);
-      }, 3000);
+  function showActionToast(result: AssignRolesResponse | BlockUsersResponse) {
+    switch (result.action) {
+      case "block":
+        if (result.isBlocked) {
+          if (result.conflicts === 0) {
+            toast.success(
+              t("page.user.toast.allBlocked", { count: result.count })
+            );
+          } else {
+            toast.warning(
+              t("page.user.toast.partialBlocked", {
+                changeCount: result.changeCount,
+                conflicts: result.conflicts,
+              })
+            );
+          }
+        } else {
+          if (result.conflicts === 0) {
+            toast.success(
+              t("page.user.toast.allUnblocked", { count: result.count })
+            );
+          } else {
+            toast.warning(
+              t("page.user.toast.partialUnblocked", {
+                changeCount: result.changeCount,
+                conflicts: result.conflicts,
+              })
+            );
+          }
+        }
+        break;
 
-      return () => clearTimeout(timer);
+      case "assign":
+        toast.success(
+          result.conflicts === 0
+            ? t("page.user.toast.allRoleChanged", {
+                count: result.count,
+                role: result.role,
+              })
+            : t("page.user.toast.partialRoleChanged", {
+                changeCount: result.changeCount,
+                conflicts: result.conflicts,
+                role: result.role,
+              })
+        );
     }
-  }, [message]);
+  }
 
-  async function executeAction(action: () => Promise<string>) {
-    setMessage(null);
-    const message = await action();
-    setMessage(message);
-    revalidate();
-    setSelectedUsers([]);
+  async function executeAction(
+    execute: () => Promise<AssignRolesResponse | BlockUsersResponse>
+  ) {
+    try {
+      const result = await execute();
+
+      showActionToast(result);
+      revalidate();
+      setSelectedUsers([]);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t("common.error"));
+    }
   }
 
   return (
-    <main>
-      {message && (
-        <div className="absolute top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
-          <div>
-            <p className="font-semibold text-sm text-nav-text-active">
-              {t("page.user.changeMessage")}
-            </p>
-            <p className="text-xs text-nav-text">{message}</p>
-          </div>
-        </div>
-      )}
-      <div className="px-6 py-5 flex items-center justify-between">
+    <main className="flex flex-col max-h-screen w-full">
+      <div className="px-2 lg:px-6 py-5 flex items-center justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
             {t("page.user.title")}
@@ -107,8 +132,8 @@ export default function Users() {
           />
         </div>
       </div>
-      <div className="mx-6 rounded-xl overflow-hidden border border-table-border">
-        <table className="w-full">
+      <div className="mx-1 lg:mx-6 overflow-x-auto rounded-xl border border-table-border">
+        <table className="w-full table-fixed min-w-225">
           <thead>
             <tr className="uppercase bg-table-header border-b text-xs font-semibold tracking-[0.06em] text-nav-text text-left">
               <th className="pl-4 py-2.5 w-[5%]">
@@ -172,14 +197,19 @@ export default function Users() {
                       checked={selectedUsers.some((u) => u.id === user.id)}
                       className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
                     />
-                    <img
-                      src={`${user.photoUrl ? user.photoUrl : defaultUser}`}
-                      className="rounded-full h-10 w-10 object-fit"
-                    />
                   </div>
                 </td>
                 <td className="px-2 py-2.5 font-medium text-sm text-nav-text-active">
-                  {user.firstName} {user.lastName}
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={user.photoUrl ?? defaultUser}
+                      className="h-10 w-10 rounded-full object-fit"
+                    />
+
+                    <span className="font-medium text-sm text-nav-text-active">
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </div>
                 </td>
                 <td className="px-4 py-2.5 truncate text-nav-text">
                   {user.email}

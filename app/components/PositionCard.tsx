@@ -29,7 +29,7 @@ export default function PositionCard({ position }: { position: Position }) {
       <div className="flex flex-wrap items-center gap-1.5">
         {position.positionProjectTags.map((tag) => (
           <span
-            key={tag.projectTag.id}
+            key={tag.projectTag.name}
             className="inline-flex items-center px-2 py-0.5 rounded font-medium bg-number text-number-text border border-number-border text-[10px]"
           >
             {tag.projectTag.name}

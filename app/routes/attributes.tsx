@@ -35,6 +35,7 @@ import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
+import { toast } from "sonner";
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -46,11 +47,52 @@ export async function clientLoader({ url }: Route.ClientLoaderArgs) {
   return attributes;
 }
 
-export async function clientAction({ request }: Route.ClientActionArgs) {
-  const formData = await request.formData();
-  const mode = formData.get("mode");
+async function create(formData: FormData, attributeOptions: AttributeOption[]) {
+  const form = {
+    name: formData.get("name"),
+    description: formData.get("description"),
+    category: formData.get("category"),
+    type: formData.get("type"),
+    attributeOptions:
+      attributeOptions.length > 0 ? attributeOptions : undefined,
+  };
+  const result = CreateAttributeSchema.safeParse(form);
 
+  if (!result.success) {
+    return {
+      error: true,
+      errors: buildErrors(result.error),
+    };
+  }
+  const data = await createAttribute(result.data);
+  return data;
+}
+
+async function edit(formData: FormData, attributeOptions: AttributeOption[]) {
+  const form = {
+    id: Number(formData.get("id")),
+    name: formData.get("name"),
+    description: formData.get("description"),
+    category: formData.get("category"),
+    type: formData.get("type"),
+    updatedAt: formData.get("updatedAt"),
+    attributeOptions:
+      attributeOptions.length > 0 ? attributeOptions : undefined,
+  };
+  const result = UpdateAttributeSchema.safeParse(form);
+  if (!result.success) {
+    return {
+      error: true,
+      errors: buildErrors(result.error),
+    };
+  }
+  const data = await updateAttribute(result.data);
+  return data;
+}
+
+function getAttributeOptions(formData: FormData): AttributeOption[] {
   const attributeOptions: AttributeOption[] = [];
+
   for (let i = 0; ; i++) {
     const value = formData.get(`attributeOptions[${i}].value`);
 
@@ -64,45 +106,19 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     });
   }
 
-  if (mode === "create") {
-    const form = {
-      name: formData.get("name"),
-      description: formData.get("description"),
-      category: formData.get("category"),
-      type: formData.get("type"),
-      attributeOptions:
-        attributeOptions.length > 0 ? attributeOptions : undefined,
-    };
-    const result = CreateAttributeSchema.safeParse(form);
+  return attributeOptions;
+}
 
-    if (!result.success) {
-      return {
-        error: true,
-        errors: buildErrors(result.error),
-      };
-    }
-    const data = await createAttribute(result.data);
-    return data;
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+  const mode = formData.get("mode");
+
+  const attributeOptions = getAttributeOptions(formData);
+
+  if (mode === "create") {
+    return await create(formData, attributeOptions);
   } else {
-    const form = {
-      id: Number(formData.get("id")),
-      name: formData.get("name"),
-      description: formData.get("description"),
-      category: formData.get("category"),
-      type: formData.get("type"),
-      updatedAt: formData.get("updatedAt"),
-      attributeOptions:
-        attributeOptions.length > 0 ? attributeOptions : undefined,
-    };
-    const result = UpdateAttributeSchema.safeParse(form);
-    if (!result.success) {
-      return {
-        error: true,
-        errors: buildErrors(result.error),
-      };
-    }
-    const data = await updateAttribute(result.data);
-    return data;
+    return await edit(formData, attributeOptions);
   }
 }
 
@@ -117,14 +133,16 @@ type ActionData = {
 export default function Attributes() {
   const { attributes, total, totalPages } = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { page, setPage, setSearch: setSearchParam } = useCustomSearchParams();
+  const {
+    page,
+    setPage,
+    setSearch: setSearchParam,
+    search: searchParam,
+  } = useCustomSearchParams();
   const [selected, setSelected] = useState<SelectedAttribute[]>([]);
   const { revalidate } = useRevalidator();
-  const [message, setMessage] = useState<string | null>(null);
   const [dialog, setDialog] = useState<Dialog>({ open: false, mode: "create" });
-  const [search, setSearch] = useState<string>(
-    () => searchParams.get("search") ?? ""
-  );
+  const [search, setSearch] = useState<string>(searchParam ?? "");
   const selectedAttribute = attributes.find(
     (a: Attribute) => a.id === selected[0]?.id
   );
@@ -137,30 +155,20 @@ export default function Attributes() {
     if (actionData.conflict) {
       revalidate();
       setDialog({ open: false, mode: "create" });
-      setMessage(actionData.message);
+      toast.warning(actionData.message);
       return;
     }
 
     if (actionData.error) {
-      setMessage(actionData.message);
+      toast.error(actionData.message);
       return;
     }
 
     revalidate();
     setDialog({ open: false, mode: "create" });
     setSelected([]);
-    setMessage(actionData.message);
+    toast.success(actionData.message);
   }, [actionData]);
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage(null);
-      }, 10000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
 
   useEffect(() => {
     const delayedParam = setTimeout(() => {
@@ -190,17 +198,7 @@ export default function Attributes() {
 
   return (
     <main>
-      {message && (
-        <div className="fixed top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
-          <div>
-            <p className="font-semibold text-sm text-nav-text-active">
-              {t("page.attribute.changesSaved")}
-            </p>
-            <p className="text-xs text-nav-text">{message}</p>
-          </div>
-        </div>
-      )}
-      <div className="px-6 py-5 flex items-center justify-between">
+      <div className="px-6 py-5 flex items-center gap-4 flex-col lg:flex-row justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
             {t("page.attribute.title")}
@@ -225,14 +223,14 @@ export default function Attributes() {
           </button>
         </div>
       </div>
-      <div className="px-6 py-3 flex justify-between items-center gap-3 border-y border-border">
-        <div>
+      <div className="px-6 py-3 flex flex-wrap justify-between items-center gap-3 border-y border-border">
+        <div className="flex gap-2">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("page.attribute.searchPlaceholder")}
-            className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border min-w-[260px]"
+            className="text-xs text-date px-3 py-2 rounded-lg bg-table-header border border-table-border w-full sm:min-w-65"
           />
           <select
             name="filter"
@@ -250,7 +248,7 @@ export default function Attributes() {
                 return params;
               })
             }
-            className="border mt-1.5 border-table-border rounded-lg px-3 py-2 bg-table-header text-xs ml-3"
+            className="border mt-1.5 border-table-border rounded-lg px-3 py-2 bg-table-header text-xs lg:ml-3"
           >
             <option value="all">{t("page.attribute.allCategories")}</option>
             {Object.entries(attributeCategoryLabels).map(([type, label]) => (
@@ -267,7 +265,7 @@ export default function Attributes() {
           </span>
         </div>
       </div>
-      <div className="mx-6 my-3 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
+      <div className="mx-6 my-3 flex flex-wrap items-center gap-x-2 gap-y-3 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
         <div className="flex items-center gap-2 mr-2">
           <Checkbox
             checked={true}
@@ -277,7 +275,7 @@ export default function Attributes() {
             {selected.length} {t("page.attribute.selected")}
           </span>
         </div>
-        <hr className="w-px mx-1 h-5 bg-hr" />
+        <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-date bg-hr cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           disabled={selected.length !== 1}
@@ -301,7 +299,12 @@ export default function Attributes() {
           onClick={async () => {
             const { conflicts, changeCount, count } =
               await deleteAttribute(selected);
-            setMessage(buildMessage(conflicts, changeCount, count));
+            const message = buildMessage(conflicts, changeCount, count);
+            if (conflicts > 0) {
+              toast.warning(message);
+            } else {
+              toast.success(message);
+            }
             revalidate();
           }}
         >
@@ -309,8 +312,8 @@ export default function Attributes() {
           <span>{t("page.attribute.delete")}</span>
         </button>
       </div>
-      <div className="mx-6 mt-2 rounded-xl overflow-hidden border border-table-border">
-        <table className="w-full">
+      <div className="mx-2 lg:mx-6 mt-2 rounded-xl overflow-x-auto border border-table-border">
+        <table className="w-full table-fixed min-w-225">
           <thead>
             <tr className="uppercase bg-table-header border-b text-xs font-semibold tracking-[0.06em] text-nav-text text-left">
               <th className="px-4 py-2.5 w-[3%]">
@@ -337,7 +340,7 @@ export default function Attributes() {
                   className="h-4 w-4 border-[#4B5563] bg-white data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
                 />
               </th>
-              <th className="px-2 py-2.5 w-[32%]">
+              <th className="px-4 py-2.5 w-[32%]">
                 {t("page.attribute.table.name")}
               </th>
               <th className="px-4 py-2.5 w-[17%]">
@@ -356,7 +359,10 @@ export default function Attributes() {
           </thead>
           <tbody>
             {attributes.map((attribute: Attribute) => (
-              <tr className="text-xs" key={attribute.id}>
+              <tr
+                className="text-xs border-b border-table-border last:border-0"
+                key={attribute.id}
+              >
                 <td className="px-4 py-2.5">
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -380,7 +386,7 @@ export default function Attributes() {
                     />
                   </div>
                 </td>
-                <td className="px-2 py-2.5 font-medium text-sm text-nav-text-active">
+                <td className="px-4 py-2.5 font-medium text-sm text-nav-text-active">
                   {attribute.name}
                 </td>
                 <td className="px-4 py-2.5 truncate text-nav-text">
@@ -389,7 +395,9 @@ export default function Attributes() {
                 <td className="px-4 py-2.5">
                   <AttributeTypeC type={attribute.type} />
                 </td>
-                <td className="px-4 py-2.5">{attribute.description}</td>
+                <td className="px-4 py-2.5">
+                  <div className="truncate">{attribute.description}</div>
+                </td>
                 <td className="px-4 py-2.5">
                   {attribute.createdAt
                     ? format(new Date(attribute.createdAt), "dd MMM, yyyy", {

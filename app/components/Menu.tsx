@@ -8,7 +8,7 @@ export default function Menu() {
   const { t } = useTranslation();
   return (
     <header className="flex justify-between bg-background border-b border-border px-6 py-3">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 overflow-x-auto">
         <BrandName />
         <NavLink
           to="profile"
@@ -51,7 +51,7 @@ export default function Menu() {
           {t("menu.cvs")}
         </NavLink>
       </div>
-      <div>
+      <div className="flex shrink-0 items-center gap-2">
         <LanguageSwitcher />
         <ModeButton />
       </div>

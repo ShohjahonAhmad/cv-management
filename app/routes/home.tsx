@@ -48,10 +48,10 @@ export default function Home() {
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [search, setParamSearch]);
+  }, [search]);
   return (
     <div className="flex flex-col min-h-screen bg-table-header w-full items-center">
-      <div className="flex flex-col gap-6 px-10 py-8 max-w-[1100px] w-full">
+      <div className="flex flex-col gap-6 px-2 lg:px-10 py-8 max-w-[1100px] w-full">
         <div>
           <h1 className="text-[22px] font-bold text-nav-text-active tracking-[-0.5px]">
             {t("page.home.greeting", { name })}
@@ -61,7 +61,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <input
             id="search"
             name="search"

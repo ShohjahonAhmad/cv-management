@@ -8,7 +8,7 @@
     },
     "page": {
         "home": {
-            "greeting": "Hello , {{name}} 👋",
+            "greeting": "Hello, {{name}} 👋",
             "description": "{{total}} open positions available — find your next opportunity below",
             "searchPlaceholder": "Search positions by title or company...",
             "level": "All levels",
@@ -83,6 +83,14 @@
                 "role": "role",
                 "status": "status",
                 "created": "created"
+            },
+            "toast": {
+                "allBlocked": "All {{count}} user(s) were successfully blocked.",
+                "partialBlocked": "{{changeCount}} user(s) were successfully blocked. {{conflicts}} user(s) could not be blocked due to conflicts.",
+                "allUnblocked": "All {{count}} user(s) were successfully unblocked.",
+                "partialUnblocked": "{{changeCount}} user(s) were successfully unblocked. {{conflicts}} user(s) could not be unblocked due to conflicts.",
+                "allRoleChanged": "All {{count}} user(s) were successfully updated to {{role}}.",
+                "partialRoleChanged": "{{changeCount}} user(s) were successfully updated to {{role}}. {{conflicts}} user(s) could not be updated due to conflicts."
             }
         },
         "attribute": {
@@ -113,7 +121,6 @@
                 "created": "created"
             },
             "dialog": {
-                
                 "create": {
                     "title": "New Attribute",
                     "subtitle": "Define a reusable attribute for positions and CVs",
@@ -259,6 +266,12 @@
             "googleSignIn": "Continue with Google",
             "githubSignIn": "Continue with GitHub",
             "agreement": "By continuing, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+        },
+        "notFound": {
+            "title": "Page not found",
+            "subtitle": "The page you're looking for doesn't exist or has been moved. Check the URL or navigate back.",
+            "go": "Go to Dashboard",
+            "back": "Go Back"
         }
     },
     "category": {
@@ -287,5 +300,8 @@
         "director": "Director",
         "vp": "VP",
         "c_level": "C-Level"
+    },
+    "common": {
+        "error": "Error happened. Please try again."
     }
 }

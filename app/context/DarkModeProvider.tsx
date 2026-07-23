@@ -14,7 +14,7 @@ interface DarkModeContextType {
 const DarkModeContext = createContext<DarkModeContextType | null>(null);
 
 export function DarkModeProvider({ children }: { children: ReactNode }) {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("isDark", JSON.stringify(isDark));

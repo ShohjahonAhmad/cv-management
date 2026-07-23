@@ -1,6 +1,5 @@
 import type { UpdateProfile } from "~/types/Profile";
 import { getToken, isAuthorized } from "./getAttributes";
-import { success } from "zod";
 import type { PositionLevel } from "~/types/Position";
 
 const BASE_URL = import.meta.env.VITE_API_URL;

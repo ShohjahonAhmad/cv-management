@@ -13,11 +13,11 @@ export default function BulkOperationToolbar({
 }: {
   selectedUsers: SelectedUser[];
   setSelectedUsers: React.Dispatch<React.SetStateAction<SelectedUser[]>>;
-  executeAction: (action: () => Promise<string>) => void;
+  executeAction: (action: () => Promise<any>) => void;
 }) {
   const { t } = useTranslation();
   return (
-    <div className="mx-6 mb-3 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
+    <div className="mx-2 lg:mx-6 mb-3 flex flex-wrap items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
       <div className="flex items-center gap-2 mr-2">
         <Checkbox
           checked={selectedUsers.length > 0}
@@ -27,7 +27,7 @@ export default function BulkOperationToolbar({
           {selectedUsers.length} {t("page.user.selected")}
         </span>
       </div>
-      <hr className="w-px mx-1 h-5 bg-hr" />
+      <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
       <span className="text-xs dark:text-[#ffffff99] text-[#9ca3af]">
         {t("page.user.changeRole")}:{" "}
       </span>
@@ -58,7 +58,7 @@ export default function BulkOperationToolbar({
       >
         {t("page.user.makeAdmin")}
       </button>
-      <hr className="w-px mx-1 h-5 bg-hr" />
+      <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
       <button
         disabled={selectedUsers.length === 0}
         onClick={() => executeAction(() => blockUsers(selectedUsers, true))}

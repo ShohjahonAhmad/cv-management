@@ -83,6 +83,14 @@
                 "role": "rol",
                 "status": "holat",
                 "created": "yaratilgan"
+            },
+            "toast": {
+                "allBlocked": "Barcha {{count}} ta foydalanuvchi muvaffaqiyatli bloklandi.",
+                "partialBlocked": "{{changeCount}} ta foydalanuvchi muvaffaqiyatli bloklandi. {{conflicts}} ta foydalanuvchini ziddiyatlar sababli bloklab bo‘lmadi.",
+                "allUnblocked": "Barcha {{count}} ta foydalanuvchining blokirovkasi muvaffaqiyatli olib tashlandi.",
+                "partialUnblocked": "{{changeCount}} ta foydalanuvchining blokirovkasi muvaffaqiyatli olib tashlandi. {{conflicts}} ta foydalanuvchining blokirovkasini ziddiyatlar sababli olib tashlab bo‘lmadi.",
+                "allRoleChanged": "Barcha {{count}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o‘zgartirildi.",
+                "partialRoleChanged": "{{changeCount}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o‘zgartirildi. {{conflicts}} ta foydalanuvchining rolini ziddiyatlar sababli o‘zgartirib bo‘lmadi."
             }
         },
         "attribute": {
@@ -101,8 +109,8 @@
             "error": "Xatolik",
             "toast": {
                 "noChanges": "Hech qanday xususiyat o'chirilmadi.",
-                "changesSaved": "{{count}} xususiyat(lar) muvaffaqiyatli o'chirildi.",
-                "conflict": "{{conflicts}} xususiyat(lar) qarama-qarshiliklar tufayli o'chirilmaydi. {{changeCount}} o'zgarish(lar) amalga oshirildi."
+                "changesSaved": "{{count}} ta xususiyat muvaffaqiyatli o'chirildi.",
+                "conflict": "{{conflicts}} ta xususiyat qarama-qarshiliklar tufayli o'chirilmaydi. {{changeCount}} ta o'zgarish amalga oshirildi."
             },
             "table": {
                 "name": "ism",
@@ -256,6 +264,12 @@
             "googleSignIn": "Google bilan davom etish",
             "githubSignIn": "GitHub bilan davom etish",
             "agreement": "Davom etish orqali siz <terms>Xizmat Ko'rsatish Shartlari</terms> va <privacy>Maxfiylik Siyosati</privacy>ga rozilik bildirasiz."
+        },
+        "notFound": {
+            "title": "Sahifa topilmadi",
+            "subtitle": "Siz qidirayotgan sahifa mavjud emas yoki boshqa joyga ko'chirilgan. URL manzilini tekshiring yoki oldingi sahifaga qayting.",
+            "go": "Boshqaruv paneliga o'tish",
+            "back": "Orqaga qaytish"
         }
     },
     "category": {

@@ -64,7 +64,10 @@ export default function PositionProfile({
             </p>
 
             {missingAttributes.map((attribute) => (
-              <div className="flex items-center justify-between px-2.5 py-2 rounded-lg bg-miss-bg border border-miss-border">
+              <div
+                key={attribute.id}
+                className="flex items-center justify-between px-2.5 py-2 rounded-lg bg-miss-bg border border-miss-border"
+              >
                 <span className="text-xs text-miss-text">{attribute.name}</span>
                 <AttributeTypeC type={attribute.type} />
               </div>

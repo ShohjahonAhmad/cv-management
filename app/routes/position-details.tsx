@@ -36,7 +36,7 @@ export default function PositionDetails() {
   } = useLoaderData<LoaderData>();
   return (
     <main className="flex flex-col min-h-screen items-center bg-table-header">
-      <div className="px-10 py-8 max-w-[1100px] w-full">
+      <div className="px-2 lg:px-10 py-8 max-w-[1100px] w-full">
         <NavLink
           to=".."
           className="inline-flex items-center gap-1.5 mb-6 text-[13px] text-nav-text font-medium"
@@ -45,7 +45,7 @@ export default function PositionDetails() {
           {t("page.positionDetails.back")}
         </NavLink>
 
-        <div className="flex gap-6 items-start">
+        <div className="flex gap-6 items-start flex-col lg:flex-row">
           <div className="flex flex-col gap-4 flex-1 min-w-0">
             <PositionHeader position={position} />
             <PositionDescription description={position.description} />

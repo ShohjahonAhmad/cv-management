@@ -30,6 +30,7 @@ import type { Dialog } from "~/types/Position";
 import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
+import { toast } from "sonner";
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -100,7 +101,6 @@ export default function Positions() {
   const [selected, setSelected] = useState<{ id: number; updatedAt: string }[]>(
     []
   );
-  const [message, setMessage] = useState<string | null>(null);
   const {
     page,
     setPage,
@@ -126,8 +126,7 @@ export default function Positions() {
     if (!actionData) return;
 
     if (actionData.success) {
-      console.log("action update:" + actionData.update);
-      setMessage(
+      toast.success(
         actionData.update
           ? t("page.position.toast.positionUpdated")
           : t("page.position.toast.positionCreated")
@@ -135,27 +134,17 @@ export default function Positions() {
       setDialog({ open: false, mode: "create" });
       revalidate();
     } else if (!actionData.success && actionData.conflict) {
-      setMessage(t("page.position.toast.conflictError"));
+      toast.error(t("page.position.toast.conflictError"));
       setDialog({ open: false, mode: "create" });
       revalidate();
     } else {
-      setMessage(actionData.message);
+      toast.error(actionData.message);
     }
   }, [actionData]);
 
   useEffect(() => {
     setSelected([]);
   }, [positions]);
-
-  useEffect(() => {
-    if (!message) return;
-
-    const timer = setTimeout(() => {
-      setMessage(null);
-    }, 10000);
-
-    return () => clearTimeout(timer);
-  }, [message]);
 
   function buildMessage(
     conflicts: number,
@@ -173,22 +162,17 @@ export default function Positions() {
 
   async function handleDelete() {
     const { conflicts, changeCount, count } = await deletePositions(selected);
-    setMessage(buildMessage(conflicts, changeCount, count));
+    const message = buildMessage(conflicts, changeCount, count);
+    if (conflicts > 0) {
+      toast.warning(message);
+    } else {
+      toast.success(message);
+    }
     revalidate();
   }
   return (
     <main>
-      {message && (
-        <div className="fixed top-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg z-50 border dark:bg-[#1a1a20] border-[#d1fae5] dark:border-[#1c3828]">
-          <div>
-            <p className="font-semibold text-sm text-nav-text-active">
-              {t("page.attribute.changesSaved")}
-            </p>
-            <p className="text-xs text-nav-text">{message}</p>
-          </div>
-        </div>
-      )}
-      <div className="px-6 py-5 flex items-start justify-between">
+      <div className="px-6 py-5 flex items-start flex-col gap-2 lg:flex-row justify-between">
         <div>
           <h1 className="font-bold text-xl text-nav-text-active tracking-[-0.4px]">
             {t("page.position.title")}
@@ -197,7 +181,7 @@ export default function Positions() {
             {t("page.position.subtitle")}
           </p>
         </div>
-        <div className="flex items-center gap-3 mt-1">
+        <div className="flex flex-wrap items-center gap-3 mt-1">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-table-header border border-table-border">
             <FolderOpen className="w-3.5 h-3.5 text-date" />
             <span className="text-xs font-medium text-hr">
@@ -219,7 +203,7 @@ export default function Positions() {
           </button>
         </div>
       </div>
-      <div className="px-6 py-3 flex justify-between items-center gap-3 border-y border-border">
+      <div className="px-6 py-3 flex-wrap flex justify-between items-center gap-3 border-y border-border">
         <div>
           <input
             type="text"
@@ -240,7 +224,7 @@ export default function Positions() {
         </div>
       </div>
 
-      <div className="mx-6 my-3 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
+      <div className="mx-2 lg:mx-6 flex-wrap my-3 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111827] dark:bg-[#6366f1]">
         <div className="flex items-center gap-2 mr-2">
           <Checkbox
             checked={
@@ -256,7 +240,7 @@ export default function Positions() {
             {selected.length} {t("page.position.selected")}
           </span>
         </div>
-        <hr className="w-px mx-1 h-5 bg-hr" />
+        <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-date bg-hr cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           disabled={selected.length !== 1}
@@ -274,7 +258,7 @@ export default function Positions() {
             {t("page.position.singleSelection")}
           </span>
         </button>
-        <hr className="w-px mx-1 h-5 bg-hr" />
+        <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
         <button
           disabled={selected.length === 0}
           onClick={handleDelete}
@@ -284,8 +268,8 @@ export default function Positions() {
           <span>{t("page.position.delete")}</span>
         </button>
       </div>
-      <div className="mx-6 mt-2 rounded-xl overflow-hidden border border-table-border">
-        <table className="w-full table-fixed">
+      <div className="mx-2 lg:mx-6 mt-2 rounded-xl overflow-x-auto border border-table-border">
+        <table className="w-full table-fixed min-w-225">
           <thead>
             <tr className="uppercase bg-table-header border-b text-xs font-semibold tracking-[0.06em] text-nav-text text-left">
               <th className="px-4 py-2.5 w-[3%]">
@@ -312,7 +296,7 @@ export default function Positions() {
                   }
                 />
               </th>
-              <th className="px-2 py-2.5 w-[24%]">
+              <th className="px-4 py-2.5 w-[24%]">
                 {t("page.position.table.title")}
               </th>
               <th className="px-4 py-2.5 truncate w-[25%]">
@@ -334,7 +318,10 @@ export default function Positions() {
           </thead>
           <tbody>
             {positions.map((position: Position) => (
-              <tr className="text-xs" key={position.id}>
+              <tr
+                className="text-xs border-b border-table-border last:border-0"
+                key={position.id}
+              >
                 <td className="px-4 py-2.5">
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -363,7 +350,7 @@ export default function Positions() {
                     />
                   </div>
                 </td>
-                <td className="px-2 py-2.5">
+                <td className="px-4 py-2.5">
                   <div className="flex flex-col">
                     <span className="text-sm font-semibold text-nav-text-active">
                       {position.title}
@@ -373,8 +360,10 @@ export default function Positions() {
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-2.5 text-nav-text">
-                  {position.description}
+                <td className="px-4 py-2.5 align-middle">
+                  <div className="truncate text-nav-text">
+                    {position.description}
+                  </div>
                 </td>
                 <td className="px-4 py-2.5">
                   <AttributeCount count={position.positionAttributes.length} />

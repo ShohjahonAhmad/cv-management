@@ -1,11 +1,19 @@
 import type { Role } from "~/types/Role";
 import type { SelectedUser } from "~/types/User";
+import { getToken, isAuthorized } from "./getAttributes";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default async function assignRoles(users: SelectedUser[], role : Role): Promise<string> {
-    const token = localStorage.getItem("token");
-    if(!token) window.location.href = "/login";
+export type AssignRolesResponse = {
+    conflicts: number;
+    changeCount: number;
+    count: number;
+    action: "assign";
+    role: Role;
+}
+
+export default async function assignRoles(users: SelectedUser[], role : Role): Promise<AssignRolesResponse> {
     try {
+        const token = getToken();
         const res = await fetch(`${BASE_URL}/users/role`, {
             method: "PATCH",
             headers: {
@@ -15,16 +23,14 @@ export default async function assignRoles(users: SelectedUser[], role : Role): P
             body: JSON.stringify({ users, role }),
         })
         if(!res.ok) {
-            if(res.status === 401) {
-                window.location.href = "/login";
-            }
+            isAuthorized(res.status);
             const error = await res.json();
             throw new Error(error.message || "Failed to assign roles");
         }
 
-        const data = await res.json();
+        const data = await res.json() as Omit<AssignRolesResponse, "action" | "role">;
 
-        return data.message;
+        return {...data, action: "assign", role};
     } catch(err) {
         if(err instanceof Error)
         throw new Error(err.message || "Failed to assign roles");
