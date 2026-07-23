@@ -31,11 +31,11 @@ export default function StringAttribute({
           </span>
         </div>
         <input
-          readOnly={readOnly}
+          disabled={readOnly}
           type="text"
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border"
+          className="w-full px-3 py-2.5 rounded-lg bg-table-header border border-table-border"
         />
         {value === null && <NotSpecified />}
       </div>
@@ -43,7 +43,7 @@ export default function StringAttribute({
         <button
           type="button"
           onClick={onRemove}
-          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
+          className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header"
         >
           <X className="w-3 h-3" />
         </button>

@@ -31,7 +31,7 @@ export default function TextAttribute({
           </span>
         </div>
         <textarea
-          readOnly={readOnly}
+          disabled={readOnly}
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           className="px-3 py-2.5 rounded-lg bg-table-header border border-table-border"

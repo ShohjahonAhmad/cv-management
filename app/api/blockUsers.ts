@@ -38,3 +38,40 @@ export default async function blockUsers(users: SelectedUser[], isBlocked : bool
         throw new Error("Failed to block users");
     }
 }
+
+export type DeleteUsersResponse = {
+    conflicts: number;
+    changeCount: number;
+    count: number;
+    action: "delete";
+}
+
+
+export async function deleteUsers(users: SelectedUser[]): Promise<DeleteUsersResponse> {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/users`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ users }),
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to delete users");
+        }
+
+        const data = await res.json() as Omit<DeleteUsersResponse, "action">;
+        return {...data, action: "delete"}; 
+
+    } catch(err) {
+        if(err instanceof Error)
+            throw new Error(err.message || "Failed to delete users");
+
+        throw new Error("Failed to delete users");
+    }
+}

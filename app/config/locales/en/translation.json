@@ -71,6 +71,7 @@
             "page": "Page",
             "of": "of",
             "changeMessage": "Info",
+            "searchPlaceholder": "Search by name or email...",
             "changeRole": "Change Role",
             "makeCandidate": "Make Candidate",
             "makeRecruiter": "Make Recruiter",
@@ -90,7 +91,9 @@
                 "allUnblocked": "All {{count}} user(s) were successfully unblocked.",
                 "partialUnblocked": "{{changeCount}} user(s) were successfully unblocked. {{conflicts}} user(s) could not be unblocked due to conflicts.",
                 "allRoleChanged": "All {{count}} user(s) were successfully updated to {{role}}.",
-                "partialRoleChanged": "{{changeCount}} user(s) were successfully updated to {{role}}. {{conflicts}} user(s) could not be updated due to conflicts."
+                "partialRoleChanged": "{{changeCount}} user(s) were successfully updated to {{role}}. {{conflicts}} user(s) could not be updated due to conflicts.",
+                "allDeleted": "All {{count}} user(s) were successfully deleted.",
+                "partialDeleted": "{{changeCount}} user(s) were successfully deleted. {{conflicts}} user(s) could not be deleted due to conflicts."
             }
         },
         "attribute": {
@@ -256,7 +259,8 @@
             "toast": {
                 "profileUpdated": "Profile updated successfully",
                 "avatarUpdated": "Avatar updated successfully",
-                "avatarUploadFailed": "Avatar upload failed. Please try again."
+                "avatarUploadFailed": "Avatar upload failed. Please try again.",
+                "profileUpdateConflict": "Profile was modified by another session. Please try again."
             } 
 
         },

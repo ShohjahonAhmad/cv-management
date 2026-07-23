@@ -61,7 +61,6 @@ export default function CVBuilder() {
   const { revalidate } = useRevalidator();
   const navigate = useNavigate();
   const missing = initialValues.filter(isNull).length;
-  console.log(attributeValues);
 
   useEffect(() => {
     setAttributeValues(initialValues);

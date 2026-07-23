@@ -31,7 +31,7 @@
             "applyDescription": "Arizangizni tayyorlash uchun siz CV yaratish sahifasiga yo'naltirilasiz",
             "apply": "Ushbu pozitsiyaga ariza topshirish",
             "applyErrorNotFound": "Pozitsiya topilmadi. Iltimos, keyinroq qayta urinib ko'ring.",
-            "applySuccess": "Siz arizangizni yakunlash uchun CV Builder sahifasiga yo‘naltirilasiz"
+            "applySuccess": "Siz arizangizni yakunlash uchun CV Builder sahifasiga yo'naltirilasiz"
         },
         "cvBuilder": {
             "back": "Orqaga",
@@ -71,6 +71,7 @@
             "page": "Sahifa",
             "of": "dan",
             "changeMessage": "Ma'lumot",
+            "searchPlaceholder": "Ism yoki email orqali qidirish...",
             "changeRole": "Rolni o'zgartirish",
             "makeCandidate": "Nomzod qiling",
             "makeRecruiter": "Rekrutr qiling",
@@ -86,11 +87,13 @@
             },
             "toast": {
                 "allBlocked": "Barcha {{count}} ta foydalanuvchi muvaffaqiyatli bloklandi.",
-                "partialBlocked": "{{changeCount}} ta foydalanuvchi muvaffaqiyatli bloklandi. {{conflicts}} ta foydalanuvchini ziddiyatlar sababli bloklab bo‘lmadi.",
+                "partialBlocked": "{{changeCount}} ta foydalanuvchi muvaffaqiyatli bloklandi. {{conflicts}} ta foydalanuvchini ziddiyatlar sababli bloklab bo'lmadi.",
                 "allUnblocked": "Barcha {{count}} ta foydalanuvchining blokirovkasi muvaffaqiyatli olib tashlandi.",
-                "partialUnblocked": "{{changeCount}} ta foydalanuvchining blokirovkasi muvaffaqiyatli olib tashlandi. {{conflicts}} ta foydalanuvchining blokirovkasini ziddiyatlar sababli olib tashlab bo‘lmadi.",
-                "allRoleChanged": "Barcha {{count}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o‘zgartirildi.",
-                "partialRoleChanged": "{{changeCount}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o‘zgartirildi. {{conflicts}} ta foydalanuvchining rolini ziddiyatlar sababli o‘zgartirib bo‘lmadi."
+                "partialUnblocked": "{{changeCount}} ta foydalanuvchining blokirovkasi muvaffaqiyatli olib tashlandi. {{conflicts}} ta foydalanuvchining blokirovkasini ziddiyatlar sababli olib tashlab bo'lmadi.",
+                "allRoleChanged": "Barcha {{count}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o'zgartirildi.",
+                "partialRoleChanged": "{{changeCount}} ta foydalanuvchining roli muvaffaqiyatli {{role}} ga o'zgartirildi. {{conflicts}} ta foydalanuvchining rolini ziddiyatlar sababli o'zgartirib bo'lmadi.",
+                "allDeleted": "Barcha {{count}} ta foydalanuvchi muvaffaqiyatli o'chirildi.",
+                "partialDeleted": "{{changeCount}} ta foydalanuvchi muvaffaqiyatli o'chirildi. {{conflicts}} ta foydalanuvchining o'chirilishi ziddiyatlar sababli amalga oshirilmadi."
             }
         },
         "attribute": {

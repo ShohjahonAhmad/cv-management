@@ -67,7 +67,6 @@ export async function updateCV(id: number | string, attributeValues: AttributeVa
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            console.log("res status" + res.status);
             return {success: false, notFound: res.status === 404, error: error.error || "Failed to update CV"};
         }
 

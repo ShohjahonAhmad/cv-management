@@ -6,7 +6,12 @@ import GitHubProvider from "~/utils/providers/GitHubProvider";
 import Active from "~/utils/statuses/Active";
 import Blocked from "~/utils/statuses/Blocked";
 import getUsers from "~/api/getUsers";
-import { useLoaderData, useSearchParams, useRevalidator } from "react-router";
+import {
+  useLoaderData,
+  useSearchParams,
+  useRevalidator,
+  useNavigate,
+} from "react-router";
 import type { Route } from "./+types/users";
 import defaultUser from "../../public/image.png";
 import { useEffect, useState } from "react";
@@ -22,12 +27,14 @@ import i18n from "~/config/i18n";
 import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 import { toast } from "sonner";
 import type { AssignRolesResponse } from "~/api/assignRoles";
-import type { BlockUsersResponse } from "~/api/blockUsers";
+import type { BlockUsersResponse, DeleteUsersResponse } from "~/api/blockUsers";
+import Search from "~/components/cvs/CVsSearch";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
   const page = Number(searchParams.get("page")) || 1;
-  const users = await getUsers(page);
+  const search = searchParams.get("search") || "";
+  const users = await getUsers(page, search);
   return users;
 }
 
@@ -42,7 +49,9 @@ export default function Users() {
     setSelectedUsers([]);
   }, [page]);
 
-  function showActionToast(result: AssignRolesResponse | BlockUsersResponse) {
+  function showActionToast(
+    result: AssignRolesResponse | BlockUsersResponse | DeleteUsersResponse
+  ) {
     switch (result.action) {
       case "block":
         if (result.isBlocked) {
@@ -75,18 +84,38 @@ export default function Users() {
         break;
 
       case "assign":
-        toast.success(
-          result.conflicts === 0
-            ? t("page.user.toast.allRoleChanged", {
-                count: result.count,
-                role: result.role,
-              })
-            : t("page.user.toast.partialRoleChanged", {
-                changeCount: result.changeCount,
-                conflicts: result.conflicts,
-                role: result.role,
-              })
-        );
+        if (result.conflicts === 0) {
+          toast.success(
+            t("page.user.toast.allRoleChanged", {
+              count: result.count,
+              role: result.role,
+            })
+          );
+        } else {
+          toast.warning(
+            t("page.user.toast.partialRoleChanged", {
+              changeCount: result.changeCount,
+              conflicts: result.conflicts,
+              role: result.role,
+            })
+          );
+        }
+
+      case "delete":
+        if (result.conflicts === 0) {
+          toast.success(
+            t("page.user.toast.allDeleted", {
+              count: result.count,
+            })
+          );
+        } else {
+          toast.warning(
+            t("page.user.toast.partialDeleted", {
+              changeCount: result.changeCount,
+              conflicts: result.conflicts,
+            })
+          );
+        }
     }
   }
 
@@ -122,6 +151,8 @@ export default function Users() {
           {t("page.user.of")} {totalPages}
         </span>
       </div>
+
+      <Search placeholder={t("page.user.searchPlaceholder")} />
 
       <div className="flex flex-1">
         <div className="flex-1 flex flex-col min-w-0">
@@ -180,7 +211,10 @@ export default function Users() {
           </thead>
           <tbody>
             {users.map((user: User) => (
-              <tr className="text-xs" key={user.id}>
+              <tr
+                className="text-xs border-b border-table-border last:border-0"
+                key={user.id}
+              >
                 <td className="pl-4 py-2.5">
                   <div className="flex items-center gap-2">
                     <Checkbox

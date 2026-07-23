@@ -92,5 +92,6 @@ export const ProfileSchema = z.object({
     photoUrl: z.string().nullable().default(null),
     headline: z.string().trim().min(1, "Headline is required").max(100, "Headline must be at most 100 characters"),
     aboutMe: z.string().trim().min(1, "About Me is required").max(2000, "About Me must be at most 2000 characters"),
+    updatedAt: z.iso.datetime(),
     attributeValues: z.array(z.any()).default([]),
 });

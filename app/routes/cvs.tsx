@@ -10,7 +10,7 @@ import type { Route } from "./+types/cvs";
 import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
-import CVsSearch from "~/components/cvs/CVsSearch";
+import Search from "~/components/cvs/CVsSearch";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
   const searchParams = new URL(url).searchParams;
@@ -30,7 +30,7 @@ export default function CVs() {
   return (
     <main className="flex flex-col min-h-screen bg-table-header">
       <CVsHeader page={page} totalCount={totalCount} totalPages={totalPages} />
-      <CVsSearch />
+      <Search placeholder={t("page.cvs.searchPlaceholder")} />
 
       <div className="mx-2 lg:mx-6 rounded-xl overflow-x-auto border border-table-border">
         <table className="w-full table-fixed min-w-225">

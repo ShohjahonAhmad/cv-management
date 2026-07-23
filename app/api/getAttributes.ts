@@ -109,12 +109,10 @@ export async function createAttribute({name, description, category, type, attrib
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            console.log(error)
             return {success: false, conflict: res.status === 409, message: error.error || "Failed to create attribute"};
         }
         return {success: true, message: "Attribute created successfully"};
     } catch(err:any) {
-        console.log(err)
         throw new Error(err.message || "Failed to create attribute");
     }
 } 

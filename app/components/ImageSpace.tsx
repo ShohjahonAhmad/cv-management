@@ -1,6 +1,6 @@
 export default function ImageSpace({ value }: { value: string }) {
   return (
-    <div className="w-72 rounded-lg overflow-hidden border border-table-border bg-header">
+    <div className="w-48 lg:w-72 rounded-lg overflow-hidden border border-table-border bg-header">
       <img
         draggable={false}
         src={value}

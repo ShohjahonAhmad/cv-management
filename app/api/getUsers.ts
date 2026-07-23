@@ -3,10 +3,10 @@ import { getToken, isAuthorized } from "./getAttributes";
 import type { PositionLevel } from "~/types/Position";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-export default async function getUsers(page: number) {
+export default async function getUsers(page: number, search: string) {
     try {
         const token = getToken();
-        const res = await fetch(`${BASE_URL}/users?page=${page}`, {
+        const res = await fetch(`${BASE_URL}/users?page=${page}&search=${search}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -36,16 +36,37 @@ export async function getProfile() {
             const error = await res.json();
             throw new Error(error.message || "Failed to fetch profile");
         }
-        return await res.json();;
+        return await res.json();
     } catch(err:any) {
         throw new Error(err.message || "Failed to fetch profile");
     }
 }
 
-export async function updateProfile(profile: UpdateProfile) {
+export async function getProfileById(id: number | string) {
     try {
         const token = getToken();
-        const res = await fetch(`${BASE_URL}/candidate/profile`, {
+        const res = await fetch(`${BASE_URL}/candidate/profile/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to fetch profile");
+        }
+
+        return await res.json()
+    } catch(err: any) {
+        throw new Error(err.message || "Failed to fetch profile");
+    }
+}
+
+export async function updateProfile(id: string, profile: UpdateProfile) {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/profile/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -57,7 +78,7 @@ export async function updateProfile(profile: UpdateProfile) {
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            return {success: false, error: error.error || "Failed to update profile"};
+            return {success: false, conflict: res.status === 409, error: error.error || "Failed to update profile"};
         }
         const {message} = await res.json();
 

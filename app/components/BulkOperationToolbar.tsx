@@ -1,8 +1,8 @@
-import blockUsers from "~/api/blockUsers";
+import blockUsers, { deleteUsers } from "~/api/blockUsers";
 import assignRoles from "~/api/assignRoles";
 import { Role } from "~/types/Role";
 import type { SelectedUser } from "~/types/User";
-import { Ban, LockOpen } from "lucide-react";
+import { Ban, LockOpen, Trash2 } from "lucide-react";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useTranslation } from "react-i18next";
 
@@ -33,7 +33,7 @@ export default function BulkOperationToolbar({
       </span>
       <button
         disabled={selectedUsers.length === 0}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db]"
+        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db] disabled:cursor-not-allowed disabled:opacity-50"
         onClick={() =>
           executeAction(() => assignRoles(selectedUsers, Role.CANDIDATE))
         }
@@ -45,7 +45,7 @@ export default function BulkOperationToolbar({
         onClick={() =>
           executeAction(() => assignRoles(selectedUsers, Role.RECRUITER))
         }
-        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db]"
+        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         {t("page.user.makeRecruiter")}
       </button>
@@ -54,22 +54,31 @@ export default function BulkOperationToolbar({
         onClick={() =>
           executeAction(() => assignRoles(selectedUsers, Role.ADMIN))
         }
-        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db]"
+        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         {t("page.user.makeAdmin")}
       </button>
       <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
       <button
         disabled={selectedUsers.length === 0}
+        onClick={() => executeAction(() => deleteUsers(selectedUsers))}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#dc2626] text-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <Trash2 className="w-3.5 h-3.5" />
+        <span>{t("page.attribute.delete")}</span>
+      </button>
+      <hr className="w-px mx-1 h-5 bg-hr hidden lg:block" />
+      <button
+        disabled={selectedUsers.length === 0}
         onClick={() => executeAction(() => blockUsers(selectedUsers, true))}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white bg-[#ef4444]"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white bg-[#ef4444] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Ban className="w-3 h-3" />
         {t("page.user.block")}
       </button>
       <button
         disabled={selectedUsers.length === 0}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db]"
+        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-[#374151] dark:bg-[#ffffff26] dark:text-white text-[#d1d5db] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         onClick={() => executeAction(() => blockUsers(selectedUsers, false))}
       >
         <LockOpen className="w-3 h-3" />

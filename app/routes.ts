@@ -8,7 +8,7 @@ export default [
         route("users", "routes/users.tsx"),
         route("attributes", "routes/attributes.tsx"),
         route("positions", "routes/positions.tsx"),
-        route("profile", "routes/profile.tsx"),
+        route("profile/:id?", "routes/profile.tsx"),
         route("positions/:id", "routes/position-details.tsx"),
         route("cvs/:cvId", "routes/cv-builder.tsx"),
         route("cvs", "routes/cvs.tsx"),

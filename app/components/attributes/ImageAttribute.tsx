@@ -72,7 +72,7 @@ export default function ImageAttribute({
 
   return (
     <div className="flex items-start gap-4 py-3.5 border-b border-header-border">
-      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-image-bg border border-image-border mt-0.5">
+      <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-image-bg border border-image-border mt-0.5">
         <Image className="w-3 h-3 text-image-text" />
       </div>
       <div className="flex flex-col gap-1.5 flex-1">
@@ -107,7 +107,7 @@ export default function ImageAttribute({
           type="button"
           disabled={isUploading}
           onClick={onRemove}
-          className="w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header disabled:opacity-50 disabled:cursor-not-allowed"
+          className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg mt-0.5 border border-table-border text-date cursor-pointer hover:bg-table-header disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <X className="w-3 h-3" />
         </button>

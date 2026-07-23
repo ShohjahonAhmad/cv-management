@@ -1,4 +1,4 @@
-import { X, MoveRight, CalendarRange } from "lucide-react";
+import { X, MoveRight, CalendarRange, MoveDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CalendarInput from "../CalendarInput";
 
@@ -22,7 +22,7 @@ export default function PeriodAttribute({
   const { t } = useTranslation();
   return (
     <div className="flex items-start gap-4 py-3.5 border-b border-header-border">
-      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-date-bg border border-date-border mt-0.5">
+      <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-date-bg border border-date-border mt-0.5">
         <CalendarRange className="w-3 h-3 text-date-text" />
       </div>
       <div className="flex flex-col gap-1.5 flex-1">
@@ -34,13 +34,14 @@ export default function PeriodAttribute({
             {t("type.date")}
           </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-2">
           <CalendarInput
             value={periodStart}
             onChange={onChangeStart}
             readOnly={readOnly}
           />
-          <MoveRight />
+          <MoveRight className="hidden lg:block" />
+          <MoveDown className="block lg:hidden" />
           <CalendarInput
             value={periodEnd}
             onChange={onChangeEnd}

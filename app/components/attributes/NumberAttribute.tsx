@@ -18,7 +18,7 @@ export default function NumberAttribute({
   const { t } = useTranslation();
   return (
     <div className="flex items-start gap-4 py-3.5 border-b border-header-border">
-      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-number-bg border border-number-border mt-0.5">
+      <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-number-bg border border-number-border mt-0.5">
         <Hash className="w-3 h-3 text-number-text" />
       </div>
       <div className="flex flex-col gap-1.5 flex-1">
@@ -32,7 +32,7 @@ export default function NumberAttribute({
         </div>
         <input
           type="number"
-          readOnly={readOnly}
+          disabled={readOnly}
           value={value ?? ""}
           onChange={(e) =>
             onChange(e.target.value === "" ? null : e.target.valueAsNumber)

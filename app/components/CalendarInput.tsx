@@ -31,7 +31,7 @@ export default function CalendarInput({
           <ChevronDownIcon data-icon="inline-end" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start" side="right">
+      <PopoverContent className="w-auto p-0" align="start" side="top">
         <Calendar
           mode="single"
           selected={value ? new Date(value) : undefined}

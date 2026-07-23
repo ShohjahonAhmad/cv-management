@@ -114,7 +114,6 @@ export default function PositionDialog({
                 name="level"
                 id="level"
                 defaultValue={position?.level || PositionLevel.INTERN}
-                onChange={(e) => console.log(e.target.value)}
                 className="border mt-1.5 border-table-border rounded-lg px-3 py-2.5 bg-table-header disabled:opacity-50"
               >
                 {Object.entries(positionLevelLabels).map(([level, label]) => (

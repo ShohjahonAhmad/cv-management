@@ -33,4 +33,4 @@ export type AttributeValue = {
     option: AttributeOption | null;
 }
 
-export type UpdateProfile = Omit<Profile, "id" | "email">;
+export type UpdateProfile = Omit<Profile, "id" | "email"> & {updatedAt: string};
