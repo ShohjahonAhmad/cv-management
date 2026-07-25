@@ -255,6 +255,13 @@
                     "action": "{{count}} xususiyat qo'shish"
                 }
             },
+            "cvs": {
+                "title": "CVlar",
+                "subtitle": "Ochiq ish o'rinlari uchun e'lon qilingan va qoralama cvlaringiz",
+                "updated": "So'nggi Yangilangan",
+                "view": "Ochish",
+                "empty": "Hozircha CVlar mavjud emas"
+            },
             "toast": {
                 "profileUpdated": "Profil muvaffaqiyatli yangilandi",
                 "avatarUpdated": "Avatar muvaffaqiyatli yangilandi",
@@ -301,5 +308,13 @@
         "director": "Direktor",
         "vp": "Vitse-prezident",
         "cLevel": "C-daraja"
+    },
+    "cv": {
+        "draft": "Qoralama",
+        "published": "Chop etilgan"
+    },
+
+    "common": {
+        "error": "Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring."
     }
 }

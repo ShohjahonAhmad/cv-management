@@ -1,5 +1,6 @@
 import type { AttributeOption } from "~/schemas";
 import type { Attribute } from "./Attribute";
+import type { CV } from "./CV";
 
 export type Profile = {
     id: number;

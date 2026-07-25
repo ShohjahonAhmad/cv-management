@@ -256,6 +256,13 @@
                     "action_other": "Add {{count}} Attributes"
                 }
             },
+            "cvs":{
+                "title": "CVs",
+                "subtitle": "Your published and draft CVs for open positions",
+                "updated": "Last updated",
+                "view": "Open",
+                "empty": "No CVs yet"
+            },
             "toast": {
                 "profileUpdated": "Profile updated successfully",
                 "avatarUpdated": "Avatar updated successfully",
@@ -304,6 +311,10 @@
         "director": "Director",
         "vp": "VP",
         "c_level": "C-Level"
+    },
+    "cv": {
+        "draft": "Draft",
+        "published": "Published"
     },
     "common": {
         "error": "Error happened. Please try again."

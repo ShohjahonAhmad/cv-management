@@ -23,6 +23,7 @@ import ProfileHeader from "~/components/profile/ProfileHeader";
 import ProfileCard from "~/components/profile/ProfileCard";
 import ProfileBasicInfo from "~/components/profile/ProfileBasicInfo";
 import ProfileAttributes from "~/components/profile/ProfileAttributes";
+import ProfileCVs from "~/components/profile/ProfileCVs";
 
 export async function clientLoader({ params }: Route.LoaderArgs) {
   if (params.id) {
@@ -92,6 +93,7 @@ export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  console.log("profile:", profile);
 
   useEffect(() => {
     setErrors(null);
@@ -154,6 +156,7 @@ export default function Profile() {
               setIsOpen={setIsOpen}
               readOnly={readOnly}
             />
+            <ProfileCVs cvs={profile.cvs} />
           </div>
         </div>
       </Form>
