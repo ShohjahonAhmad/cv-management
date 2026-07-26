@@ -72,7 +72,7 @@ export default function CVBuilder() {
     if (actionData.success) {
       if (actionData.published) {
         toast.success(t("page.cvBuilder.publishSuccess"));
-        navigate("/");
+        navigate("/profile");
       } else {
         toast.success(t("page.cvBuilder.saveSuccess"));
         revalidate();
@@ -80,7 +80,7 @@ export default function CVBuilder() {
     } else {
       if (actionData.notFound) {
         toast.error(t("page.cvBuilder.cvNotFound"));
-        navigate("/");
+        navigate("/profile");
       } else {
         toast.error(actionData.error || t("page.cvBuilder.saveError"));
       }
@@ -93,17 +93,17 @@ export default function CVBuilder() {
       className="flex flex-col min-h-screen items-center bg-table-header"
     >
       <CVBuilderHeader position={cv.position} readOnly={readOnly} />
-      <div className="flex items-start gap-6 px-8 py-6 max-w-[1280px] w-full">
+      <div className="flex flex-col lg:flex-row items-start gap-6 px-2 sm:px-4 lg:px-8 py-6 max-w-[1280px] w-full">
         <CVBuilderProfile
           profile={cv.candidate}
           missing={missing}
           all={initialValues.length}
         />
-        <div className="flex flex-col gap-5 flex-1 min-w-0">
+        <div className="flex flex-col gap-5 flex-1 min-w-0 w-full">
           {missing > 0 && <CVBuilderWarning missing={missing} />}
           <div className="rounded-xl overflow-hidden border border-table-border bg-header">
-            <div className="px-6 py-5">
-              <div className="flex flex-col">
+            <div className="px-2 lg:px-6 py-5">
+              <div className="flex flex-col overflow-x-auto">
                 {attributeValues.map((attributeValue) => (
                   <Attribute
                     key={attributeValue.id}

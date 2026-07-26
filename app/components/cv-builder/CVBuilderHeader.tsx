@@ -15,19 +15,19 @@ export default function CVBuilderHeader({
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
-    <div className="px-8 py-5 flex items-center justify-between bg-header border-b border-border w-full">
-      <div className="flex items-center gap-3">
+    <div className="px-4 sm:px-6 lg:px-8 py-5 flex flex-col lg:flex-row gap-y-4 items-start lg:items-center justify-between bg-header border-b border-border w-full">
+      <div className="flex items-center gap-3 min-w-0 w-full">
         <NavLink
           to=".."
-          className="flex items-center gap-1.5 text-[13px] text-nav-text font-medium"
+          className="flex items-center gap-1.5 text-[13px] text-nav-text font-medium shrink-0"
         >
           <ArrowLeft className="w-[13px] h-[13px]" />
           {t("page.cvBuilder.back")}
         </NavLink>
-        <span className="text-drag-border">·</span>
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-bold text-[18px] text-nav-text-active tracking-[-0.4px]">
+        <span className="text-drag-border shrink-0">·</span>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 min-w-0">
+            <h1 className="font-bold text-[18px] text-nav-text-active tracking-[-0.4px] truncate">
               {position.title}
             </h1>
             {!readOnly && (
@@ -37,7 +37,7 @@ export default function CVBuilderHeader({
               </span>
             )}
           </div>
-          <p className="text-xs text-nav-text mt-0.5">
+          <p className="text-xs text-nav-text mt-0.5 truncate">
             {position.company} · {t(positionLevelLabels[position.level])}
           </p>
         </div>
@@ -49,7 +49,7 @@ export default function CVBuilderHeader({
             name="intent"
             value="save"
             disabled={isSubmitting}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-nav-border-active text-white"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-nav-border-active text-white whitespace-nowrap"
           >
             <Save className="w-[13px] h-[13px]" />
             {t("page.cvBuilder.save")}

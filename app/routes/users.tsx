@@ -15,7 +15,7 @@ import {
 import type { Route } from "./+types/users";
 import defaultUser from "../../public/image.png";
 import { useEffect, useState } from "react";
-import { Provider } from "~/types/Role";
+import { Provider, Role } from "~/types/Role";
 import type { SelectedUser, User } from "~/types/User";
 import { Checkbox } from "~/components/ui/checkbox";
 import BulkOperationToolbar from "~/components/BulkOperationToolbar";
@@ -29,8 +29,12 @@ import { toast } from "sonner";
 import type { AssignRolesResponse } from "~/api/assignRoles";
 import type { BlockUsersResponse, DeleteUsersResponse } from "~/api/blockUsers";
 import Search from "~/components/cvs/CVsSearch";
+import { requireRoles } from "~/utils/requireRoles";
 
 export async function clientLoader({ url }: Route.LoaderArgs) {
+  const role = localStorage.getItem("role") as Role;
+  requireRoles(role, [Role.ADMIN]);
+
   const searchParams = new URL(url).searchParams;
   const page = Number(searchParams.get("page")) || 1;
   const search = searchParams.get("search") || "";

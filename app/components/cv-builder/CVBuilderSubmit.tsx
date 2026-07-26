@@ -13,7 +13,7 @@ export default function CVBuilderSubmit({
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
-    <div className="flex items-center justify-between px-6 py-4 rounded-xl bg-header border border-table-border">
+    <div className="flex items-center justify-between px-6 py-4 gap-2 rounded-xl bg-header border border-table-border">
       <div>
         <p className="text-[13px] font-semibold text-nav-text-active">
           {t("page.cvBuilder.submitTitle")}

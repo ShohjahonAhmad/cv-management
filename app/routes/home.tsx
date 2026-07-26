@@ -1,4 +1,4 @@
-import { getPositions } from "~/api/getUsers";
+import { getPositions, getStats } from "~/api/getUsers";
 import type { Route } from "./+types/home";
 import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router";
@@ -8,6 +8,8 @@ import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 import Pagination from "~/components/Pagination";
 import { useEffect, useState } from "react";
 import { positionLevelLabels } from "~/components/PositionDialog";
+import { Briefcase, FileText, Send, Users } from "lucide-react";
+import HomeStats from "~/components/HomeStats";
 
 export async function clientLoader({ request }: Route.LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
@@ -16,8 +18,9 @@ export async function clientLoader({ request }: Route.LoaderArgs) {
   const level = (searchParams.get("level") as PositionLevel) || "";
   const sort = searchParams.get("sort") === "asc" ? "asc" : "desc";
   const result = await getPositions(page, search, level, sort);
+  const stats = await getStats();
 
-  return result;
+  return { ...result, ...stats };
 }
 
 export function meta({}: Route.MetaArgs) {
@@ -29,7 +32,8 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   const { t } = useTranslation();
-  const { positions, pageSize, total, totalPages, name } = useLoaderData();
+  const { positions, pageSize, total, totalPages, name, ...stats } =
+    useLoaderData();
   const {
     page,
     setPage,
@@ -60,6 +64,8 @@ export default function Home() {
             {t("page.home.description", { total })}
           </p>
         </div>
+
+        <HomeStats stats={stats} />
 
         <div className="flex flex-wrap items-center gap-3">
           <input

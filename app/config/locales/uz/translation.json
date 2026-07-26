@@ -17,7 +17,17 @@
             "allPositions": "Barcha pozitsiyalar",
             "attributesRequired": "{{count}} ta xususiyat talab qilinadi",
             "viewDetails": "Pozitsiyani ko'rish",
-            "noPositions": "Hozircha mavjud bo'sh ish o'rni yo'q. Iltimos, keyinroq qayta urinib ko'ring."
+            "noPositions": "Hozircha mavjud bo'sh ish o'rni yo'q. Iltimos, keyinroq qayta urinib ko'ring.",
+            "newCVs": "Yaratilgan CVlar",
+            "lastDay": "So'nggi 24 soat ichida",
+            "totalPositions": "Jami pozitsiyalar",
+            "systemWide": "Tizim bo'yicha",
+            "candidates": "Nomzodlar",
+            "activeProfiles": "Faol profillar",
+            "recruiters": "Rekruterlar",
+            "active": "Faol",
+            "submittedCVs": "Yuborilgan CVlar",
+            "allTime": "Barcha vaqtlar"
         },
         "positionDetails": {
             "back": "Pozitsiyalarga qaytish",

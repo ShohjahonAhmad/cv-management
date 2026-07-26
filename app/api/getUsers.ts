@@ -1,6 +1,7 @@
 import type { UpdateProfile } from "~/types/Profile";
 import { getToken, isAuthorized } from "./getAttributes";
 import type { PositionLevel } from "~/types/Position";
+import type { ProfileUser } from "~/context/UserContext";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default async function getUsers(page: number, search: string) {
@@ -205,5 +206,54 @@ export async function getPositions(page: number, search: string, level: Position
         return await res.json();
     } catch(err: any) {
         throw new Error(err.message || "Failed to fetch positions");
+    }
+}
+
+export async function getCurrentUser() : Promise<ProfileUser>{
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/users/me`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to fetch user");
+        }
+
+        return await res.json() as ProfileUser;
+    } catch(err: any){
+        throw new Error(err.message || "Failed to fetch user");
+    }
+}
+
+type StatsResponse = {
+    totalPositions: number;
+    totalCandidates: number;
+    totalRecruiters: number;
+    totalCVs: number;
+    totalNewCVs: number;
+}
+export async function getStats(): Promise<StatsResponse> {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/stats`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to fetch stats");
+        }
+
+        return await res.json();
+    } catch(err: any) {
+        throw new Error(err.message || "Failed to fetch stats");
     }
 }

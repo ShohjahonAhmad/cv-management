@@ -31,6 +31,8 @@ import { format } from "date-fns";
 import { languageLocaleMap } from "~/components/position-details/PositionHeader";
 import i18n from "~/config/i18n";
 import { toast } from "sonner";
+import { Role } from "~/types/Role";
+import { requireRoles } from "~/utils/requireRoles";
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -86,6 +88,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 }
 
 export async function clientLoader({ url }: Route.ClientLoaderArgs) {
+  const role = localStorage.getItem("role") as Role;
+  requireRoles(role, [Role.ADMIN, Role.RECRUITER]);
   const searchParams = new URL(url).searchParams;
   const page = Number(searchParams.get("page")) || 1;
   const search = searchParams.get("search") || "";
