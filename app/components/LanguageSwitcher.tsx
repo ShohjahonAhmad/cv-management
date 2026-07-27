@@ -7,6 +7,7 @@ export default function LanguageSwitcher() {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     i18n.changeLanguage(event.target.value);
+    localStorage.setItem("lang", event.target.value);
   };
   return (
     <select

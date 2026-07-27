@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useUser } from "~/context/UserContext";
 import { Role } from "~/types/Role";
+import { LogOut } from "lucide-react";
+import LogOutButton from "./LogOutButton";
 
 const NAV_ITEMS: { to: string; labelKey: string; roles: Role[] }[] = [
   {
@@ -54,6 +56,7 @@ export default function Menu() {
       <div className="flex shrink-0 items-center gap-2">
         <LanguageSwitcher />
         <ModeButton />
+        <LogOutButton />
       </div>
     </header>
   );

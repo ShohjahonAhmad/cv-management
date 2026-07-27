@@ -4,7 +4,11 @@
         "attributes": "Xususiyatlar",
         "positions": "Pozitsiyalar",
         "profile": "Profil",
-        "cvs": "CVlar"
+        "cvs": "CVlar",
+        "logout": "Chiqish",
+        "toast": {
+            "loggedOut": "Siz muvaffaqiyatli tizimdan chiqdingiz"
+        }
     },
     "page": {
         "home": {

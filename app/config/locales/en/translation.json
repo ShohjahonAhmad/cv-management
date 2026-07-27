@@ -4,7 +4,11 @@
         "attributes": "Attributes",
         "positions": "Positions",
         "profile": "Profile",
-        "cvs": "CVs"
+        "cvs": "CVs",
+        "logout": "Logout",
+        "toast": {
+            "loggedOut": "You have been logged out successfully"
+        }
     },
     "page": {
         "home": {

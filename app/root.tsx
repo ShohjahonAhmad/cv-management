@@ -12,6 +12,8 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import "./config/i18n";
 import { DarkModeProvider } from "./context/DarkModeProvider";
+import { useEffect } from "react";
+import i18n from "./config/i18n";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -45,6 +47,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    const language = localStorage.getItem("lang");
+
+    if (language) {
+      i18n.changeLanguage(language);
+    }
+  }, []);
   return (
     <DarkModeProvider>
       <Outlet />
