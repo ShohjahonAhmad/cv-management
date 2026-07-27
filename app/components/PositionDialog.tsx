@@ -37,8 +37,8 @@ export default function PositionDialog({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-40 bg-[#00000059]">
-      <div className="flex flex-col rounded-2xl w-[560px] bg-table-header border border-table-border shadow-2xl">
-        <div className="flex items-start justify-between px-6 py-5">
+      <div className="flex flex-col rounded-2xl w-[560px] max-h-[90vh] bg-table-header border border-table-border shadow-2xl">
+        <div className="flex items-start justify-between px-6 py-5 shrink-0">
           <div>
             <h1 className="font-bold text-base text-nav-text-active">
               {isEdit
@@ -59,7 +59,10 @@ export default function PositionDialog({
           </button>
         </div>
         {errors && errors.length > 0 && <ErrorBanner errors={errors} />}
-        <Form method="POST" className="px-6 py-5 flex flex-col gap-1.5">
+        <Form
+          method="POST"
+          className="px-6 py-5 flex flex-col gap-1.5 overflow-y-auto scrollbar dark:scrollbar-thumb-table-border dark:scrollbar-track-table-header"
+        >
           <input type="hidden" name="mode" value={mode} />
           {isEdit && (
             <>
@@ -89,7 +92,7 @@ export default function PositionDialog({
             name="description"
             id="description"
             defaultValue={position?.description}
-            className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
+            className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date shrink-0"
             placeholder={t("page.position.dialog.descriptionPlaceholder")}
           ></textarea>
           <div className="flex gap-3">

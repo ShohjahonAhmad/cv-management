@@ -53,7 +53,7 @@ export default function AttributeDialog({
   );
   return (
     <div className="fixed inset-0 flex items-center justify-center z-40 bg-[#00000059]">
-      <div className="bg-table-header rounded-2xl shadow-2xl flex flex-col w-[500px] border border-table-border">
+      <div className="bg-table-header rounded-2xl shadow-2xl flex flex-col w-[500px] max-h-[90vh] border border-table-border">
         <div className="flex items-center justify-between px-6 py-4">
           <div>
             <p className="font-bold text-base text-nav-text-active">
@@ -75,7 +75,10 @@ export default function AttributeDialog({
           </button>
         </div>
         {errors && errors.length > 0 && <ErrorBanner errors={errors} />}
-        <Form method="POST" className="px-6 py-5 flex flex-col gap-4">
+        <Form
+          method="POST"
+          className="px-6 py-5 flex flex-col gap-4 overflow-y-auto scrollbar dark:scrollbar-thumb-table-border dark:scrollbar-track-table-header"
+        >
           <input type="hidden" name="mode" value={mode} />
           {isEdit && (
             <>
@@ -107,7 +110,7 @@ export default function AttributeDialog({
             name="description"
             id="description"
             defaultValue={attribute?.description}
-            className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date"
+            className="border border-table-border rounded-lg px-3 py-2.5 bg-table-header text-sm text-date shrink-0"
             placeholder={t("page.attribute.dialog.descriptionPlaceholder")}
           ></textarea>
           <div className="flex gap-3">
