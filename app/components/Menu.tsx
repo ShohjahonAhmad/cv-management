@@ -34,9 +34,12 @@ const NAV_ITEMS: { to: string; labelKey: string; roles: Role[] }[] = [
 
 export default function Menu() {
   const { t } = useTranslation();
-  const { role } = useUser();
+  const user = useUser();
+  const role = user?.role;
 
-  const visibleNavItems = NAV_ITEMS.filter((item) => item.roles.includes(role));
+  const visibleNavItems = role
+    ? NAV_ITEMS.filter((item) => item.roles.includes(role))
+    : [];
   return (
     <header className="flex justify-between bg-background border-b border-border px-6 py-3">
       <div className="flex items-center gap-4 overflow-x-auto">

@@ -1,6 +1,5 @@
 import { getPositions, getStats } from "~/api/getUsers";
 import type { Route } from "./+types/home";
-import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router";
 import type { PositionLevel } from "~/types/Position";
 import useCustomSearchParams from "~/hooks/useCustomSearchParam";
@@ -33,13 +32,12 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { t } = useTranslation();
   const { positions, total, totalPages, name, ...stats } = useLoaderData();
   const { page, setPage } = useCustomSearchParams();
 
   return (
     <div className="flex flex-col min-h-screen bg-table-header w-full items-center">
-      <div className="flex flex-col gap-6 px-2 lg:px-10 py-8 max-w-[1100px] w-full">
+      <div className="flex flex-col gap-6 px-2 lg:px-10 py-8 max-w-275 w-full">
         <HomeHeader name={name} total={total} />
         <HomeStats stats={stats} />
         <HomeFilters />

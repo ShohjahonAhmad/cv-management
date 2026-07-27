@@ -4,9 +4,14 @@ import Menu from "~/components/Menu";
 import UserContext from "~/context/UserContext";
 
 export async function clientLoader() {
-  const user = await getCurrentUser();
-  localStorage.setItem("role", user.role);
-  return user;
+  try {
+    const user = await getCurrentUser();
+    localStorage.setItem("role", user.role);
+    return user;
+  } catch (err) {
+    localStorage.removeItem("role");
+    return null;
+  }
 }
 
 export default function DashboardLayout() {

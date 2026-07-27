@@ -11,7 +11,8 @@ const UserContext = createContext<ProfileUser | null>(null);
 
 export function useUser() {
   const ctx = useContext(UserContext);
-  if (!ctx) {
+
+  if (ctx === undefined) {
     throw new Error("useUser must be used within UserProvider");
   }
 

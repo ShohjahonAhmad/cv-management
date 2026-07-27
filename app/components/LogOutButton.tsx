@@ -9,6 +9,7 @@ export default function LogOutButton() {
 
   function handleLogOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login", { replace: true });
     toast.success(t("menu.toast.loggedOut"));
   }

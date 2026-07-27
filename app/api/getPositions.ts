@@ -121,15 +121,18 @@ export async function updatePosition( {id, title, description, company, level, m
 
 export async function getPositionById(id: string): Promise<Position> {
     try {
-        const token = getToken();
-        const res = await fetch(`${BASE_URL}/candidate/positions/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
+        const token = localStorage.getItem("token");
+
+        const headers: HeadersInit = {};
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
+        const res = await fetch(`${BASE_URL}/public/positions/${id}`, {
+            headers
         })
 
         if(!res.ok) {
-            isAuthorized(res.status);
             const error = await res.json();
             throw new Error(error.error || "Failed to fetch position");
         }

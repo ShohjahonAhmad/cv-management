@@ -190,11 +190,16 @@ export async function addAttributes(attributeIds: number[] | string[]): Promise<
 
 export async function getPositions(page: number, search: string, level: PositionLevel | "", sort: "asc" | "desc") {
     try {
-        const token = getToken();
-        const res = await fetch(`${BASE_URL}/candidate/positions?page=${page}&sort=${sort}&level=${level}&search=${search}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+        const token = localStorage.getItem("token");
+
+        const headers: HeadersInit = {};
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
+
+        const res = await fetch(`${BASE_URL}/public/positions?page=${page}&sort=${sort}&level=${level}&search=${search}`, {
+            headers
         });
 
         if(!res.ok) {
@@ -211,15 +216,19 @@ export async function getPositions(page: number, search: string, level: Position
 
 export async function getCurrentUser() : Promise<ProfileUser>{
     try {
-        const token = getToken();
+        const token = localStorage.getItem("token");
+
+        const headers: HeadersInit = {};
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
+
         const res = await fetch(`${BASE_URL}/users/me`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+            headers
         });
 
         if(!res.ok) {
-            isAuthorized(res.status);
             const error = await res.json();
             throw new Error(error.message || "Failed to fetch user");
         }
@@ -239,12 +248,7 @@ type StatsResponse = {
 }
 export async function getStats(): Promise<StatsResponse> {
     try {
-        const token = getToken();
-        const res = await fetch(`${BASE_URL}/stats`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
+        const res = await fetch(`${BASE_URL}/stats`);
 
         if(!res.ok) {
             isAuthorized(res.status);

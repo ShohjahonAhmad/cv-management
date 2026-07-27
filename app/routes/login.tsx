@@ -4,13 +4,14 @@ import Google from "~/utils/Google";
 
 export default function Login() {
   const login = (provider: "google" | "github") => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}`;
+    const BASE_URL = import.meta.env.VITE_API_URL;
+    window.location.href = `${BASE_URL}/auth/${provider}`;
   };
   const { t } = useTranslation();
   return (
     <main className="flex-1 flex items-center justify-center px-16 py-14">
       <div className="w-full max-w-sm flex flex-col">
-        <h2 className="font-bold text-2xl text-[#111111] tracking-[-0.5px]">
+        <h2 className="font-bold text-2xl text-nav-text-active tracking-[-0.5px]">
           {t("page.auth.title")}
         </h2>
         <p className="text-sm mt-1.5 text-zinc-500">

@@ -332,5 +332,25 @@
     },
     "common": {
         "error": "Error happened. Please try again."
+    },
+    "error": {
+        "backToHome": "Back to Home",
+        "401": {
+            "title": "Authentication required",
+            "details": "Please sign in to continue"
+        },
+        "403": {
+            "title": "Access denied",
+            "details": "You don't have permission to view this page"
+        },
+        "404": {
+            "title": "Page not found",
+            "details": "The page you're looking for doesn't exist"
+        },
+        "default": {
+            "title": "Something went wrong",
+            "details": "An unexpected error occurred. Please try again later."
+        }
+        
     }
 }
