@@ -7,10 +7,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const [search, setSearch] = useState(searchParam);
 
   useEffect(() => {
-    setSearch(searchParam);
-  }, [searchParam]);
-
-  useEffect(() => {
     const timer = setTimeout(() => {
       setSearchParam(search.trim());
     }, 400);
