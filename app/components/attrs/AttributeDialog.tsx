@@ -8,9 +8,9 @@ import {
   type Attribute,
   type Dialog,
 } from "~/types/Attribute";
-import { SelectOptionsEditor } from "./SelectOptionsEditor";
+import { SelectOptionsEditor } from "../SelectOptionsEditor";
 import type { AttributeOption } from "~/schemas";
-import ErrorBanner from "./ErrorBanner";
+import ErrorBanner from "../ErrorBanner";
 
 export const attributeCategoryLabels: Record<AttributeCategory, string> = {
   [AttributeCategory.PERSONAL_INFORMATION]: "category.personalInformation",

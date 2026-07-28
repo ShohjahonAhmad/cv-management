@@ -7,6 +7,7 @@ export default function useCustomSearchParams() {
   const search = searchParams.get("search") || "";
   const level = searchParams.get("level") || "";
   const sort = searchParams.get("sort") === "asc" ? "asc" : "desc";
+  const filter = searchParams.get("filter") || "all";
 
   function setPage(newPage: number) {
     setSearchParams((prev) => {
@@ -64,6 +65,19 @@ export default function useCustomSearchParams() {
     });
   }
 
+  function setFilter(newFilter: string) {
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev);
+      if (newFilter === "all") {
+        params.delete("filter");
+      } else {
+        params.set("filter", newFilter);
+      }
+      params.set("page", "1");
+      return params;
+    });
+  }
+
   return {
     page,
     setPage,
@@ -73,5 +87,7 @@ export default function useCustomSearchParams() {
     setLevel,
     sort,
     setSort,
+    filter,
+    setFilter,
   };
 }

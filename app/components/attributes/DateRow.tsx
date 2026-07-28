@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Attribute } from "~/types/Attribute";
-import { attributeCategoryLabels } from "../AttributeDialog";
+import { attributeCategoryLabels } from "../attrs/AttributeDialog";
 
 export default function DateRow({
   attribute,
