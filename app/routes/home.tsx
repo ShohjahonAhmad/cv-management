@@ -24,13 +24,6 @@ export async function clientLoader({ request }: Route.LoaderArgs) {
   return { ...result, ...stats };
 }
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
-
 export default function Home() {
   const { positions, total, totalPages, name, ...stats } = useLoaderData();
   const { page, setPage } = useCustomSearchParams();

@@ -2,6 +2,7 @@ import { Outlet, useLoaderData } from "react-router";
 import { getCurrentUser } from "~/api/getUsers";
 import Menu from "~/components/Menu";
 import UserContext from "~/context/UserContext";
+import type { Route } from "./+types/dashboard-layout";
 
 export async function clientLoader() {
   try {
@@ -12,6 +13,13 @@ export async function clientLoader() {
     localStorage.removeItem("role");
     return null;
   }
+}
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "HireBoard" },
+    { name: "description", content: "Welcome to HireBoard!" },
+  ];
 }
 
 export default function DashboardLayout() {
