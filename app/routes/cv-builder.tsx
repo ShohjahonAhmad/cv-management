@@ -1,3 +1,4 @@
+import type { Route } from "./+types/cv-builder";
 import { useTranslation } from "react-i18next";
 import {
   Form,
@@ -9,15 +10,14 @@ import {
 import CVBuilderHeader from "~/components/cv-builder/CVBuilderHeader";
 import CVBuilderProfile from "~/components/cv-builder/CVBuilderProfile";
 import CVBuilderWarning from "~/components/cv-builder/CVBuilderWarning";
-import type { Route } from "./+types/cv-builder";
-import { getCV, publishCV, updateCV } from "~/api/getCV";
 import Attribute from "~/components/attributes/AttributeValue";
+import CVBuilderSubmit from "~/components/cv-builder/CVBuilderSubmit";
+import { getCV, publishCV, updateCV } from "~/api/getCV";
 import { buildAttributePayload } from "~/utils/buildPayload";
 import { useEffect, useState } from "react";
 import { isNull } from "~/utils/isNull";
 import type { AttributeValue } from "~/types/Profile";
 import { toast } from "sonner";
-import CVBuilderSubmit from "~/components/cv-builder/CVBuilderSubmit";
 
 export async function clientLoader({ params }: Route.LoaderArgs) {
   const { cvId } = params;

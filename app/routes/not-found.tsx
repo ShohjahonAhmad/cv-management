@@ -21,8 +21,7 @@ export default function NotFound() {
           {t("page.notFound.title")}
         </h1>
         <p className="text-sm text-nav-text leading-[1.65]">
-          The page you're looking for doesn't exist or has been moved. Check the
-          URL or navigate back.
+          {t("page.notFound.subtitle")}
         </p>
       </div>
       <div className="flex items-center gap-3 mt-8">
@@ -31,14 +30,14 @@ export default function NotFound() {
           className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium bg-nav-border-active text-white text-[13px]"
         >
           <Home className="w-[13px] h-[13px]" />
-          Go to Dashboard
+          {t("page.notFound.go")}
         </NavLink>
         <NavLink
           to=".."
           className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium bg-table-header border border-table-border text-hr text-[13px]"
         >
           <ArrowLeft className="w-[13px] h-[13px]" />
-          Go Back
+          {t("page.notFound.back")}
         </NavLink>
       </div>
     </main>

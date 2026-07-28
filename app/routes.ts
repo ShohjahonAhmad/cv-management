@@ -1,7 +1,6 @@
 import { type RouteConfig, index, layout, route } from "@react-router/dev/routes";
 
 export default [ 
-    
     route("auth/callback", "routes/callback.tsx"),
     layout("layouts/dashboard-layout.tsx", [
         index("routes/home.tsx"),

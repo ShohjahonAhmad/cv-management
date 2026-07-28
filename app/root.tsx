@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import i18n from "./config/i18n";
 import { useTranslation } from "react-i18next";
 import BrandName from "./components/BrandName";
-import { Bug, Home, TriangleAlert } from "lucide-react";
+import { Home, TriangleAlert } from "lucide-react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

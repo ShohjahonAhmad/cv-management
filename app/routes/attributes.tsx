@@ -13,7 +13,6 @@ import {
   UpdateAttributeSchema,
   type AttributeOption,
 } from "~/schemas";
-import { useTranslation } from "react-i18next";
 import { buildErrors } from "~/utils/buildErrors";
 import useCustomSearchParams from "~/hooks/useCustomSearchParam";
 import { toast } from "sonner";
@@ -109,7 +108,6 @@ export default function Attributes() {
   const { revalidate } = useRevalidator();
   const [dialog, setDialog] = useState<Dialog>({ open: false, mode: "create" });
   const actionData = useActionData<ActionData>();
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (!actionData) return;

@@ -330,5 +330,25 @@
 
     "common": {
         "error": "Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring."
-    }
+    },
+
+    "error": {
+        "backToHome": "Bosh sahifaga qaytish",
+        "401": {
+            "title": "Autentifikatsiya talab qilinadi",
+            "details": "Davom etish uchun tizimga kiring"
+            },
+        "403": {
+            "title": "Kirish taqiqlangan",
+            "details": "Sizda ushbu sahifani ko'rish uchun ruxsat yo'q"
+            },
+        "404": {
+            "title": "Sahifa topilmadi",
+            "details": "Siz qidirayotgan sahifa mavjud emas"
+            },
+        "default": {
+            "title": "Nimadir xato ketdi",
+            "details": "Kutilmagan xatolik yuz berdi. Iltimos, keyinroq yana urinib ko‘ring."
+            }
+  }
 }
