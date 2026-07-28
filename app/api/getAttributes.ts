@@ -82,7 +82,6 @@ export async function deleteAttribute(attributes: SelectedAttribute[]) {
 
 export function getToken() {
     const token = localStorage.getItem("token");
-    console.log(token);
     if(!token) window.location.href = "/login";
     return token;
 }

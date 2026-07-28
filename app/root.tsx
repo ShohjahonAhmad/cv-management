@@ -71,7 +71,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
   const { t } = useTranslation();
-  console.log(error);
 
   if (isRouteErrorResponse(error)) {
     switch (error.status) {

@@ -109,7 +109,6 @@ export async function updatePosition( {id, title, description, company, level, m
         if(!res.ok) {
             isAuthorized(res.status);
             const error = await res.json();
-            console.log(error);
             return {success: false, conflict: res.status === 409, message: error.error || "Failed to update position"};
         }
 

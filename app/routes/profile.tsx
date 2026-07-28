@@ -93,7 +93,6 @@ export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  console.log("profile:", profile);
 
   useEffect(() => {
     setErrors(null);
