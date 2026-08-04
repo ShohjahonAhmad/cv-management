@@ -2,6 +2,7 @@ import { Outlet, useLoaderData } from "react-router";
 import { getCurrentUser } from "~/api/getUsers";
 import Menu from "~/components/Menu";
 import UserContext from "~/context/UserContext";
+import SupportTicket from "~/components/SupportTicket";
 import type { Route } from "./+types/dashboard-layout";
 
 export async function clientLoader() {
@@ -24,11 +25,13 @@ export function meta({}: Route.MetaArgs) {
 
 export default function DashboardLayout() {
   const user = useLoaderData();
+
   return (
     <div className="min-h-screen">
       <UserContext.Provider value={user}>
         <Menu />
         <Outlet />
+        <SupportTicket />
       </UserContext.Provider>
     </div>
   );

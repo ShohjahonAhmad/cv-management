@@ -18,6 +18,35 @@ import i18n from "./config/i18n";
 import { useTranslation } from "react-i18next";
 import BrandName from "./components/BrandName";
 import { Home, TriangleAlert } from "lucide-react";
+import { SupportTicketSchema } from "./schemas";
+import { buildErrors } from "./utils/buildErrors";
+import { createSupportTicket } from "./api/getUsers";
+
+export async function clientAction({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const summary = formData.get("summary");
+  const priority = formData.get("priority");
+  const link = formData.get("link");
+  const pathname = formData.get("pathname") as string;
+  const match = pathname.match(/^\/positions\/(\d+)$/);
+  const id = match ? Number(match[1]) : undefined;
+
+  const result = SupportTicketSchema.safeParse({
+    summary,
+    priority,
+    id,
+    link,
+  });
+
+  if (!result.success) {
+    return {
+      error: true,
+      errors: buildErrors(result.error),
+    };
+  }
+
+  return await createSupportTicket(result.data);
+}
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -6,7 +6,7 @@ export async function clientLoader({ url }: Route.LoaderArgs) {
   if (!token) {
     throw redirect("/login");
   }
-
+  console.log(token);
   localStorage.setItem("token", token);
   throw redirect("/");
 }

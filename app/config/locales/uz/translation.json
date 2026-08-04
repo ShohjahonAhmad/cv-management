@@ -10,6 +10,26 @@
             "loggedOut": "Siz muvaffaqiyatli tizimdan chiqdingiz"
         }
     },
+    "help": {
+        "link": "Yordam so'rovini yarating",
+        "dialog": {
+            "title": "Yordam so'rovini yarating",
+            "subtitle": "Siz bilan imkon qadar tezroq bog'lanamiz",
+            "summary": "Qisqacha xabar",
+            "summaryPlaceholder": "Muammo qandayligini qisqacha tushuntiring...",
+            "summaryHint": "Sizga tezroq yordam bera olishimiz uchun muammoni iloji boricha aniq tasvirlab bering",
+            "priority": "Muhimlik darajasi",
+            "high": "Yuqori",
+            "average": "O'rtacha",
+            "low": "Past",
+            "locker": "So'rov faqat administratorlar jamoasiga yuboriladi",
+            "cancel": "Bekor qilish",
+            "submit": "So'rovni yuborish",
+            "submitting": "Yuborilmoqda...",
+            "success": "Yordam so'rovi muvaffaqiyatli yaratildi",
+            "error": "Yordam so'rovini yaratishda xatolik yuz berdi"
+        }
+    },
     "page": {
         "home": {
             "greeting": "Salom, {{name}} 👋",

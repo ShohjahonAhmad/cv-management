@@ -2,6 +2,7 @@ import type { UpdateProfile } from "~/types/Profile";
 import { getToken, isAuthorized } from "./getAttributes";
 import type { PositionLevel } from "~/types/Position";
 import type { ProfileUser } from "~/context/UserContext";
+import type { Priority, SupportTicket } from "~/types/SupportTicket";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default async function getUsers(page: number, search: string) {
@@ -259,5 +260,29 @@ export async function getStats(): Promise<StatsResponse> {
         return await res.json();
     } catch(err: any) {
         throw new Error(err.message || "Failed to fetch stats");
+    }
+}
+
+export async function createSupportTicket(data: SupportTicket) {
+    try {
+        const token = getToken();
+        const res = await fetch(`${BASE_URL}/candidate/support-ticket`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if(!res.ok) {
+            isAuthorized(res.status);
+            const error = await res.json();
+            throw new Error(error.message || "Failed to create support ticket");
+        }
+
+        return {success: true, ...await res.json()};
+    } catch(err: any) {
+        return {success: false, error: err.message || "Failed to create support ticket" };
     }
 }

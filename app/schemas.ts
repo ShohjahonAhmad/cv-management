@@ -1,6 +1,7 @@
 import z from "zod";
 import { AttributeCategory, AttributeType } from "./types/Attribute";
 import { PositionLevel } from "./types/Position";
+import { Priority } from "./types/SupportTicket";
 const MAX_OPTIONS = 100;
 
 export const AttributeOptionSchema = z.object({
@@ -95,3 +96,10 @@ export const ProfileSchema = z.object({
     updatedAt: z.iso.datetime(),
     attributeValues: z.array(z.any()).default([]),
 });
+
+export const SupportTicketSchema = z.object({
+    summary: z.string().trim().min(1, "Summary is required").max(200, "Summary must be at most 200 characters"),
+    priority: z.enum(Priority),
+    id: z.number().int().positive("ID must be a positive integer").optional(),
+    link: z.url("Link must be a valid URL").default("/"),
+})

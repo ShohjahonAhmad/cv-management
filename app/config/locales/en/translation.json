@@ -10,6 +10,26 @@
             "loggedOut": "You have been logged out successfully"
         }
     },
+    "help": {
+        "link": "Create Support Ticket",
+        "dialog": {
+            "title": "Create Support Ticket",
+            "subtitle": "We'll get back to you as soon as possible",
+            "summary": "Summary",
+            "summaryPlaceholder": "Describe the issue you're experiencing...",
+            "summaryHint": "Be specific so we can help you faster",
+            "priority": "Priority",
+            "high": "High",
+            "average": "Average",
+            "low": "Low",
+            "locked": "Ticket sent only to admin team",
+            "cancel": "Cancel",
+            "submit": "Submit Ticket",
+            "submitting": "Submitting...",
+            "success": "Support ticket created successfully",
+            "error": "Failed to create support ticket"
+        }
+    },
     "page": {
         "home": {
             "greeting": "Hello, {{name}} 👋",
